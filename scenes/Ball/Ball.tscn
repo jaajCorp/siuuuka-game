@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://lxhxjkiveulc"]
+
+[ext_resource type="Script" path="res://scenes/Ball/ball.gd" id="1_cro3g"]
+[ext_resource type="Texture2D" uid="uid://dr5kvw60b14bs" path="res://icon.svg" id="2_ht0q0"]
+[ext_resource type="Shader" path="res://scenes/Ball/circle_frame.gdshader" id="2_imdjw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6njgi"]
+radius = 32.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u1ll0"]
+shader = ExtResource("2_imdjw")
+
+[node name="Ball" type="RigidBody2D"]
+contact_monitor = true
+max_contacts_reported = 6
+script = ExtResource("1_cro3g")
+texture = ExtResource("2_ht0q0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6njgi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_u1ll0")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_ht0q0")
