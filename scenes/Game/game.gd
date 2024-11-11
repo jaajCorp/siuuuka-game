@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var spawn_level: Marker2D
+
 @onready var collision := $StaticBody2D/CollisionPolygon2D
 @onready var balls_container := $Balls
 
@@ -10,14 +12,6 @@ var current_ball: Ball = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Initialize game box
-	collision.polygon = [
-		Vector2(0, 0),
-		Vector2(0, get_viewport().get_visible_rect().size.y),
-		Vector2(get_viewport().get_visible_rect().size.x, get_viewport().get_visible_rect().size.y),
-		Vector2(get_viewport().get_visible_rect().size.x, 0)
-	]
-	
 	spawn_ball()
 	
 
@@ -40,7 +34,7 @@ func _process(delta: float) -> void:
 	
 func spawn_ball():
 	current_ball = BALL_SCENE.instantiate()
-	current_ball.position = Vector2(get_viewport().size.x / 2, 100)
+	current_ball.position = Vector2(get_viewport().size.x / 2, spawn_level.position.y)
 	balls_container.add_child(current_ball)
 	current_ball.level = randi() % 3
 	current_ball.freeze = true

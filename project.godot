@@ -22,9 +22,11 @@ TextureRegistry="*res://scripts/TextureRegistry.gd"
 
 window/size/viewport_width=720
 window/size/viewport_height=1280
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
 [rendering]
 
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.827451, 0.768627, 0.6, 1)
+anti_aliasing/quality/msaa_2d=1

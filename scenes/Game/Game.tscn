@@ -1,20 +1,31 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmu6mss2cn51m"]
+[gd_scene load_steps=4 format=3 uid="uid://cmu6mss2cn51m"]
 
 [ext_resource type="Script" path="res://scenes/Game/game.gd" id="1_5ymrm"]
+[ext_resource type="Texture2D" uid="uid://cveq5rwk5iua5" path="res://assets/img/ui/background.png" id="2_y6q5m"]
+[ext_resource type="Texture2D" uid="uid://c6fia1vx6bnmb" path="res://assets/img/ui/ground.png" id="3_gqi84"]
 
-[sub_resource type="Environment" id="Environment_q6msv"]
-glow_enabled = true
-
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("spawn_level")]
 script = ExtResource("1_5ymrm")
+spawn_level = NodePath("Spawn")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(360, 640)
+scale = Vector2(0.671016, 0.663556)
+texture = ExtResource("2_y6q5m")
+
+[node name="Ground" type="Sprite2D" parent="Background"]
+position = Vector2(0, 855.994)
+scale = Vector2(6.24578, 1)
+texture = ExtResource("3_gqi84")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 build_mode = 1
-polygon = PackedVector2Array(0, 0, 8, 1280, 720, 1280, 720, 0)
+polygon = PackedVector2Array(0, 0, 0, 1128, 720, 1128, 720, 0)
 
 [node name="Balls" type="Node2D" parent="."]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_q6msv")
+[node name="Spawn" type="Marker2D" parent="."]
+position = Vector2(352, 296)
+gizmo_extents = 32.0

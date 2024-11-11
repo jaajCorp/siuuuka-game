@@ -30,7 +30,7 @@ const LEVEL_SIZES := [
 	10.07936839915896,
 ]
 
-@onready var BASE_SIZE: Vector2 = Vector2.ONE * get_viewport().get_visible_rect().size.x / 12
+@onready var BASE_SIZE: Vector2 = Vector2.ONE * 56
 const BASE_MASS: float = 1
 const PACKED_SCENE = preload("res://scenes/Ball/Ball.tscn")
 
