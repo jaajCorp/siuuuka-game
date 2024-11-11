@@ -7,7 +7,7 @@ void fragment() {
 	float dist = distance(vec2(0.0), uv);
 	float mask = 1.0 - step(1.0, dist);
 	
-	float frame = smoothstep(0.93, 0.99, dist);
+	float frame = smoothstep(0.94, 1.0, dist);
 	
 	vec3 finalColor = ((1.0 - frame) * COLOR.rgb) + (frame * color);
 
