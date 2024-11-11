@@ -1,8 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://lxhxjkiveulc"]
+[gd_scene load_steps=7 format=3 uid="uid://lxhxjkiveulc"]
 
 [ext_resource type="Script" path="res://scenes/Ball/ball.gd" id="1_cro3g"]
 [ext_resource type="Texture2D" uid="uid://dr5kvw60b14bs" path="res://icon.svg" id="2_ht0q0"]
 [ext_resource type="Shader" path="res://scenes/Ball/circle_frame.gdshader" id="2_imdjw"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cl83c"]
+friction = 0.6
+bounce = 0.1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6njgi"]
 radius = 32.0
@@ -11,6 +15,7 @@ radius = 32.0
 shader = ExtResource("2_imdjw")
 
 [node name="Ball" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_cl83c")
 contact_monitor = true
 max_contacts_reported = 6
 script = ExtResource("1_cro3g")

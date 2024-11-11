@@ -28,7 +28,7 @@ func _input(event: InputEvent) -> void:
 			if current_ball:
 				current_ball.freeze = false
 				current_ball = null
-				await get_tree().create_timer(1.2).timeout
+				await get_tree().create_timer(0.6).timeout
 				spawn_ball()
 	elif event is InputEventMouseMotion:
 		current_ball.position.x = event.position.x
