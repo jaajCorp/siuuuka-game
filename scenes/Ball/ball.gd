@@ -16,7 +16,21 @@ extends RigidBody2D
 @onready var sprite := $Sprite2D
 @onready var collision := $CollisionShape2D
 
-const BASE_SIZE: Vector2 = Vector2(52, 52)
+const LEVEL_SIZES := [
+	1.0,
+	1.25992104989487,
+	1.587401051968192,
+	2.0,
+	2.51984209978974,
+	3.174802103936383,
+	4.0,
+	5.03968419957948,
+	6.349604207872766,
+	8.0,
+	10.07936839915896,
+]
+
+const BASE_SIZE: Vector2 = Vector2(64, 64)
 const BASE_MASS: float = 1.0
 const PACKED_SCENE = preload("res://scenes/Ball/Ball.tscn")
 
@@ -53,12 +67,18 @@ func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, lo
 func merge_with(other: Ball):
 	self.freeze = true
 	other.freeze = true
+	
 	var center_of_mass: Vector2 = self.position - (self.position - other.position)/2.0
+	var mean_linear_velocity: Vector2 = (self.linear_velocity + other.linear_velocity)/2.0
+	var mean_angular_velocity: float = (self.angular_velocity + other.angular_velocity)/2.0
 	
 	var new_ball: Ball = PACKED_SCENE.instantiate()
 	self.get_parent().add_child(new_ball)
 	new_ball.level = self.level + 1
 	new_ball.position = center_of_mass
+	new_ball.linear_velocity = mean_linear_velocity
+	new_ball.angular_velocity = mean_angular_velocity
+	
 	
 	await get_tree().create_timer(0.5).timeout
 	self.queue_free()
@@ -67,13 +87,13 @@ func merge_with(other: Ball):
 
 func update_level():
 	# Visible scale
-	var scale := Vector2.ONE * pow(PI/2, level)
+	var scale:float = LEVEL_SIZES[level]
 	if self.sprite and self.collision:
 		var base_sprite_scale: Vector2 = BASE_SIZE / sprite.texture.get_size()
 		sprite.scale = base_sprite_scale * scale
-		collision.scale = scale
+		collision.scale = Vector2.ONE * scale
 	# Mass
-	self.mass = BASE_MASS * scale.x
+	self.mass = BASE_MASS * scale
 
 func get_ball_level() -> int:
 	return self.level
