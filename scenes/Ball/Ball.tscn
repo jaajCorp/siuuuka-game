@@ -11,8 +11,9 @@ bounce = 0.06
 [sub_resource type="CircleShape2D" id="CircleShape2D_6njgi"]
 radius = 32.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_u1ll0"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nyh7v"]
 shader = ExtResource("2_imdjw")
+shader_parameter/color = Color(0.0885599, 0.0885599, 0.0885599, 1)
 
 [node name="Ball" type="RigidBody2D"]
 physics_material_override = SubResource("PhysicsMaterial_cl83c")
@@ -25,6 +26,6 @@ texture = ExtResource("2_ht0q0")
 shape = SubResource("CircleShape2D_6njgi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_u1ll0")
+material = SubResource("ShaderMaterial_nyh7v")
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_ht0q0")

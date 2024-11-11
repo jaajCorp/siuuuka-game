@@ -13,9 +13,9 @@ func _ready() -> void:
 	# Initialize game box
 	collision.polygon = [
 		Vector2(0, 0),
-		Vector2(0, get_viewport().size.y),
-		Vector2(get_viewport().size.x, get_viewport().size.y),
-		Vector2(get_viewport().size.x, 0)
+		Vector2(0, get_viewport().get_visible_rect().size.y),
+		Vector2(get_viewport().get_visible_rect().size.x, get_viewport().get_visible_rect().size.y),
+		Vector2(get_viewport().get_visible_rect().size.x, 0)
 	]
 	
 	spawn_ball()
