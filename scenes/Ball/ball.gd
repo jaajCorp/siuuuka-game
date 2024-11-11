@@ -30,8 +30,8 @@ const LEVEL_SIZES := [
 	10.07936839915896,
 ]
 
-const BASE_SIZE: Vector2 = Vector2(64, 64)
-const BASE_MASS: float = 1.0
+@onready var BASE_SIZE: Vector2 = Vector2.ONE * get_viewport().size.x / 12
+const BASE_MASS: float = 1
 const PACKED_SCENE = preload("res://scenes/Ball/Ball.tscn")
 
 var is_merged: bool = false
@@ -39,13 +39,15 @@ var is_merged: bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Scale children
-	sprite.scale = BASE_SIZE / sprite.texture.get_size()
+	sprite.scale = Vector2.ZERO
 	collision.shape.radius = BASE_SIZE.x / 2
 	
 	contact_monitor = true
 	max_contacts_reported = 8
 	body_shape_entered.connect(_on_body_shape_entered)
 	freeze_mode = FreezeMode.FREEZE_MODE_STATIC
+	
+	call_deferred("spawn_anim")
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -68,26 +70,40 @@ func merge_with(other: Ball):
 	self.freeze = true
 	other.freeze = true
 	
-	var center_of_mass: Vector2 = self.position - (self.position - other.position)/2.0
+	var merge_center: Vector2 = self.position - (self.position - other.position)/2.0
 	var mean_linear_velocity: Vector2 = (self.linear_velocity + other.linear_velocity)/2.0
 	var mean_angular_velocity: float = (self.angular_velocity + other.angular_velocity)/2.0
 	
 	var new_ball: Ball = PACKED_SCENE.instantiate()
 	self.get_parent().add_child(new_ball)
 	new_ball.level = self.level + 1
-	new_ball.position = center_of_mass
+	new_ball.position = merge_center
 	new_ball.linear_velocity = mean_linear_velocity
 	new_ball.angular_velocity = mean_angular_velocity
 	
+	merge_anim(merge_center)
+	other.merge_anim(merge_center)
+
+func merge_anim(merge_center: Vector2):
+	var tween := get_tree().create_tween()
+	tween.tween_property(self, "position", merge_center, 0.1)
+	tween.play()
+	await tween.finished
+	queue_free()
 	
-	await get_tree().create_timer(0.5).timeout
-	self.queue_free()
-	other.queue_free()
+func spawn_anim():
+	var target_scale: Vector2 = BASE_SIZE / sprite.texture.get_size() * LEVEL_SIZES[level]
+	sprite.scale = Vector2.ZERO
 	
+	var tween := get_tree().create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(sprite, "scale", target_scale, 0.3)
+	tween.play()
 
 func update_level():
 	# Visible scale
-	var scale:float = LEVEL_SIZES[level]
+	var scale: float = LEVEL_SIZES[level]
 	self.texture = TextureRegistry.get_level_texture(self.level)
 	if self.sprite and self.collision:
 		var base_sprite_scale: Vector2 = BASE_SIZE / sprite.texture.get_size()

@@ -17,7 +17,7 @@ shader = ExtResource("2_imdjw")
 [node name="Ball" type="RigidBody2D"]
 physics_material_override = SubResource("PhysicsMaterial_cl83c")
 contact_monitor = true
-max_contacts_reported = 6
+max_contacts_reported = 8
 script = ExtResource("1_cro3g")
 texture = ExtResource("2_ht0q0")
 
