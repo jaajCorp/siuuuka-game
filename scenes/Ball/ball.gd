@@ -88,6 +88,7 @@ func merge_with(other: Ball):
 func update_level():
 	# Visible scale
 	var scale:float = LEVEL_SIZES[level]
+	self.texture = TextureRegistry.get_level_texture(self.level)
 	if self.sprite and self.collision:
 		var base_sprite_scale: Vector2 = BASE_SIZE / sprite.texture.get_size()
 		sprite.scale = base_sprite_scale * scale
