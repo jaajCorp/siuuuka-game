@@ -56,7 +56,6 @@ func _process(delta: float) -> void:
 
 func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, local_shape_index: int) -> void:
 	if body.has_method("get_ball_level"):
-		print("Collided with ball with level ", body.get_ball_level())
 		var other_level: int = body.get_ball_level()
 		if self.level == other_level and not (self.is_merged or body.is_merged):
 			# Merge
