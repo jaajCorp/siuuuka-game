@@ -15,6 +15,7 @@ extends RigidBody2D
 
 @onready var sprite := $Sprite2D
 @onready var collision := $CollisionShape2D
+@onready var audio := $AudioStreamPlayer2D
 
 const LEVEL_SIZES := [
 	1.0,
@@ -87,6 +88,7 @@ func merge_anim(merge_center: Vector2):
 	var tween := get_tree().create_tween()
 	tween.tween_property(self, "position", merge_center, 0.1)
 	tween.play()
+	audio.play()
 	await tween.finished
 	queue_free()
 	
