@@ -1,4 +1,3 @@
-@tool
 class_name Ball
 extends RigidBody2D
 
@@ -115,3 +114,6 @@ func update_level():
 
 func get_ball_level() -> int:
 	return self.level
+	
+func get_radius() -> int:
+	return sprite.texture.get_width() * sprite.scale.x / 2.0
