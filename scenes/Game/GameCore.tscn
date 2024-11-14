@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmu6mss2cn51m"]
+
+[ext_resource type="Script" path="res://scenes/Game/game_logic.gd" id="1_sn5wc"]
+
+[node name="GameCore" type="Node2D" node_paths=PackedStringArray("spawn_level")]
+script = ExtResource("1_sn5wc")
+spawn_level = NodePath("Spawn")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+build_mode = 1
+polygon = PackedVector2Array(0, 0, 0, 1280, 720, 1280, 720, 0)
+
+[node name="Balls" type="Node2D" parent="."]
+
+[node name="Spawn" type="Marker2D" parent="."]
+position = Vector2(320, 80)
+gizmo_extents = 32.0

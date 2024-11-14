@@ -16,7 +16,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-TextureRegistry="*res://scripts/TextureRegistry.gd"
+TextureRegistry="*res://scripts/global/TextureRegistry.gd"
 
 [display]
 

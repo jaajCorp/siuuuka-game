@@ -25,7 +25,7 @@ func _input(event: InputEvent) -> void:
 				await get_tree().create_timer(0.6).timeout
 				spawn_ball()
 	elif event is InputEventMouseMotion:
-		current_ball.position.x = event.position.x
+		current_ball.global_position.x = event.global_position.x
 		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
