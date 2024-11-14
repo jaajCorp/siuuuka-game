@@ -34,7 +34,7 @@ func _process(delta: float) -> void:
 	
 func spawn_ball():
 	current_ball = BALL_SCENE.instantiate()
-	current_ball.position = Vector2(get_viewport().size.x / 2, spawn_level.position.y)
+	current_ball.position = Vector2(ProjectSettings.get_setting("display/window/size/viewport_width", 720) / 2, spawn_level.position.y)
 	balls_container.add_child(current_ball)
 	current_ball.level = randi() % 3
 	current_ball.freeze = true
