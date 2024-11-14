@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=6 format=3 uid="uid://cjenmxr6qql66"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://cjenmxr6qql66"]
+
+[ext_resource type="FontFile" uid="uid://dapkttovfb4ap" path="res://assets/font/SingleDay-Regular.ttf" id="1_rfbuw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e0evu"]
 
@@ -60,5 +62,6 @@ Button/styles/hover = SubResource("StyleBoxFlat_dehq3")
 Button/styles/normal = SubResource("StyleBoxFlat_vln4o")
 Button/styles/pressed = SubResource("StyleBoxFlat_hvhdi")
 Label/colors/font_color = Color(0.873233, 0.819525, 0.675174, 1)
-Label/font_sizes/font_size = 24
+Label/font_sizes/font_size = 32
+Label/fonts/font = ExtResource("1_rfbuw")
 Panel/styles/panel = SubResource("StyleBoxFlat_dheyu")

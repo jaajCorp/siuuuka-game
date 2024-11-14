@@ -109,7 +109,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_ugm33")
 [node name="Label" type="Label" parent="VBoxContainer/Top/GridContainer/Next/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.434291, 0.290224, 0.222828, 1)
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 32
 text = "Next"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -149,6 +149,9 @@ initial_size = Vector2(720, 721)
 
 [node name="StaticBody2D" parent="VBoxContainer/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore" index="0"]
 position = Vector2(0, -560.704)
+
+[node name="CollisionPolygon2D" parent="VBoxContainer/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore/StaticBody2D" index="0"]
+metadata/_edit_lock_ = true
 
 [node name="Spawn" parent="VBoxContainer/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore" index="2"]
 position = Vector2(360, -80.7043)
