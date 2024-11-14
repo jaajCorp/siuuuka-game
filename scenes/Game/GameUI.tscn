@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://ds15eem7lyxir"]
+[gd_scene load_steps=7 format=3 uid="uid://ds15eem7lyxir"]
 
 [ext_resource type="Theme" uid="uid://cjenmxr6qql66" path="res://res/ui_theme.tres" id="1_ioi18"]
 [ext_resource type="Texture2D" uid="uid://dxxs4tafnr2b8" path="res://assets/img/ui/jar.png" id="1_jgld7"]
+[ext_resource type="Texture2D" uid="uid://b8v1n5j8hxr50" path="res://assets/icon/settings.svg" id="2_210qi"]
 [ext_resource type="PackedScene" uid="uid://cmu6mss2cn51m" path="res://scenes/Game/GameCore.tscn" id="2_l10mu"]
 [ext_resource type="Script" path="res://scripts/components/Node2DContainer.gd" id="2_w46qg"]
 
@@ -11,6 +12,9 @@ corner_radius_top_left = 64
 corner_radius_top_right = 64
 corner_radius_bottom_right = 64
 corner_radius_bottom_left = 64
+shadow_color = Color(0, 0, 0, 0.313726)
+shadow_size = 4
+shadow_offset = Vector2(2, 3)
 
 [node name="GameUi" type="Control"]
 layout_mode = 3
@@ -52,11 +56,14 @@ size_flags_vertical = 0
 layout_mode = 2
 theme_override_constants/margin_left = 24
 
-[node name="Button" type="Button" parent="VBoxContainer/Top/GridContainer/Settings"]
+[node name="SettingsButton" type="Button" parent="VBoxContainer/Top/GridContainer/Settings"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+icon = ExtResource("2_210qi")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Score" type="HBoxContainer" parent="VBoxContainer/Top/GridContainer"]
 layout_mode = 2
