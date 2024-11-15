@@ -23,11 +23,6 @@ const POLITICIANS := [
 func _ready() -> void:
 	http_request = HTTPRequest.new()
 	add_child(http_request)
-	
-	var pack_list = await fetch_pack_list()
-	print(pack_list)
-	var default_pack_meta = await fetch_pack_metadata(manifest.get("default_pack_id"))
-	print(default_pack_meta)
 
 func fetch_pack_list() -> Dictionary:
 	if manifest.is_empty():
