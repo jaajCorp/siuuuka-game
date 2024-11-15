@@ -20,64 +20,77 @@ const POLITICIANS := [
 	preload("res://assets/img/french_politicians/jean-marie.png"),
 ]
 
+enum CMSError {
+	INTERNET_ERROR,
+	SERVER_ERROR,
+	DATA_INTEGRITY,
+	MANIFEST_VERSION,
+}
+	
+
 func _ready() -> void:
 	http_request = HTTPRequest.new()
 	add_child(http_request)
 
+func fetch_manifest() -> Dictionary:
+	var manifest := await __generic_fetch(MANIFEST_URL)
+	if manifest.has("error"):
+		# Let callers handle the error
+		return manifest
+	
+	if manifest.get("version") != MANIFEST_VERSION:
+		return { "error": CMSError.MANIFEST_VERSION }
+		
+	return manifest
+
 func fetch_pack_list() -> Dictionary:
 	if manifest.is_empty():
-		await __fetch_manifest()
+		manifest = await fetch_manifest()
+		if manifest.has("error"):
+			# Let callers handle the error
+			return manifest
 		
-	var error = http_request.request(manifest.get("registry_url"))
-	if error != OK:
-		push_error("An error occurred while fetching pack list.")
-		return {}
-	var response = await http_request.request_completed
-	var response_code: int = response[0]
-	if response_code == 200:
-		push_error("Received non 200 response code while fetching registry: ", response_code)
-		return {}
-		
-	var body = response[3]
-	var json = JSON.new()
-	json.parse(body.get_string_from_utf8())
-	return json.get_data()
+	var registry = await __generic_fetch(manifest.get("registry_url"))
+	if registry.has("error"):
+		# Let callers handle the error
+		return registry
+	
+	return registry
 	
 func fetch_pack_metadata(id: String) -> Dictionary:
 	if manifest.is_empty():
-		await __fetch_manifest()
+		manifest = await fetch_manifest()
+		if manifest.has("error"):
+			# Let callers handle the error
+			return manifest
 		
-	var error = http_request.request(manifest.get("packs_url") + id + "/pack.json")
-	if error != OK:
-		push_error("An error occurred while fetching pack list.")
-		return {}
-	var response = await http_request.request_completed
-	var response_code: int = response[0]
-	if response_code == 200:
-		push_error("Received non 200 response code while fetching pack metatata: ", response_code, ", pack_id: ", id)
-		return {}
-		
-	var body = response[3]
-	var json = JSON.new()
-	json.parse(body.get_string_from_utf8())
-	return json.get_data()
+	var pack_meta = await __generic_fetch(manifest.get("packs_url") + id + "/pack.json")
+	if pack_meta.has("error"):
+		# Let callers handle the error
+		return pack_meta
 	
+	return pack_meta
+
+func __generic_fetch(url: String) -> Dictionary:
+	var error: Error = http_request.request(url)
+	if error != OK:
+		return {"error": CMSError.INTERNET_ERROR, "code": error}
+	var response = await http_request.request_completed
+	var result: int = response[0]
+	if result != OK:
+		return {"error": CMSError.INTERNET_ERROR, "code": result}
+	
+	var status_code: int = response[1]
+	if status_code != 200:
+		return {"error": CMSError.SERVER_ERROR, "code": status_code}
 		
+	var body: PackedByteArray = response[3]
+	var json := JSON.new()
+	var parse_error := json.parse(body.get_string_from_utf8())
+	if parse_error != OK:
+		return{"error": CMSError.DATA_INTEGRITY, "code": parse_error}
+
+	return json.get_data()
+
 func get_level_texture(level: int) -> Texture2D:
 	return POLITICIANS[level]
-
-func __fetch_manifest() -> void:
-	var error = http_request.request(MANIFEST_URL)
-	if error != OK:
-		push_error("An error occurred while fetching manifest.")
-		return
-	var response = await http_request.request_completed
-	var response_code: int = response[0]
-	if response_code == 200:
-		push_error("Received non 200 response code while fetching manifest: ", response_code)
-		return
-		
-	var body = response[3]
-	var json = JSON.new()
-	json.parse(body.get_string_from_utf8())
-	manifest = json.get_data()
