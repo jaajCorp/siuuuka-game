@@ -21,6 +21,7 @@ const POLITICIANS := [
 ]
 
 enum CMSError {
+	OK,
 	INTERNET_ERROR,
 	SERVER_ERROR,
 	DATA_INTEGRITY,
