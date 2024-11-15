@@ -1,9 +1,7 @@
 extends Node2D
 
 @export var spawn_level: Marker2D
-
-@onready var collision := $StaticBody2D/CollisionPolygon2D
-@onready var balls_container := $Balls
+@export var balls_container: Node2D
 
 const BALL_SCENE := preload("res://scenes/Ball/Ball.tscn")
 

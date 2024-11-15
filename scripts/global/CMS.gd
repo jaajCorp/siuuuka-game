@@ -110,8 +110,3 @@ func __generic_json_fetch(url: String) -> Dictionary:
 		return{"error": CMSError.DATA_INTEGRITY, "code": parse_error}
 		
 	return json.get_data()
-
-	
-
-func get_level_texture(level: int) -> Texture2D:
-	return POLITICIANS[level]

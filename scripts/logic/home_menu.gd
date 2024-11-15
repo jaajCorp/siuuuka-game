@@ -11,6 +11,7 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	start_button.disabled = true
+	start_button.connect("pressed", _on_start_pressed)
 	fetch_remote_data()
 
 func fetch_remote_data():
@@ -26,9 +27,16 @@ func fetch_remote_data():
 	pack.connect("load_progress_update", _on_pack_load_progress_update)
 	await pack.loaded
 	
-	print_status("")
+	print_status("Ready !")
+	GameSettings.current_pack = pack
 	start_button.disabled = false
 	
+
+func _on_start_pressed():
+	get_tree().change_scene_to_file("res://scenes/Game/GameUI.tscn")
+
+func _on_pack_load_progress_update(current: int, total: int):
+	print_status("Fetching latest content (%d/%d)" % [current, total])
 
 func print_status(status: String):
 	status_label.text = status
@@ -51,6 +59,3 @@ func check_error(data: Dictionary):
 		return true
 	else:
 		return false
-
-func _on_pack_load_progress_update(current: int, total: int):
-	print_status("Fetching latest content (%d/%d)" % [current, total])
