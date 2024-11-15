@@ -10,11 +10,19 @@ extends RigidBody2D
 		texture = value
 		if self.sprite:
 			self.sprite.texture = value
-		
+
+@export_category("Ambient sounds")
+@export var frequency_secs: int = 10 :
+	set(value):
+		frequency_secs = value
+		ambient_audio_timer.wait_time = value
+@export_range(0, 100) var probability: int = 30
 
 @onready var sprite := $Sprite2D
 @onready var collision := $CollisionShape2D
-@onready var audio := $AudioStreamPlayer2D
+@onready var merge_audio_player := $MergeAudioPlayer
+@onready var ambient_audio_player := $AmbientAudioPlayer
+@onready var ambient_audio_timer := $Timer
 
 const LEVEL_SIZES := [
 	1.0,
@@ -47,6 +55,9 @@ func _ready() -> void:
 	body_shape_entered.connect(_on_body_shape_entered)
 	freeze_mode = FreezeMode.FREEZE_MODE_STATIC
 	
+	ambient_audio_timer.wait_time = frequency_secs
+	ambient_audio_timer.connect("timeout", _on_ambient_timer_timeout)
+	
 	call_deferred("spawn_anim")
 	
 
@@ -65,6 +76,14 @@ func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, lo
 			body.collision.set_deferred("disabled", true)
 			call_deferred("merge_with", body)
 			
+func _on_ambient_timer_timeout():
+	if randi() % 100 < probability:
+		var audio_stream := GameSettings.current_pack.get_level_random_ambient(self.level)
+		if audio_stream != null:
+			ambient_audio_player.stream = audio_stream
+			ambient_audio_player.play()
+	
+
 func merge_with(other: Ball):
 	self.freeze = true
 	other.freeze = true
@@ -86,8 +105,9 @@ func merge_with(other: Ball):
 func merge_anim(merge_center: Vector2):
 	var tween := get_tree().create_tween()
 	tween.tween_property(self, "position", merge_center, 0.1)
+	tween.tween_property(ambient_audio_player, "volume_db", -24.0, 0.1)
 	tween.play()
-	audio.play()
+	merge_audio_player.play()
 	await tween.finished
 	queue_free()
 	

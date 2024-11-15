@@ -43,12 +43,21 @@ func __load_assets():
 	self.background = await __load_texture_asset(meta.get("background"))
 	
 	self.ui = PackUI.new(meta.get("ui"))
-	for level in meta.get("levels"):
+	for level: Dictionary in meta.get("levels"):
 		var texture := await __load_texture_asset(level.get("texture"))
 		if texture == null:
 			emit_signal("loaded", CMS.CMSError.DATA_INTEGRITY)
 			return
-		self.levels.push_back(PackLevelData.new(texture, []))
+		var ambient_sounds: Array[AudioStreamOggVorbis] = []
+		for sound: String in level.get("ambient_sounds"):
+			var audio_stream := await __load_audio_asset(sound)
+			if audio_stream == null:
+				emit_signal("loaded", CMS.CMSError.DATA_INTEGRITY)
+				return
+			
+			ambient_sounds.push_back(audio_stream)
+		
+		self.levels.push_back(PackLevelData.new(texture, ambient_sounds))
 		
 	
 	emit_signal("loaded", CMS.CMSError.OK)
@@ -81,6 +90,19 @@ func __load_texture_asset(asset_path: String) -> ImageTexture:
 	__incr_asset_count()
 	return ImageTexture.create_from_image(image)
 	
+func __load_audio_asset(asset_path: String) -> AudioStreamOggVorbis:
+	print("Loading audio asset " + asset_path + " for pack " + id)
+	assert(asset_path.rsplit(".", true, 1)[1].to_lower() == "ogg")
+	var buffer := await CMS.fetch_pack_asset(id, asset_path)
+	if buffer.is_empty():
+		printerr("Failed to fetch audio stream asset")
+		return null
+		
+	var stream := AudioStreamOggVorbis.load_from_buffer(buffer)
+	
+	__incr_asset_count()
+	return stream
+	
 func __get_total_asset_count(meta: Dictionary) -> int:
 	var count = 1 # Background
 	for level: Dictionary in meta.get("levels"):
@@ -94,3 +116,9 @@ func __incr_asset_count() -> void:
 	
 func get_level_texture(level: int) -> Texture2D:
 	return levels[level].texture
+	
+func get_level_random_ambient(level: int) -> AudioStreamOggVorbis:
+	if levels[level].ambient_sounds.is_empty():
+		return null
+	else:
+		return levels[level].ambient_sounds.pick_random()
