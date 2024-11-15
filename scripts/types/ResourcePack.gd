@@ -1,6 +1,7 @@
 class_name ResourcePack extends Resource
 
 signal loaded(error: CMS.CMSError)
+signal load_progress_update(current: int, total: int)
 
 class PackLevelData extends Resource:
 	var texture: ImageTexture
@@ -23,18 +24,24 @@ class PackUI extends Resource:
 @export var levels: Array[PackLevelData]
 
 var id: String
+var total_asset_count: int
+var current_asset_count: int
 
 func _init(id: String):
 	self.id = id
 	load_assets()
 	
 func load_assets():
+	emit_signal("load_progress_update", 0, 100)
+	
 	var meta = await CMS.fetch_pack_metadata(id)
 	if meta.has("error"):
 		emit_signal("loaded", meta.get("error"))
 		return
+	total_asset_count = get_total_asset_count(meta)
 	
 	self.background = await load_texture_asset(meta.get("background"))
+	
 	self.ui = PackUI.new(meta.get("ui"))
 	for level in meta.get("levels"):
 		var texture := await load_texture_asset(level.get("texture"))
@@ -70,5 +77,17 @@ func load_texture_asset(asset_path: String) -> ImageTexture:
 	if image.is_empty():
 		printerr("Received corrupted image format")
 		return null
-		
+	
+	incr_asset_count()
 	return ImageTexture.create_from_image(image)
+	
+func get_total_asset_count(meta: Dictionary) -> int:
+	var count = 1 # Background
+	for level: Dictionary in meta.get("levels"):
+		count += 1 + len(level.get("ambient_sounds"))
+		
+	return count
+	
+func incr_asset_count() -> void:
+	current_asset_count += 1
+	emit_signal("load_progress_update", current_asset_count, total_asset_count)
