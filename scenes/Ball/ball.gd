@@ -15,7 +15,8 @@ extends RigidBody2D
 @export var frequency_secs: int = 10 :
 	set(value):
 		frequency_secs = value
-		ambient_audio_timer.wait_time = value
+		if ambient_audio_timer:
+			ambient_audio_timer.wait_time = value
 @export_range(0, 100) var probability: int = 30
 
 @onready var sprite := $Sprite2D

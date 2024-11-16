@@ -21,6 +21,8 @@ contact_monitor = true
 max_contacts_reported = 8
 script = ExtResource("1_cro3g")
 texture = ExtResource("2_ht0q0")
+frequency_secs = 4
+probability = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_6njgi")
