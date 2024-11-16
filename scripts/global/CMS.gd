@@ -5,7 +5,7 @@ var manifest: Dictionary = {}
 @onready var http_request: HTTPRequest
 
 const MANIFEST_URL := "https://public.s3web.gasdev.fr/siuuka-game-data/manifest.json"
-const MANIFEST_VERSION := 1
+const MANIFEST_VERSION := 2
 
 enum CMSError {
 	OK,

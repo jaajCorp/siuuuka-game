@@ -7,6 +7,7 @@ signal load_progress_update(current: int, total: int)
 
 @export_category("Data")
 @export var background: ImageTexture
+@export var background_landscape: ImageTexture
 @export var ui: PackUI
 @export var levels: Array[PackLevelData]
 
@@ -30,6 +31,7 @@ func __load_assets():
 	total_asset_count = __get_total_asset_count(meta)
 	
 	self.background = await __load_texture_asset(meta.get("background"))
+	self.background_landscape = await __load_texture_asset(meta.get("background_landscape"))
 	
 	self.ui = PackUI.from(meta.get("ui"))
 	for level: Dictionary in meta.get("levels"):
@@ -93,7 +95,7 @@ func __load_audio_asset(asset_path: String) -> AudioStreamOggVorbis:
 	return stream
 	
 func __get_total_asset_count(meta: Dictionary) -> int:
-	var count = 1 # Background
+	var count = 2 # Background (portrait + landscape)
 	for level: Dictionary in meta.get("levels"):
 		count += 1 + len(level.get("ambient_sounds"))
 		
