@@ -23,6 +23,33 @@ shadow_offset = Vector2(2, 3)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bqi4p"]
 shader = ExtResource("4_lqh75")
 
+[sub_resource type="Animation" id="Animation_h6630"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(40, 52)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_o2i42"]
 resource_name = "best_score"
 length = 0.8
@@ -50,33 +77,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(0.470704, 2.83955, 0.508121),
 "update": 0,
 "values": [Vector2(1, 1), Vector2(1.1591, 1.13942), Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_h6630"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(40, 52)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_smf5d"]
@@ -277,7 +277,7 @@ anchor_right = 1.0
 anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
-expand_mode = 2
+expand_mode = 4
 stretch_mode = 6
 script = ExtResource("6_alc1o")
 metadata/_edit_lock_ = true
