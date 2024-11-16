@@ -2,11 +2,16 @@ extends Node2D
 
 @export var spawn_level: Marker2D
 @export var balls_container: Node2D
+@export var score_label: Label
 
 const BALL_SCENE := preload("res://scenes/Ball/Ball.tscn")
 
-var score: int = 0
 var current_ball: Ball = null
+var score: int = 0 :
+	set(value):
+		score = value
+		if score_label:
+			score_label.text = str(score)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,9 +32,9 @@ func _input(event: InputEvent) -> void:
 		current_ball.position.x = clamp(local_mouse_pos.x, current_ball.get_radius(), get_width() - current_ball.get_radius())
 		
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _on_ball_merge(new_ball: Ball):
+	new_ball.connect("merged", _on_ball_merge)
+	score += new_ball.level * 2
 	
 func spawn_ball():
 	current_ball = BALL_SCENE.instantiate()
@@ -37,6 +42,7 @@ func spawn_ball():
 	balls_container.add_child(current_ball)
 	current_ball.level = randi() % 3
 	current_ball.freeze = true
+	current_ball.connect("merged", _on_ball_merge)
 	
 func get_width() -> int:
 	return ProjectSettings.get_setting("display/window/size/viewport_width", 720)

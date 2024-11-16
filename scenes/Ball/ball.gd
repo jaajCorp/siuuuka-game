@@ -1,5 +1,6 @@
-class_name Ball
-extends RigidBody2D
+class_name Ball extends RigidBody2D
+
+signal merged(new_ball: Ball)
 
 @export_range(0, 10) var level: int = 0 :
 	set(value):
@@ -102,6 +103,8 @@ func merge_with(other: Ball):
 	
 	merge_anim(merge_center)
 	other.merge_anim(merge_center)
+	
+	emit_signal("merged", new_ball)
 
 func merge_anim(merge_center: Vector2):
 	var tween := get_tree().create_tween()

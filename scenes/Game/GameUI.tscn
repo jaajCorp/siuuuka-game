@@ -83,7 +83,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "6942"
+text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -145,7 +145,8 @@ size_flags_stretch_ratio = 10.9
 script = ExtResource("2_w46qg")
 initial_size = Vector2(720, 721)
 
-[node name="GameCore" parent="VBoxContainer/AspectRatioContainer/JarTexture/VBoxContainer/JarInside" instance=ExtResource("2_l10mu")]
+[node name="GameCore" parent="VBoxContainer/AspectRatioContainer/JarTexture/VBoxContainer/JarInside" node_paths=PackedStringArray("score_label") instance=ExtResource("2_l10mu")]
+score_label = NodePath("../../../../../Top/GridContainer/Score/Panel/Label")
 
 [node name="StaticBody2D" parent="VBoxContainer/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore" index="0"]
 position = Vector2(0, -560.704)
