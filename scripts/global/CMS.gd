@@ -21,7 +21,7 @@ func _ready() -> void:
 	add_child(http_request)
 
 func fetch_manifest() -> Dictionary:
-	http_request.timeout = 3
+	http_request.timeout = 4
 	var manifest := await __generic_json_fetch(MANIFEST_URL)
 	if manifest.has("error"):
 		# Let callers handle the error

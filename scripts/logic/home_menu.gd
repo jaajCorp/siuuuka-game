@@ -10,7 +10,7 @@ signal game_ready
 
 @onready var error_dialog := $AcceptDialog
 
-var is_game_ready := false
+var game_loading := false
 
 func _ready() -> void:
 	start_button.connect("pressed", _on_start_pressed)
@@ -21,6 +21,8 @@ func _ready() -> void:
 func fetch_remote_data():
 	var pack: ResourcePack = null
 	var online := true
+	
+	game_loading = true
 	
 	print_status("Fetching info")
 	var manifest: Dictionary = await CMS.fetch_manifest()
@@ -46,7 +48,7 @@ func fetch_remote_data():
 	
 	Global.current_pack = pack
 	print_status("Ready !")
-	is_game_ready = true
+	game_loading = false
 	emit_signal("game_ready")
 	
 	
@@ -74,8 +76,12 @@ func _on_start_pressed():
 	if waiting_for_start: return
 	waiting_for_start = true
 	
-	if not is_game_ready:
+	if game_loading:
 		await self.game_ready
+	elif Global.current_pack == null:
+		fetch_remote_data()
+		await self.game_ready
+
 	get_tree().change_scene_to_file("res://scenes/Game/GameUI.tscn")
 		
 	
@@ -95,12 +101,13 @@ func display_error(display_data: Dictionary):
 	error_dialog.title = display_data.get("title", "WTF")
 	error_dialog.dialog_text = display_data.get("tip", "HMM, wut !?")
 	error_dialog.visible = true
+	waiting_for_start = false
+	game_loading = false
 	
 func get_error_display(data: Dictionary) -> Dictionary:
 	assert(data.has("error"))
-	print("ERROR: ", data)
+	printerr(data)
 	var error: CMS.CMSError = data.get("error")
-	printerr(error)
 	if error == CMS.CMSError.INTERNET_ERROR:
 		return {
 			"title": "No internet",
