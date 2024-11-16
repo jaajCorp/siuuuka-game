@@ -18,3 +18,6 @@ polygon = PackedVector2Array(0, 0, 0, 1280, 720, 1280, 720, 0)
 [node name="Spawn" type="Marker2D" parent="."]
 position = Vector2(320, 80)
 gizmo_extents = 32.0
+
+[node name="GameEndTimer" type="Timer" parent="."]
+wait_time = 0.4

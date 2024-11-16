@@ -45,6 +45,7 @@ const BASE_MASS: float = 1
 const PACKED_SCENE = preload("res://scenes/Ball/Ball.tscn")
 
 var is_merged: bool = false
+var is_outside: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -55,7 +56,6 @@ func _ready() -> void:
 	contact_monitor = true
 	max_contacts_reported = 8
 	body_shape_entered.connect(_on_body_shape_entered)
-	freeze_mode = FreezeMode.FREEZE_MODE_STATIC
 	
 	ambient_audio_timer.wait_time = frequency_secs
 	ambient_audio_timer.connect("timeout", _on_ambient_timer_timeout)
