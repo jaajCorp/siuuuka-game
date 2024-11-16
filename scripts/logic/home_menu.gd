@@ -25,14 +25,15 @@ func fetch_remote_data():
 	var pack: ResourcePack
 	if CMSCache.has_resource_pack(default_pack_id):
 		print_status("Loading local assets")
-		pack = CMSCache.get_resource_pack(default_pack_id)
+		pack = await CMSCache.get_resource_pack(default_pack_id)
 	else:
 		pack = ResourcePack.new_from_id(default_pack_id)
 		pack.connect("load_progress_update", _on_pack_load_progress_update)
 		await pack.loaded
 		var cache_result = CMSCache.save_resource_pack(pack)
 		if cache_result != OK:
-			printerr("Failed to cache pack: ", cache_result)
+			print_status("Failed to cache pack, error code: %d" % cache_result)
+			return
 	
 	print_status("Ready !")
 	GameSettings.current_pack = pack
