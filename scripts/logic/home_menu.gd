@@ -11,6 +11,7 @@ func _ready() -> void:
 	start_button.disabled = true
 	start_button.connect("pressed", _on_start_pressed)
 	store_button.connect("pressed", _on_store_pressed)
+	quit_button.connect("pressed", _on_quit_pressed)
 	fetch_remote_data()
 
 func fetch_remote_data():
@@ -36,7 +37,7 @@ func fetch_remote_data():
 			return
 	
 	print_status("Ready !")
-	GameSettings.current_pack = pack
+	Global.current_pack = pack
 	start_button.disabled = false
 	
 
@@ -44,7 +45,10 @@ func _on_start_pressed():
 	get_tree().change_scene_to_file("res://scenes/Game/GameUI.tscn")
 	
 func _on_store_pressed():
-	$Popup.visible = true
+	print_status("Coming soon")
+	
+func _on_quit_pressed():
+	get_tree().quit()
 
 func _on_pack_load_progress_update(current: int, total: int):
 	print_status("Fetching latest content (%d/%d)" % [current, total])
