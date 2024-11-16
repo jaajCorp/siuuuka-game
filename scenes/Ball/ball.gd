@@ -6,7 +6,7 @@ signal merged(new_ball: Ball)
 	set(value):
 		level = value
 		update_level()
-@export var texture: Texture2D : 
+@export var texture: Texture2D :
 	set(value):
 		texture = value
 		if self.sprite:

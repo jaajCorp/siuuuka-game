@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ds15eem7lyxir"]
+[gd_scene load_steps=15 format=3 uid="uid://ds15eem7lyxir"]
 
 [ext_resource type="Theme" uid="uid://cjenmxr6qql66" path="res://res/ui_theme.tres" id="1_ioi18"]
 [ext_resource type="Texture2D" uid="uid://dxxs4tafnr2b8" path="res://assets/img/ui/jar.png" id="1_jgld7"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://scripts/logic/game_ui.gd" id="2_k6hk3"]
 [ext_resource type="PackedScene" uid="uid://cmu6mss2cn51m" path="res://scenes/Game/GameCore.tscn" id="2_l10mu"]
 [ext_resource type="Script" path="res://scripts/components/Node2DContainer.gd" id="2_w46qg"]
+[ext_resource type="Shader" path="res://scenes/Ball/circle_frame.gdshader" id="4_lqh75"]
+[ext_resource type="Texture2D" uid="uid://dr5kvw60b14bs" path="res://icon.svg" id="5_dlhc0"]
 [ext_resource type="Script" path="res://scripts/components/ResponsiveTextureRect.gd" id="6_alc1o"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ugm33"]
@@ -17,6 +19,9 @@ corner_radius_bottom_left = 64
 shadow_color = Color(0, 0, 0, 0.313726)
 shadow_size = 4
 shadow_offset = Vector2(2, 3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bqi4p"]
+shader = ExtResource("4_lqh75")
 
 [sub_resource type="Animation" id="Animation_o2i42"]
 resource_name = "best_score"
@@ -185,6 +190,21 @@ custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ugm33")
 
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/Top/GridContainer/Next/MarginContainer/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NextBallPreview" type="TextureRect" parent="VBoxContainer/Top/GridContainer/Next/MarginContainer/VBoxContainer/Panel/CenterContainer"]
+material = SubResource("ShaderMaterial_bqi4p")
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+texture = ExtResource("5_dlhc0")
+expand_mode = 2
+
 [node name="Label" type="Label" parent="VBoxContainer/Top/GridContainer/Next/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.434291, 0.290224, 0.222828, 1)
@@ -257,7 +277,7 @@ anchor_right = 1.0
 anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
-expand_mode = 4
+expand_mode = 2
 stretch_mode = 6
 script = ExtResource("6_alc1o")
 metadata/_edit_lock_ = true
