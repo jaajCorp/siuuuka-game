@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 CMS="*res://scripts/global/CMS.gd"
 GameSettings="*res://scripts/global/GameSettings.gd"
+CMSCache="*res://scripts/global/CMSCache.gd"
 
 [display]
 

@@ -3,33 +3,22 @@ class_name ResourcePack extends Resource
 signal loaded(error: CMS.CMSError)
 signal load_progress_update(current: int, total: int)
 
-class PackLevelData extends Resource:
-	var texture: ImageTexture
-	var ambient_sounds: Array[AudioStreamOggVorbis]
-	
-	func _init(texture: ImageTexture, ambient_sounds: Array[AudioStreamOggVorbis]) -> void:
-		self.texture = texture
-		self.ambient_sounds = ambient_sounds
+@export var id: String
 
-class PackUI extends Resource:
-	var primary: Color
-	var primary_content: Color
-	
-	func _init(data: Dictionary) -> void:
-		primary = data.get("primary")
-		primary_content = data.get("primary-content")
-
+@export_category("Data")
 @export var background: ImageTexture
 @export var ui: PackUI
 @export var levels: Array[PackLevelData]
 
-var id: String
-var total_asset_count: int
-var current_asset_count: int
+@export_category("Metadata")
+@export var total_asset_count: int
+@export var current_asset_count: int
 
-func _init(id: String):
-	self.id = id
-	__load_assets()
+static func new_from_id(id: String) -> ResourcePack:
+	var new_pack := ResourcePack.new()
+	new_pack.id = id
+	new_pack.__load_assets()
+	return new_pack
 	
 func __load_assets():
 	emit_signal("load_progress_update", 0, 100)
@@ -42,7 +31,7 @@ func __load_assets():
 	
 	self.background = await __load_texture_asset(meta.get("background"))
 	
-	self.ui = PackUI.new(meta.get("ui"))
+	self.ui = PackUI.from(meta.get("ui"))
 	for level: Dictionary in meta.get("levels"):
 		var texture := await __load_texture_asset(level.get("texture"))
 		if texture == null:
@@ -57,7 +46,7 @@ func __load_assets():
 			
 			ambient_sounds.push_back(audio_stream)
 		
-		self.levels.push_back(PackLevelData.new(texture, ambient_sounds))
+		self.levels.push_back(PackLevelData.from(texture, ambient_sounds))
 		
 	
 	emit_signal("loaded", CMS.CMSError.OK)

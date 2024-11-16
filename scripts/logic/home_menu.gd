@@ -6,12 +6,11 @@ extends Control
 @export var store_button: Button
 @export var quit_button: Button
 
-@export var pack: ResourcePack
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	start_button.disabled = true
 	start_button.connect("pressed", _on_start_pressed)
+	store_button.connect("pressed", _on_store_pressed)
 	fetch_remote_data()
 
 func fetch_remote_data():
@@ -23,9 +22,17 @@ func fetch_remote_data():
 	print_status("Fetching latest content")
 	var default_pack_id: String = manifest.get("default_pack_id")
 	
-	pack = ResourcePack.new(default_pack_id)
-	pack.connect("load_progress_update", _on_pack_load_progress_update)
-	await pack.loaded
+	var pack: ResourcePack
+	if CMSCache.has_resource_pack(default_pack_id):
+		print_status("Loading local assets")
+		pack = CMSCache.get_resource_pack(default_pack_id)
+	else:
+		pack = ResourcePack.new_from_id(default_pack_id)
+		pack.connect("load_progress_update", _on_pack_load_progress_update)
+		await pack.loaded
+		var cache_result = CMSCache.save_resource_pack(pack)
+		if cache_result != OK:
+			printerr("Failed to cache pack: ", cache_result)
 	
 	print_status("Ready !")
 	GameSettings.current_pack = pack
@@ -34,6 +41,9 @@ func fetch_remote_data():
 
 func _on_start_pressed():
 	get_tree().change_scene_to_file("res://scenes/Game/GameUI.tscn")
+	
+func _on_store_pressed():
+	$Popup.visible = true
 
 func _on_pack_load_progress_update(current: int, total: int):
 	print_status("Fetching latest content (%d/%d)" % [current, total])
