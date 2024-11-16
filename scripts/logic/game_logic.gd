@@ -1,6 +1,7 @@
 extends Node2D
 
 signal game_over
+signal best_score
 
 @export var spawn_level: Marker2D
 @export var balls_container: Node2D
@@ -14,8 +15,7 @@ var current_ball: Ball = null
 var score: int = 0 :
 	set(value):
 		score = value
-		if score_label:
-			score_label.text = str(score)
+		_on_score_update()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -43,6 +43,13 @@ func _input(event: InputEvent) -> void:
 func _on_ball_merge(new_ball: Ball):
 	new_ball.connect("merged", _on_ball_merge)
 	score += new_ball.level * 2
+	
+func _on_score_update():
+	if score_label:
+		score_label.text = str(score)
+	if score > Global.settings.best_score:
+		Global.settings.best_score = score
+		emit_signal("best_score")
 	
 func spawn_ball():
 	current_ball = BALL_SCENE.instantiate()

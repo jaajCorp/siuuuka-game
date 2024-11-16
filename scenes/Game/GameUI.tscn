@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ds15eem7lyxir"]
+[gd_scene load_steps=12 format=3 uid="uid://ds15eem7lyxir"]
 
 [ext_resource type="Theme" uid="uid://cjenmxr6qql66" path="res://res/ui_theme.tres" id="1_ioi18"]
 [ext_resource type="Texture2D" uid="uid://dxxs4tafnr2b8" path="res://assets/img/ui/jar.png" id="1_jgld7"]
@@ -17,6 +17,68 @@ corner_radius_bottom_left = 64
 shadow_color = Color(0, 0, 0, 0.313726)
 shadow_size = 4
 shadow_offset = Vector2(2, 3)
+
+[sub_resource type="Animation" id="Animation_o2i42"]
+resource_name = "best_score"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(0.44085, 2.46229, 0.617325),
+"update": 0,
+"values": [Vector2(40, 52), Vector2(32, 52), Vector2(40, 52)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(0.470704, 2.83955, 0.508121),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1591, 1.13942), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_h6630"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(40, 52)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_smf5d"]
+_data = {
+"RESET": SubResource("Animation_h6630"),
+"best_score": SubResource("Animation_o2i42")
+}
 
 [node name="GameUi" type="Control" node_paths=PackedStringArray("background")]
 layout_mode = 3
@@ -81,7 +143,7 @@ custom_minimum_size = Vector2(128, 48)
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="VBoxContainer/Top/GridContainer/Score/Panel"]
+[node name="Score" type="Label" parent="VBoxContainer/Top/GridContainer/Score/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -89,6 +151,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BestScoreSplash" type="Label" parent="VBoxContainer/Top/GridContainer/Score/Panel"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 52.0
+offset_right = 185.0
+offset_bottom = 85.0
+rotation = -0.430003
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+text = "Best score !"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -158,7 +232,7 @@ script = ExtResource("2_w46qg")
 initial_size = Vector2(720, 721)
 
 [node name="GameCore" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside" node_paths=PackedStringArray("score_label") instance=ExtResource("2_l10mu")]
-score_label = NodePath("../../../../../../Top/GridContainer/Score/Panel/Label")
+score_label = NodePath("../../../../../../Top/GridContainer/Score/Panel/Score")
 
 [node name="StaticBody2D" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore" index="0"]
 position = Vector2(0, -560.704)
@@ -183,7 +257,7 @@ anchor_right = 1.0
 anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
-expand_mode = 2
+expand_mode = 4
 stretch_mode = 6
 script = ExtResource("6_alc1o")
 metadata/_edit_lock_ = true
@@ -195,5 +269,10 @@ size = Vector2i(367, 100)
 ok_button_text = "Restart"
 dialog_text = "T'as perdu ma gueule (ratio)"
 dialog_close_on_escape = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_smf5d")
+}
 
 [editable path="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore"]

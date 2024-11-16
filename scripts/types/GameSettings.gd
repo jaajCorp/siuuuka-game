@@ -1,8 +1,4 @@
-class_name Manifest extends Resource
+class_name GameSettings extends Resource
 
-@export var version: int
-@export var registry_url: String
-@export var default_pack_id: String
-
-func _init(data: Dictionary) -> void:
-	pass
+@export var best_score: int = 0
+@export var selected_pack_id: String
