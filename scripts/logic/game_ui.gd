@@ -9,8 +9,8 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	assert(background != null)
-	background.portrait_texture = GameSettings.current_pack.background
-	background.landscape_texture = GameSettings.current_pack.background_landscape
+	background.portrait_texture = Global.current_pack.background
+	background.landscape_texture = Global.current_pack.background_landscape
 	background.queue_redraw()
 	
 	game_core.connect("game_over", _on_game_over)

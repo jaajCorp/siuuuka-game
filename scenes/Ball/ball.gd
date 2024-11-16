@@ -80,7 +80,7 @@ func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, lo
 			
 func _on_ambient_timer_timeout():
 	if randi() % 100 < probability:
-		var audio_stream := GameSettings.current_pack.get_level_random_ambient(self.level)
+		var audio_stream := Global.current_pack.get_level_random_ambient(self.level)
 		if audio_stream != null:
 			ambient_audio_player.stream = audio_stream
 			ambient_audio_player.play()
@@ -128,7 +128,7 @@ func spawn_anim():
 func update_level():
 	# Visible scale
 	var scale: float = LEVEL_SIZES[level]
-	self.texture = GameSettings.current_pack.get_level_texture(self.level)
+	self.texture = Global.current_pack.get_level_texture(self.level)
 	if self.sprite and self.collision:
 		var base_sprite_scale: Vector2 = BASE_SIZE / sprite.texture.get_size()
 		sprite.scale = base_sprite_scale * scale

@@ -18,7 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 CMS="*res://scripts/global/CMS.gd"
-GameSettings="*res://scripts/global/GameSettings.gd"
+Global="*res://scripts/global/Global.gd"
 CMSCache="*res://scripts/global/CMSCache.gd"
 
 [display]
