@@ -21,6 +21,7 @@ func _ready() -> void:
 	add_child(http_request)
 
 func fetch_manifest() -> Dictionary:
+	http_request.timeout = 3
 	var manifest := await __generic_json_fetch(MANIFEST_URL)
 	if manifest.has("error"):
 		# Let callers handle the error
@@ -37,7 +38,8 @@ func fetch_pack_list() -> Dictionary:
 		if manifest.has("error"):
 			# Let callers handle the error
 			return manifest
-		
+	
+	http_request.timeout = 30
 	var registry = await __generic_json_fetch(manifest.get("registry_url"))
 	
 	return registry
@@ -48,7 +50,8 @@ func fetch_pack_metadata(id: String) -> Dictionary:
 		if manifest.has("error"):
 			# Let callers handle the error
 			return manifest
-		
+	
+	http_request.timeout = 5
 	var pack_meta = await __generic_json_fetch(manifest.get("packs_url") + id + "/pack.json")
 	
 	return pack_meta
@@ -59,6 +62,8 @@ func fetch_pack_asset(id: String, asset: String) -> PackedByteArray:
 		if manifest.has("error"):
 			# Error not passed, if only rust...
 			return []
+			
+	http_request.timeout = 60
 	var response = await __generic_fetch(manifest.get("packs_url") + id + "/assets/" + asset)
 	if response.has("error"):
 		return []

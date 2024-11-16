@@ -168,3 +168,10 @@ text = "Wooow debug info"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+title = "Error!"
+initial_position = 2
+size = Vector2i(480, 240)
+ok_button_text = " BRUH "
+dialog_autowrap = true
