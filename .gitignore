@@ -1,6 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
-keys
+build
+secrets
 .envrc
 .direnv
