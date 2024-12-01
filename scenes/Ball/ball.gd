@@ -28,19 +28,19 @@ signal merged(new_ball: Ball)
 
 const LEVEL_SIZES := [
 	1.0,
-	1.25992104989487,
-	1.587401051968192,
+	1.31,
 	2.0,
-	2.51984209978974,
-	3.174802103936383,
+	2.25,
+	2.63,
+	3.44,
 	4.0,
-	5.03968419957948,
-	6.349604207872766,
-	8.0,
-	10.07936839915896,
+	4.9,
+	5.51,
+	6.88,
+	8.14,
 ]
 
-@onready var BASE_SIZE: Vector2 = Vector2.ONE * 56
+@onready var BASE_SIZE: Vector2 = Vector2.ONE * 50
 const BASE_MASS: float = 1
 const PACKED_SCENE = preload("res://scenes/Ball/Ball.tscn")
 
