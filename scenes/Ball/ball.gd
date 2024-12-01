@@ -61,15 +61,11 @@ func _ready() -> void:
 	ambient_audio_timer.connect("timeout", _on_ambient_timer_timeout)
 	
 	call_deferred("spawn_anim")
-	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, local_shape_index: int) -> void:
-	if body.has_method("get_ball_level"):
-		var other_level: int = body.get_ball_level()
+	if body is Ball:
+		var other_level: int = body.level
 		if self.level == other_level and not (self.is_merged or body.is_merged):
 			# Merge
 			self.is_merged = true
@@ -77,7 +73,8 @@ func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, lo
 			self.collision.set_deferred("disabled", true)
 			body.collision.set_deferred("disabled", true)
 			call_deferred("merge_with", body)
-			
+
+
 func _on_ambient_timer_timeout():
 	if randi() % 100 < probability:
 		var audio_stream := Global.current_pack.get_level_random_ambient(self.level)
@@ -106,6 +103,7 @@ func merge_with(other: Ball):
 	
 	emit_signal("merged", new_ball)
 
+
 func merge_anim(merge_center: Vector2):
 	var tween := get_tree().create_tween()
 	tween.tween_property(self, "position", merge_center, 0.1)
@@ -114,9 +112,10 @@ func merge_anim(merge_center: Vector2):
 	merge_audio_player.play()
 	await tween.finished
 	queue_free()
-	
+
+
 func spawn_anim():
-	var target_scale: Vector2 = BASE_SIZE / sprite.texture.get_size() * LEVEL_SIZES[level]
+	var target_scale: Vector2 = get_sprite_level_scale(sprite, level)
 	sprite.scale = Vector2.ZERO
 	
 	var tween := get_tree().create_tween()
@@ -125,19 +124,21 @@ func spawn_anim():
 	tween.tween_property(sprite, "scale", target_scale, 0.3)
 	tween.play()
 
+
 func update_level():
 	# Visible scale
-	var scale: float = LEVEL_SIZES[level]
+	var level_size: float = LEVEL_SIZES[level]
 	self.texture = Global.current_pack.get_level_texture(self.level)
 	if self.sprite and self.collision:
-		var base_sprite_scale: Vector2 = BASE_SIZE / sprite.texture.get_size()
-		sprite.scale = base_sprite_scale * scale
-		collision.scale = Vector2.ONE * scale
+		sprite.scale = get_sprite_level_scale(sprite, level)
+		collision.scale = Vector2.ONE * level_size
 	# Mass
-	self.mass = BASE_MASS * scale
+	self.mass = BASE_MASS * level_size
 
-func get_ball_level() -> int:
-	return self.level
-	
+
+func get_sprite_level_scale(sprite: Sprite2D, level: int) -> Vector2:
+	return BASE_SIZE / sprite.texture.get_size() * LEVEL_SIZES[level]
+
+
 func get_radius() -> int:
 	return sprite.texture.get_width() * sprite.scale.x / 2.0
