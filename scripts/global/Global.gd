@@ -9,6 +9,7 @@ func _ready() -> void:
 	get_tree().set_auto_accept_quit(false)
 	
 	if FileAccess.file_exists(SETTINGS_SAVE_PATH):
+		print("Loading settings from file")
 		settings = ResourceLoader.load(SETTINGS_SAVE_PATH)
 	else:
 		settings = GameSettings.new()

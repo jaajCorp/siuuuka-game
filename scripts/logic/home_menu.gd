@@ -31,6 +31,8 @@ func fetch_remote_data():
 	if pack_id == "":
 		if not manifest.has("error"):
 			pack_id = manifest.get("default_pack_id")
+			Global.settings.selected_pack_id = pack_id
+			Global.save_state()
 		else:
 			display_error(get_error_display(manifest))
 			return
