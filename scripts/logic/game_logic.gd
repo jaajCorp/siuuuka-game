@@ -52,6 +52,7 @@ func _on_score_update():
 		score_label.text = str(score)
 	if score > Global.settings.best_score:
 		Global.settings.best_score = score
+		Global.save_state()
 		emit_signal("best_score")
 	
 func spawn_ball():
