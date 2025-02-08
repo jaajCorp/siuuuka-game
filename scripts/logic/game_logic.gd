@@ -33,7 +33,7 @@ func _input(event: InputEvent) -> void:
 		var local_mouse_pos: Vector2 = (event.global_position - global_position) / scale
 		held_ball.position.x = clamp(local_mouse_pos.x, held_ball.get_radius(), get_width() - held_ball.get_radius())
 		if event is InputEventMouseButton:
-			if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
+			if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed and event.position.y > spawn_level.global_position.y:
 				if held_ball:
 					held_ball.freeze = false
 					held_ball.collision.disabled = false
