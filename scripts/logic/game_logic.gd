@@ -14,6 +14,7 @@ const BALL_SCENE := preload("res://scenes/Ball/Ball.tscn")
 
 var held_ball: Ball = null
 var ball_queue: Array[Ball] = []
+var max_ball_level: int = 0
 var score: int = 0 :
 	set(value):
 		score = value
@@ -46,6 +47,7 @@ func _input(event: InputEvent) -> void:
 func _on_ball_merge(new_ball: Ball):
 	new_ball.connect("merged", _on_ball_merge)
 	score += new_ball.level * 2
+	max_ball_level = max(max_ball_level, new_ball.level)
 	
 func _on_score_update():
 	if score_label:
@@ -59,7 +61,7 @@ func spawn_ball():
 	held_ball = ball_queue.pop_front()
 	
 	var new_ball := BALL_SCENE.instantiate()
-	new_ball.level = randi() % 3
+	new_ball.level = randi() % clamp(max_ball_level, 3, 5)
 	ball_queue.push_back(new_ball)
 	emit_signal("next_ball_update", ball_queue.front())
 

@@ -81,7 +81,6 @@ func _on_ambient_timer_timeout():
 		if audio_stream != null:
 			ambient_audio_player.stream = audio_stream
 			ambient_audio_player.play()
-	
 
 func merge_with(other: Ball):
 	self.freeze = true
