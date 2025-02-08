@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ds15eem7lyxir"]
+[gd_scene load_steps=16 format=3 uid="uid://ds15eem7lyxir"]
 
 [ext_resource type="Theme" uid="uid://cjenmxr6qql66" path="res://res/game_theme.tres" id="1_ioi18"]
 [ext_resource type="Texture2D" uid="uid://dxxs4tafnr2b8" path="res://assets/img/ui/jar.png" id="1_jgld7"]
@@ -9,6 +9,7 @@
 [ext_resource type="Shader" path="res://scenes/Ball/circle_frame.gdshader" id="4_lqh75"]
 [ext_resource type="Texture2D" uid="uid://dr5kvw60b14bs" path="res://icon.svg" id="5_dlhc0"]
 [ext_resource type="Script" path="res://scripts/components/ResponsiveTextureRect.gd" id="6_alc1o"]
+[ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="10_fa8tv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ugm33"]
 bg_color = Color(0.87451, 0.847059, 0.737255, 1)
@@ -262,18 +263,64 @@ anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-expand_mode = 4
+expand_mode = 2
 stretch_mode = 6
 script = ExtResource("6_alc1o")
 metadata/_edit_lock_ = true
 
-[node name="GameOverDialog" type="AcceptDialog" parent="."]
+[node name="GameOverDialog" type="Popup" parent="."]
+transparent_bg = true
 title = "Game over!"
 initial_position = 2
-size = Vector2i(367, 100)
-ok_button_text = "Restart"
-dialog_text = "T'as perdu ma gueule (ratio)"
-dialog_close_on_escape = false
+size = Vector2i(520, 220)
+transparent = true
+theme = ExtResource("10_fa8tv")
+
+[node name="Panel" type="Panel" parent="GameOverDialog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="GameOverDialog/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverDialog/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GameOverDialog/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "T'as perdu ma gueule (ratio)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameOverDialog/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="RestartButton" type="Button" parent="GameOverDialog/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Recommencer"
+
+[node name="QuitButton" type="Button" parent="GameOverDialog/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "FF"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
