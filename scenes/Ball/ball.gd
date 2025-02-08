@@ -41,7 +41,7 @@ const LEVEL_SIZES := [
 ]
 
 @onready var BASE_SIZE: Vector2 = Vector2.ONE * 50
-const BASE_MASS: float = 1
+const BASE_MASS: float = 0.1
 const PACKED_SCENE = preload("res://scenes/Ball/Ball.tscn")
 
 var is_merged: bool = false

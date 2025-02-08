@@ -6,8 +6,8 @@
 [ext_resource type="AudioStream" uid="uid://bsci2un04pf06" path="res://assets/audio/pop.mp3" id="4_yp1eo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cl83c"]
-friction = 0.6
-bounce = 0.06
+friction = 0.4
+bounce = 0.05
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6njgi"]
 radius = 28.0
