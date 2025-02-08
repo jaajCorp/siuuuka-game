@@ -15,7 +15,7 @@ func _ready() -> void:
 	sfx_volume.value_changed.connect(_on_sfx_volume_changed)
 	
 	resume_button.connect("pressed", _on_resume_pressed)
-	quit_button.connect("pressed", _on_resume_pressed)
+	quit_button.connect("pressed", _on_quit_pressed)
 	
 
 func _on_music_volume_changed(vol: float):
