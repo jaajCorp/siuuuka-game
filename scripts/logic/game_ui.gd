@@ -34,7 +34,7 @@ func _on_best_score():
 		animation_player.play("best_score")
 		
 func _on_next_ball_update(ball: Ball):
-	next_ball_preview.texture = Global.current_pack.get_level_texture(ball.level)
+	next_ball_preview.texture = Global.current_pack.get_level_data(ball.level).texture
 	next_ball_preview.queue_redraw()
 
 func _on_dialog_confirmed():

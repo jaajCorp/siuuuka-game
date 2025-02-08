@@ -128,10 +128,14 @@ func spawn_anim():
 func update_level():
 	# Visible scale
 	var level_size: float = LEVEL_SIZES[level]
-	self.texture = Global.current_pack.get_level_texture(self.level)
+	var level_data := Global.current_pack.get_level_data(self.level)
+	self.texture = level_data.texture
+
 	if self.sprite and self.collision:
 		sprite.scale = get_sprite_level_scale(sprite, level)
 		collision.scale = Vector2.ONE * level_size
+		if not level_data.frame:
+			self.sprite.material = null
 	# Mass
 	self.mass = BASE_MASS * level_size
 

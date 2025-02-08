@@ -39,6 +39,7 @@ func __load_assets():
 		if texture == null:
 			emit_signal("loaded", CMS.CMSError.DATA_INTEGRITY)
 			return
+		var frame: bool = level.get("frame")
 		var ambient_sounds: Array[AudioStreamOggVorbis] = []
 		for sound: String in level.get("ambient_sounds"):
 			var audio_stream := await __load_audio_asset(sound)
@@ -48,7 +49,7 @@ func __load_assets():
 			
 			ambient_sounds.push_back(audio_stream)
 		
-		self.levels.push_back(PackLevelData.from(texture, ambient_sounds))
+		self.levels.push_back(PackLevelData.from(texture, frame, ambient_sounds))
 		
 	
 	emit_signal("loaded", CMS.CMSError.OK)
@@ -105,8 +106,8 @@ func __incr_asset_count() -> void:
 	current_asset_count += 1
 	emit_signal("load_progress_update", current_asset_count, total_asset_count)
 	
-func get_level_texture(level: int) -> Texture2D:
-	return levels[level].texture
+func get_level_data(level: int) -> PackLevelData:
+	return levels[level]
 	
 func get_level_random_ambient(level: int) -> AudioStreamOggVorbis:
 	if levels[level].ambient_sounds.is_empty():
