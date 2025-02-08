@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/logic/game_ui.gd" id="2_k6hk3"]
 [ext_resource type="PackedScene" uid="uid://cmu6mss2cn51m" path="res://scenes/Game/GameCore.tscn" id="2_l10mu"]
 [ext_resource type="Script" path="res://scripts/components/Node2DContainer.gd" id="2_w46qg"]
-[ext_resource type="Texture2D" uid="uid://cfo3oudyoqndd" path="res://assets/icon/exit.svg" id="3_s5q16"]
+[ext_resource type="Texture2D" uid="uid://degqop0axj2k1" path="res://assets/icon/pause.svg" id="3_t8gfn"]
 [ext_resource type="Shader" path="res://scenes/Ball/circle_frame.gdshader" id="4_lqh75"]
 [ext_resource type="Texture2D" uid="uid://dr5kvw60b14bs" path="res://icon.svg" id="5_dlhc0"]
 [ext_resource type="Script" path="res://scripts/components/ResponsiveTextureRect.gd" id="6_alc1o"]
@@ -108,12 +108,13 @@ layout_mode = 2
 theme_override_constants/margin_left = 24
 
 [node name="ExitButton" type="Button" parent="VBoxContainer/Top/GridContainer/Settings"]
-custom_minimum_size = Vector2(64, 64)
+custom_minimum_size = Vector2(82, 82)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_default_cursor_shape = 2
-icon = ExtResource("3_s5q16")
+theme_override_constants/icon_max_width = 48
+icon = ExtResource("3_t8gfn")
 icon_alignment = 1
 expand_icon = true
 
@@ -124,7 +125,7 @@ size_flags_vertical = 0
 alignment = 1
 
 [node name="Panel" type="Panel" parent="VBoxContainer/Top/GridContainer/Score"]
-custom_minimum_size = Vector2(156, 64)
+custom_minimum_size = Vector2(156, 82)
 layout_mode = 2
 size_flags_vertical = 4
 
@@ -135,19 +136,21 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 48
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BestScoreSplash" type="Label" parent="VBoxContainer/Top/GridContainer/Score/Panel"]
 layout_mode = 0
-offset_left = 70.0
-offset_top = 36.0
-offset_right = 215.0
-offset_bottom = 69.0
+offset_left = 38.0
+offset_top = 68.0
+offset_right = 255.0
+offset_bottom = 117.0
 rotation = -0.430003
 pivot_offset = Vector2(72, 16)
 theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 48
 text = "Best score !"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -259,7 +262,7 @@ anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-expand_mode = 2
+expand_mode = 4
 stretch_mode = 6
 script = ExtResource("6_alc1o")
 metadata/_edit_lock_ = true
