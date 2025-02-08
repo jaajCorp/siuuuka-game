@@ -13,6 +13,7 @@ func _ready() -> void:
 		settings = ResourceLoader.load(SETTINGS_SAVE_PATH)
 	else:
 		settings = GameSettings.new()
+	settings.apply()
 		
 	var save_timer = Timer.new()
 	save_timer.autostart = true

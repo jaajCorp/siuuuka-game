@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ds15eem7lyxir"]
+[gd_scene load_steps=17 format=3 uid="uid://ds15eem7lyxir"]
 
 [ext_resource type="Theme" uid="uid://cjenmxr6qql66" path="res://res/game_theme.tres" id="1_ioi18"]
 [ext_resource type="Texture2D" uid="uid://dxxs4tafnr2b8" path="res://assets/img/ui/jar.png" id="1_jgld7"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dr5kvw60b14bs" path="res://icon.svg" id="5_dlhc0"]
 [ext_resource type="Script" path="res://scripts/components/ResponsiveTextureRect.gd" id="6_alc1o"]
 [ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="10_fa8tv"]
+[ext_resource type="Script" path="res://scenes/ui/pause_dialog.gd" id="11_ms4ad"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ugm33"]
 bg_color = Color(0.87451, 0.847059, 0.737255, 1)
@@ -108,7 +109,7 @@ size_flags_vertical = 0
 layout_mode = 2
 theme_override_constants/margin_left = 24
 
-[node name="ExitButton" type="Button" parent="VBoxContainer/Top/GridContainer/Settings"]
+[node name="PauseButton" type="Button" parent="VBoxContainer/Top/GridContainer/Settings"]
 custom_minimum_size = Vector2(82, 82)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -248,6 +249,9 @@ metadata/_edit_lock_ = true
 [node name="Spawn" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore" index="2"]
 position = Vector2(360, -48.2887)
 
+[node name="AudioStreamPlayer2D" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore" index="4"]
+bus = &"Music"
+
 [node name="Ground" type="ColorRect" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
@@ -313,8 +317,8 @@ alignment = 1
 [node name="RestartButton" type="Button" parent="GameOverDialog/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 24
-text = "Recommencer"
+theme_override_font_sizes/font_size = 32
+text = "Restart"
 
 [node name="QuitButton" type="Button" parent="GameOverDialog/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -322,11 +326,89 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 32
 text = "FF"
 
+[node name="PauseDialog" type="Popup" parent="." node_paths=PackedStringArray("music_volume", "sfx_volume", "resume_button", "quit_button")]
+transparent_bg = true
+initial_position = 2
+size = Vector2i(520, 600)
+transparent = true
+theme = ExtResource("10_fa8tv")
+script = ExtResource("11_ms4ad")
+music_volume = NodePath("Panel/MarginContainer/VBoxContainer/VolumeSettings/MusicVolume/Slider")
+sfx_volume = NodePath("Panel/MarginContainer/VBoxContainer/VolumeSettings/SFXVolume/Slider")
+resume_button = NodePath("Panel/MarginContainer/VBoxContainer/VBoxContainer/ResumeButton")
+quit_button = NodePath("Panel/MarginContainer/VBoxContainer/VBoxContainer/QuitButton")
+
+[node name="Panel" type="Panel" parent="PauseDialog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PauseDialog/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseDialog/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PauseDialog/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 48
+text = "Pause"
+horizontal_alignment = 1
+
+[node name="VolumeSettings" type="VBoxContainer" parent="PauseDialog/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+
+[node name="MusicVolume" type="VBoxContainer" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VolumeSettings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VolumeSettings/MusicVolume"]
+layout_mode = 2
+text = "Music"
+
+[node name="Slider" type="HSlider" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VolumeSettings/MusicVolume"]
+layout_mode = 2
+
+[node name="SFXVolume" type="VBoxContainer" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VolumeSettings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VolumeSettings/SFXVolume"]
+layout_mode = 2
+text = "Sound effects"
+
+[node name="Slider" type="HSlider" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VolumeSettings/SFXVolume"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseDialog/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+alignment = 2
+
+[node name="QuitButton" type="Button" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Save and quit"
+
+[node name="ResumeButton" type="Button" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_smf5d")
 }
-
-[connection signal="pressed" from="VBoxContainer/Top/GridContainer/Settings/ExitButton" to="." method="_on_exit_button_pressed"]
 
 [editable path="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore"]
