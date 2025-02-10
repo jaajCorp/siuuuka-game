@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="1_mlg5t"]
 [ext_resource type="Script" path="res://scripts/logic/home_menu.gd" id="2_gau8m"]
 
-[node name="Home" type="Control" node_paths=PackedStringArray("status_label", "start_button", "store_button", "quit_button")]
+[node name="Home" type="Control" node_paths=PackedStringArray("status_label", "start_button", "leaderboard_button", "quit_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,7 +15,7 @@ theme = ExtResource("1_mlg5t")
 script = ExtResource("2_gau8m")
 status_label = NodePath("MarginContainer/VBoxContainer/VBoxContainer/Label")
 start_button = NodePath("MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/StartButton")
-store_button = NodePath("MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/LeaderboardButton")
+leaderboard_button = NodePath("MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/LeaderboardButton")
 quit_button = NodePath("MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/QuitButton")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
