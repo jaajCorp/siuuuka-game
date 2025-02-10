@@ -112,3 +112,7 @@ alignment = 1
 [node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "  Save   "
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_pressed"]
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/HBoxContainer/UsernameEdit" to="." method="_on_username_edit_submit"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveButton" to="." method="_on_username_edit_submit"]
