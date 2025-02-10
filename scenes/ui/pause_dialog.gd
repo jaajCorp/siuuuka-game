@@ -1,4 +1,4 @@
-extends Popup
+extends Window
 
 @export var music_volume: HSlider
 @export var sfx_volume: HSlider

@@ -38,10 +38,10 @@ func _ready() -> void:
 	get_tree().root.go_back_requested.connect(_on_android_back_pressed)
 
 
-func _on_game_over():
+func _on_game_over(_score: int):
 	game_over_dialog.visible = true
 	
-func _on_best_score():
+func _on_best_score(_score: int):
 	best_score_splash.visible = true
 	if not animation_player.is_playing():
 		animation_player.play("best_score")

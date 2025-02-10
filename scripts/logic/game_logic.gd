@@ -1,7 +1,7 @@
-extends Node2D
+class_name GameCore extends Node2D
 
-signal game_over
-signal best_score
+signal game_over(score: int)
+signal best_score(score: int)
 signal next_ball_update(ball: Ball)
 
 @export var spawn_level: Marker2D
@@ -55,7 +55,7 @@ func _on_score_update():
 	if score > Global.settings.best_score:
 		Global.settings.best_score = score
 		Global.save_state()
-		emit_signal("best_score")
+		best_score.emit(score)
 	
 func spawn_ball():
 	held_ball = ball_queue.pop_front()
@@ -63,7 +63,7 @@ func spawn_ball():
 	var new_ball := BALL_SCENE.instantiate()
 	new_ball.level = randi() % clamp(max_ball_level, 3, 5)
 	ball_queue.push_back(new_ball)
-	emit_signal("next_ball_update", ball_queue.front())
+	next_ball_update.emit(ball_queue.front())
 
 	balls_container.add_child(held_ball)
 	held_ball.update_level()
@@ -82,7 +82,7 @@ func check_game_end():
 					held_ball = null
 				print("u ded")
 				game_end_timer.stop()
-				emit_signal("game_over")
+				game_over.emit(score)
 			else:
 				ball.is_outside = true
 		else:
