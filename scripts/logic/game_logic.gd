@@ -17,8 +17,9 @@ var ball_queue: Array[Ball] = []
 var max_ball_level: int = 0
 var score: int = 0 :
 	set(value):
-		score = value
-		_on_score_update()
+		if not is_game_over():
+			score = value
+			_on_score_update()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -98,6 +99,9 @@ func reset():
 	
 	game_end_timer.start()
 	spawn_ball()
+	
+func is_game_over() -> bool:
+	return game_end_timer.is_stopped()
 
 func get_width() -> int:
 	return ProjectSettings.get_setting("display/window/size/viewport_width", 720)
