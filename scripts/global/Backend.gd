@@ -1,10 +1,9 @@
 class_name Backend extends Node
 
 var client : NakamaClient
+var socket : NakamaSocket
 var session : NakamaSession 
 var device_id = OS.get_unique_id()
-
-@onready var socket = Nakama.create_socket_from(client)
 
 func _init() -> void:
 	var config := ConfigFile.new()
@@ -22,6 +21,7 @@ func _init() -> void:
 		return
 	print("Successfully authenticated to the backend: %s" % session)
 
+	socket = Nakama.create_socket_from(client)
 
 	var connected : NakamaAsyncResult = await socket.connect_async(session)
 	if connected.is_exception():
