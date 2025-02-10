@@ -34,6 +34,8 @@ func _ready() -> void:
 	pause_button.connect("pressed", _on_pause_pressed)
 	quit_button.connect("pressed", _on_exit_button_pressed)
 	restart_button.connect("pressed", _on_restart_pressed)
+	
+	get_tree().root.go_back_requested.connect(_on_android_back_pressed)
 
 
 func _on_game_over():
@@ -57,6 +59,9 @@ func _on_restart_pressed():
 	
 func _on_exit_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/ui/Home.tscn")
+	
+func _on_android_back_pressed() -> void:
+	pause_dialog.visible = not pause_dialog.visible
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
