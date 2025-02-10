@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 CMS="*res://scripts/global/CMS.gd"
 Global="*res://scripts/global/Global.gd"
 CMSCache="*res://scripts/global/CMSCache.gd"
+Nakama="*res://addons/com.heroiclabs.nakama/Nakama.gd"
 
 [display]
 
