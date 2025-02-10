@@ -1,5 +1,6 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://cjenmxr6qql66"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://cjenmxr6qql66"]
 
+[ext_resource type="Texture2D" uid="uid://cfwxt7pajsede" path="res://assets/icon/grabber.svg" id="1_jl2mj"]
 [ext_resource type="FontFile" uid="uid://dapkttovfb4ap" path="res://assets/font/SingleDay-Regular.ttf" id="1_rfbuw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e0evu"]
@@ -46,6 +47,17 @@ corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_plvgu"]
+bg_color = Color(0.286275, 0.215686, 0.180392, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 1.0
+expand_margin_top = 12.0
+expand_margin_right = 1.0
+expand_margin_bottom = 12.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dheyu"]
 bg_color = Color(0.564706, 0.388235, 0.305882, 1)
 border_width_right = 1
@@ -61,6 +73,10 @@ Button/styles/focus = SubResource("StyleBoxEmpty_e0evu")
 Button/styles/hover = SubResource("StyleBoxFlat_dehq3")
 Button/styles/normal = SubResource("StyleBoxFlat_vln4o")
 Button/styles/pressed = SubResource("StyleBoxFlat_hvhdi")
+HSlider/icons/grabber = ExtResource("1_jl2mj")
+HSlider/icons/grabber_disabled = ExtResource("1_jl2mj")
+HSlider/icons/grabber_highlight = ExtResource("1_jl2mj")
+HSlider/styles/slider = SubResource("StyleBoxFlat_plvgu")
 Label/colors/font_color = Color(0.873233, 0.819525, 0.675174, 1)
 Label/font_sizes/font_size = 32
 Label/fonts/font = ExtResource("1_rfbuw")
