@@ -1,4 +1,4 @@
-class_name BestScoreUpdater extends Node
+class_name LeaderboardUpdater extends Node
 
 @export var game: GameCore
 

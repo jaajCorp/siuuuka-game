@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://scripts/components/ResponsiveTextureRect.gd" id="6_alc1o"]
 [ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="10_fa8tv"]
 [ext_resource type="Script" path="res://scenes/ui/pause_dialog.gd" id="11_ms4ad"]
-[ext_resource type="Script" path="res://scripts/components/BestScoreUpdater.gd" id="12_lsrva"]
+[ext_resource type="Script" path="res://scripts/components/LeaderboardUpdater.gd" id="12_lsrva"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ugm33"]
 bg_color = Color(0.87451, 0.847059, 0.737255, 1)
@@ -414,7 +414,7 @@ libraries = {
 "": SubResource("AnimationLibrary_smf5d")
 }
 
-[node name="BestScoreUpdater" type="Node" parent="." node_paths=PackedStringArray("game")]
+[node name="LeaderboardUpdater" type="Node" parent="." node_paths=PackedStringArray("game")]
 script = ExtResource("12_lsrva")
 game = NodePath("../VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore")
 
