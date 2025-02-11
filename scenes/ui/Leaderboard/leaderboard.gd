@@ -44,6 +44,7 @@ func update_leaderboard_grid():
 			[0.3, record.score]
 		]:
 			var label := Label.new()
+			label.add_theme_font_size_override("font_size", 44)
 			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			label.size_flags_stretch_ratio = field[0]
@@ -52,6 +53,7 @@ func update_leaderboard_grid():
 	
 func _on_username_edit_submit():
 	var username = username_edit.text
+	Global.backend.session.username = username
 	await Global.backend.client.update_account_async(Global.backend.session, username)
 	print("Updated username")
 
