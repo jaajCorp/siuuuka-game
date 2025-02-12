@@ -5,7 +5,7 @@ signal game_ready
 @export var status_label: Label
 
 @export var start_button: Button
-@export var store_button: Button
+@export var leaderboard_button: Button
 @export var quit_button: Button
 
 @onready var error_dialog := $AcceptDialog
@@ -14,7 +14,7 @@ var game_loading := false
 
 func _ready() -> void:
 	start_button.connect("pressed", _on_start_pressed)
-	store_button.connect("pressed", _on_store_pressed)
+	leaderboard_button.connect("pressed", _on_leaderboard_pressed)
 	quit_button.connect("pressed", _on_quit_pressed)
 	fetch_remote_data()
 
@@ -87,8 +87,8 @@ func _on_start_pressed():
 	get_tree().change_scene_to_file("res://scenes/Game/GameUI.tscn")
 		
 	
-func _on_store_pressed():
-	print_status("Coming soon")
+func _on_leaderboard_pressed():
+	get_tree().change_scene_to_file("res://scenes/ui/Leaderboard/Leaderboard.tscn")
 	
 func _on_quit_pressed():
 	get_tree().quit()
