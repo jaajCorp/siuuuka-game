@@ -328,7 +328,7 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 32
 text = "FF"
 
-[node name="PauseDialog" type="Window" parent="." node_paths=PackedStringArray("music_volume", "sfx_volume", "resume_button", "quit_button")]
+[node name="PauseDialog" type="Window" parent="." node_paths=PackedStringArray("music_volume", "sfx_volume")]
 transparent_bg = true
 initial_position = 2
 size = Vector2i(520, 600)
@@ -339,8 +339,6 @@ theme = ExtResource("10_fa8tv")
 script = ExtResource("11_ms4ad")
 music_volume = NodePath("Panel/MarginContainer/VBoxContainer/VolumeSettings/MusicVolume/Slider")
 sfx_volume = NodePath("Panel/MarginContainer/VBoxContainer/VolumeSettings/SFXVolume/Slider")
-resume_button = NodePath("Panel/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/ResumeButton")
-quit_button = NodePath("Panel/MarginContainer/VBoxContainer/VBoxContainer/SaveQuitButton")
 
 [node name="Panel" type="Panel" parent="PauseDialog"]
 anchors_preset = 15
@@ -432,5 +430,12 @@ game = NodePath("../VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxCon
 [node name="GameSerializer" type="Node" parent="." node_paths=PackedStringArray("game")]
 script = ExtResource("13_mchgy")
 game = NodePath("../VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore")
+
+[connection signal="pressed" from="VBoxContainer/Top/GridContainer/Settings/PauseButton" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="GameOverDialog/Panel/MarginContainer/VBoxContainer/HBoxContainer/RestartButton" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="GameOverDialog/Panel/MarginContainer/VBoxContainer/HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/SaveQuitButton" to="." method="_on_save_quit_button_pressed"]
+[connection signal="pressed" from="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/RestartButton" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/ResumeButton" to="." method="_on_pause_pressed"]
 
 [editable path="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore"]

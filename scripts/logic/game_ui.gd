@@ -8,12 +8,6 @@ extends Control
 @onready var game_over_dialog := $GameOverDialog
 @onready var pause_dialog := $PauseDialog
 
-
-@onready var pause_button := $VBoxContainer/Top/GridContainer/Settings/PauseButton
-@onready var restart_button := $PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/RestartButton
-@onready var game_over_restart_button := $GameOverDialog/Panel/MarginContainer/VBoxContainer/HBoxContainer/RestartButton
-@onready var save_quit_button := $PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/SaveQuitButton
-
 @onready var animation_player := $AnimationPlayer
 @onready var best_score_splash := $VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash
 @onready var next_ball_preview := $VBoxContainer/Top/GridContainer/Next/MarginContainer/VBoxContainer/Panel/CenterContainer/NextBallPreview
@@ -32,11 +26,6 @@ func _ready() -> void:
 	game_core.connect("game_over", _on_game_over)
 	game_core.connect("best_score", _on_best_score)
 	game_core.connect("next_ball_update", _on_next_ball_update)
-	
-	pause_button.connect("pressed", _on_pause_pressed)
-	save_quit_button.connect("pressed", _on_save_quit_button_pressed)
-	restart_button.connect("pressed", _on_restart_pressed)
-	game_over_restart_button.connect("pressed", _on_restart_pressed)
 	
 	get_tree().root.go_back_requested.connect(_on_android_back_pressed)
 	
@@ -57,7 +46,7 @@ func _on_next_ball_update(ball: Ball):
 	next_ball_preview.queue_redraw()
 
 func _on_pause_pressed():
-	pause_dialog.visible = true
+	pause_dialog.visible = not pause_dialog.visible
 
 func _on_restart_pressed():
 	pause_dialog.visible = false
@@ -67,11 +56,15 @@ func _on_restart_pressed():
 	
 func _on_save_quit_button_pressed() -> void:
 	game_serializer.save_game()
+	_on_quit_button_pressed()
+		
+
+func _on_quit_button_pressed() -> void:
 	if get_tree() != null:
 		get_tree().change_scene_to_file("res://scenes/ui/Home.tscn")
-	
+
 func _on_android_back_pressed() -> void:
-	pause_dialog.visible = not pause_dialog.visible
+	_on_pause_pressed()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
