@@ -144,4 +144,4 @@ func get_sprite_level_scale(sprite: Sprite2D, level: int) -> Vector2:
 
 
 func get_radius() -> int:
-	return sprite.texture.get_width() * sprite.scale.x / 2.0
+	return sprite.texture.get_width() * sprite.global_scale.x / 2.0
