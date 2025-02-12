@@ -266,7 +266,7 @@ anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-expand_mode = 2
+expand_mode = 4
 stretch_mode = 6
 script = ExtResource("6_alc1o")
 metadata/_edit_lock_ = true
@@ -338,8 +338,8 @@ theme = ExtResource("10_fa8tv")
 script = ExtResource("11_ms4ad")
 music_volume = NodePath("Panel/MarginContainer/VBoxContainer/VolumeSettings/MusicVolume/Slider")
 sfx_volume = NodePath("Panel/MarginContainer/VBoxContainer/VolumeSettings/SFXVolume/Slider")
-resume_button = NodePath("Panel/MarginContainer/VBoxContainer/VBoxContainer/ResumeButton")
-quit_button = NodePath("Panel/MarginContainer/VBoxContainer/VBoxContainer/QuitButton")
+resume_button = NodePath("Panel/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/ResumeButton")
+quit_button = NodePath("Panel/MarginContainer/VBoxContainer/VBoxContainer/SaveQuitButton")
 
 [node name="Panel" type="Panel" parent="PauseDialog"]
 anchors_preset = 15
@@ -401,12 +401,22 @@ size_flags_vertical = 3
 theme_override_constants/separation = 30
 alignment = 2
 
-[node name="QuitButton" type="Button" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="SaveQuitButton" type="Button" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Save and quit"
 
-[node name="ResumeButton" type="Button" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="RestartButton" type="Button" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Restart"
+
+[node name="ResumeButton" type="Button" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Resume"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

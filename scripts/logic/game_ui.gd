@@ -10,7 +10,7 @@ extends Control
 
 @onready var pause_button := $VBoxContainer/Top/GridContainer/Settings/PauseButton
 @onready var restart_button := $GameOverDialog/Panel/MarginContainer/VBoxContainer/HBoxContainer/RestartButton
-@onready var quit_button := $GameOverDialog/Panel/MarginContainer/VBoxContainer/HBoxContainer/QuitButton
+@onready var save_quit_button := $PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/SaveQuitButton
 
 @onready var animation_player := $AnimationPlayer
 @onready var best_score_splash := $VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash
@@ -32,7 +32,7 @@ func _ready() -> void:
 	game_core.connect("next_ball_update", _on_next_ball_update)
 	
 	pause_button.connect("pressed", _on_pause_pressed)
-	quit_button.connect("pressed", _on_exit_button_pressed)
+	save_quit_button.connect("pressed", _on_save_quit_button_pressed)
 	restart_button.connect("pressed", _on_restart_pressed)
 	
 	get_tree().root.go_back_requested.connect(_on_android_back_pressed)
@@ -57,7 +57,7 @@ func _on_restart_pressed():
 	game_over_dialog.visible = false
 	game_core.reset()
 	
-func _on_exit_button_pressed() -> void:
+func _on_save_quit_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/ui/Home.tscn")
 	
 func _on_android_back_pressed() -> void:
