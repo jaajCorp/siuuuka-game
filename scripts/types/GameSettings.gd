@@ -2,6 +2,8 @@ class_name GameSettings extends Resource
 
 @export var best_score: int = 0
 @export var selected_pack_id: String = ""
+@export var game_save: Dictionary = {}
+
 @export var music_volume: int = 100
 @export var sfx_volume: int = 100
 
