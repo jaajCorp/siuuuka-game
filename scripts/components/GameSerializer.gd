@@ -39,10 +39,10 @@ func restore_game():
 	var save := Global.settings.game_save
 	
 	_restore_balls(save.get("balls"))
-	_restore_score(save.get("balls"))
-	print("Computed score: %d, saved score: %d" % [game.score, save.get("debug_score")])
 	_restore_queue(save.get("queue"))
 	_restore_held(save.get("held"))
+	
+	game.score = save.get("debug_score")
 	
 func reset_save():
 	Global.settings.game_save = {}
@@ -90,15 +90,3 @@ func _restore_held(ball_level: int):
 	
 	game.held_ball = ball
 	game._input(InputEventMouseMotion.new())
-
-func _restore_score(balls: Array[Dictionary]):
-	var score := 0
-	for ball_save in balls:
-		var ball_level: int = ball_save.get("level")
-		print(ball_level)
-		score += _get_ball_level_score(ball_level)
-		
-	game.score = score
-	
-func _get_ball_level_score(level: int) -> int:
-	return level * 2
