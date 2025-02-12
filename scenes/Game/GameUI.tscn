@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ds15eem7lyxir"]
+[gd_scene load_steps=19 format=3 uid="uid://ds15eem7lyxir"]
 
 [ext_resource type="Theme" uid="uid://cjenmxr6qql66" path="res://res/game_theme.tres" id="1_ioi18"]
 [ext_resource type="Texture2D" uid="uid://dxxs4tafnr2b8" path="res://assets/img/ui/jar.png" id="1_jgld7"]
@@ -12,6 +12,7 @@
 [ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="10_fa8tv"]
 [ext_resource type="Script" path="res://scenes/ui/pause_dialog.gd" id="11_ms4ad"]
 [ext_resource type="Script" path="res://scripts/components/LeaderboardUpdater.gd" id="12_lsrva"]
+[ext_resource type="Script" path="res://scripts/components/GameSerializer.gd" id="13_mchgy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ugm33"]
 bg_color = Color(0.87451, 0.847059, 0.737255, 1)
@@ -266,7 +267,7 @@ anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-expand_mode = 4
+expand_mode = 2
 stretch_mode = 6
 script = ExtResource("6_alc1o")
 metadata/_edit_lock_ = true
@@ -426,6 +427,10 @@ libraries = {
 
 [node name="LeaderboardUpdater" type="Node" parent="." node_paths=PackedStringArray("game")]
 script = ExtResource("12_lsrva")
+game = NodePath("../VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore")
+
+[node name="GameSerializer" type="Node" parent="." node_paths=PackedStringArray("game")]
+script = ExtResource("13_mchgy")
 game = NodePath("../VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore")
 
 [editable path="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore"]
