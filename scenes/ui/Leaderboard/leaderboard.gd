@@ -2,6 +2,8 @@ extends Control
 
 @onready var username_edit := $MarginContainer/VBoxContainer/HBoxContainer/UsernameEdit
 @onready var scoreboard_grid := $MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/GridContainer
+@onready var username_updated_popup := $Popup
+@onready var virtual_keyboard_margin := $MarginContainer/VBoxContainer/VKeyboardMargin
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -50,12 +52,20 @@ func update_leaderboard_grid():
 			label.size_flags_stretch_ratio = field[0]
 			label.text = field[1]
 			scoreboard_grid.add_child(label)
+
+func _on_username_edit_focus():
+	var margin_height := DisplayServer.virtual_keyboard_get_height()
+	if margin_height <= 0 and DisplayServer.has_feature(DisplayServer.FEATURE_VIRTUAL_KEYBOARD):
+		margin_height = 440
+	virtual_keyboard_margin.add_theme_constant_override("margin_bottom", margin_height)
 	
 func _on_username_edit_submit():
 	var username = username_edit.text
 	Global.backend.session.username = username
 	await Global.backend.client.update_account_async(Global.backend.session, username)
-	print("Updated username")
+	username_updated_popup.visible = true
+
+	virtual_keyboard_margin.add_theme_constant_override("margin_bottom", 0)
 
 func _on_back_pressed():
 	get_tree().change_scene_to_file("res://scenes/ui/Home.tscn")
