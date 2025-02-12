@@ -34,6 +34,7 @@ func _ready() -> void:
 
 
 func _on_game_over(_score: int):
+	game_serializer.reset_save()
 	game_over_dialog.visible = true
 	
 func _on_best_score(_score: int):
