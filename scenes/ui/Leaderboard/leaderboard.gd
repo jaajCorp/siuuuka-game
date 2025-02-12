@@ -71,8 +71,11 @@ func _on_username_edit_focus():
 	
 func _on_username_edit_submit():
 	var username = username_edit.text
-	Global.backend.session.username = username
-	await Global.backend.client.update_account_async(Global.backend.session, username)
+	var result = await Global.backend.client.update_account_async(Global.backend.session, username)
+	if result.is_exception():
+		_on_backend_error(Backend.Error.API_CALL)
+		return
+	Global.backend.refresh_session()
 
 	virtual_keyboard_margin.add_theme_constant_override("margin_bottom", 0)
 	

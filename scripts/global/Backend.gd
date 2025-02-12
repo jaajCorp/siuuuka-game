@@ -48,6 +48,14 @@ func create_session_and_connect():
 		return
 	print("Backend socket connected.")
 	connected.emit()
+	
+func refresh_session():
+	session = await client.session_refresh_async(session)
+	if session.is_exception():
+		print("An error occurred while refreshing the backend session: %s" % session)
+		error.emit(Error.SESSION_REFRESH)
+	else:
+		session_refreshed.emit()
 
 func _ready() -> void:
 	create_session_and_connect()
@@ -65,9 +73,4 @@ func _ready() -> void:
 	self.error.connect(func (_code): is_healthy = false)
 	
 func _on_session_refresh_timer_timeout() -> void:
-	session = await client.session_refresh_async(session)
-	if session.is_exception():
-		print("An error occurred while refreshing the backend session: %s" % session)
-		error.emit(Error.SESSION_REFRESH)
-	else:
-		session_refreshed.emit()
+	refresh_session()
