@@ -22,6 +22,7 @@ func _ready() -> void:
 	save_timer.connect("timeout", save_state)
 	
 	backend = await Backend.new()
+	add_child(backend)
 		
 func save_state():
 	print("Saving state")
