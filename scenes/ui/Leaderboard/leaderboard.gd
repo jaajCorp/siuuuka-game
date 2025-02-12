@@ -2,32 +2,42 @@ extends Control
 
 @onready var username_edit := $MarginContainer/VBoxContainer/HBoxContainer/UsernameEdit
 @onready var scoreboard_grid := $MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/GridContainer
-@onready var username_updated_popup := $Popup
 @onready var virtual_keyboard_margin := $MarginContainer/VBoxContainer/VKeyboardMargin
+
+@onready var popup := $Popup
+@onready var popup_title := $Popup/VBoxContainer/Title
+@onready var popup_content := $Popup/VBoxContainer/Content
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if not Global.backend.socket:
-		_on_backend_error()
-	elif Global.backend.socket.is_connecting_to_host():
-		Global.backend.socket.connected.connect(_on_backend_ready)
-		Global.backend.socket.connection_error.connect(_on_backend_error)
-	elif Global.backend.socket.is_connected_to_host():
-		_on_backend_ready()
+	popup.visible = false
+	
+	Global.backend.error.connect(_on_backend_error)
+	Global.backend.connected.connect(_on_backend_ready)
+	# Refreshes the list
+	Global.backend.session_refreshed.connect(_on_backend_ready)
+	if not Global.backend.is_healthy:
+		Global.backend.create_session_and_connect()
 	else:
-		_on_backend_error()
-		
+		_on_backend_ready()
 
 func _on_backend_ready():
 	update_username_edit()
 	update_leaderboard_grid()
 
-func _on_backend_error():
-	print("Errore")
+func _on_backend_error(code: Backend.Error):
+	popup.visible = true
+	popup_title.text = "Error!"
+	popup_content.text = "Failed to connect to the server, please check your internet connection (code: %s)" % [Backend.Error.keys()[code]]
+	
+	popup.confirmed.connect(_on_back_pressed, ConnectFlags.CONNECT_ONE_SHOT)
 	
 func update_username_edit():
 	var account = await Global.backend.client.get_account_async(Global.backend.session)
-	username_edit.text = account.user.username
+	if account.is_exception():
+		_on_backend_error(Backend.Error.API_CALL)
+	else:
+		username_edit.text = account.user.username
 	
 func update_leaderboard_grid():
 	var limit = 100
@@ -63,9 +73,12 @@ func _on_username_edit_submit():
 	var username = username_edit.text
 	Global.backend.session.username = username
 	await Global.backend.client.update_account_async(Global.backend.session, username)
-	username_updated_popup.visible = true
 
 	virtual_keyboard_margin.add_theme_constant_override("margin_bottom", 0)
+	
+	popup.visible = true
+	popup_title.text = "Username updated!"
+	popup_content.text = "Beat your personal weekly record to see it updated in the leaderboard"
 
 func _on_back_pressed():
 	get_tree().change_scene_to_file("res://scenes/ui/Home.tscn")

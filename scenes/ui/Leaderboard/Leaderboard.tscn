@@ -140,8 +140,10 @@ layout_mode = 2
 transparent_bg = true
 initial_position = 1
 size = Vector2i(500, 300)
+visible = true
 borderless = true
 transparent = true
+max_size = Vector2i(500, 300)
 theme_override_styles/panel = SubResource("StyleBoxFlat_uvx5i")
 ok_button_text = "    OK     "
 
