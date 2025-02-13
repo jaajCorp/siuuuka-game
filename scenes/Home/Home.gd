@@ -44,10 +44,11 @@ func fetch_remote_data():
 	
 	if pack == null:
 		printerr("Failed to fetch pack")
-		display_error({
-			"title": "Failed to download remote content", 
-			"tip": "This game needs to be conencted to the interned the first time it is launched"}
-		)
+		if not error_dialog.visible:
+			display_error({
+				"title": "Failed to download remote content", 
+				"tip": "This game needs to be connected to the interned the first time it is launched"}
+			)
 		return
 		
 	
@@ -68,7 +69,13 @@ func fetch_pack(pack_id: String, online := true) -> ResourcePack:
 		print_status("Downloading latest content")
 		pack = ResourcePack.new_from_id(pack_id)
 		pack.connect("load_progress_update", _on_pack_load_progress_update)
-		await pack.loaded
+		var error = await pack.loaded
+		if error != CMS.CMSError.OK:
+			display_error(
+				get_error_display({"error": error})
+			)
+			return
+
 		var cache_result = CMSCache.save_resource_pack(pack)
 		if cache_result != OK:
 			display_error({"title": "Storage error", "tip": "Could not cache aseets on your storage device, please allow us to do so (i'm begging you)"})
