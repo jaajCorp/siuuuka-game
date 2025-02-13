@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://cj6irws0y2x5e"]
 
-[ext_resource type="FontFile" uid="uid://dapkttovfb4ap" path="res://assets/font/SingleDay-Regular.ttf" id="1_h2qd6"]
-[ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="1_mlg5t"]
-[ext_resource type="Script" path="res://scripts/logic/home_menu.gd" id="2_gau8m"]
+[ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="1_k58y3"]
+[ext_resource type="Script" path="res://scenes/Home/Home.gd" id="2_aipuy"]
+[ext_resource type="FontFile" uid="uid://dapkttovfb4ap" path="res://assets/font/SingleDay-Regular.ttf" id="3_xo6fq"]
 
 [node name="Home" type="Control" node_paths=PackedStringArray("status_label", "start_button", "leaderboard_button", "quit_button")]
 layout_mode = 3
@@ -11,8 +11,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_mlg5t")
-script = ExtResource("2_gau8m")
+theme = ExtResource("1_k58y3")
+script = ExtResource("2_aipuy")
 status_label = NodePath("MarginContainer/VBoxContainer/VBoxContainer/Label")
 start_button = NodePath("MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/StartButton")
 leaderboard_button = NodePath("MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/LeaderboardButton")
@@ -42,7 +42,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.952941, 0.721569, 0.12549, 1)
 theme_override_colors/font_outline_color = Color(0.27451, 0.0980392, 0.0470588, 1)
 theme_override_constants/outline_size = 13
-theme_override_fonts/font = ExtResource("1_h2qd6")
+theme_override_fonts/font = ExtResource("3_xo6fq")
 theme_override_font_sizes/font_size = 96
 text = "Siuuuka Game"
 horizontal_alignment = 1

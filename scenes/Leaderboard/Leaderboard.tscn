@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://b7rp6hp01y3qb"]
 
-[ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="1_3ee3c"]
-[ext_resource type="Script" path="res://scenes/ui/Leaderboard/leaderboard.gd" id="1_e17mw"]
-[ext_resource type="FontFile" uid="uid://dapkttovfb4ap" path="res://assets/font/SingleDay-Regular.ttf" id="3_hxch5"]
+[ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="1_ijuk4"]
+[ext_resource type="Script" path="res://scenes/Leaderboard/Leaderboard.gd" id="2_euexk"]
+[ext_resource type="FontFile" uid="uid://dapkttovfb4ap" path="res://assets/font/SingleDay-Regular.ttf" id="3_77xjd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uvx5i"]
 content_margin_left = 12.0
@@ -27,8 +27,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_3ee3c")
-script = ExtResource("1_e17mw")
+theme = ExtResource("1_ijuk4")
+script = ExtResource("2_euexk")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -52,7 +52,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.952941, 0.721569, 0.12549, 1)
 theme_override_colors/font_outline_color = Color(0.27451, 0.0980392, 0.0470588, 1)
 theme_override_constants/outline_size = 13
-theme_override_fonts/font = ExtResource("3_hxch5")
+theme_override_fonts/font = ExtResource("3_77xjd")
 theme_override_font_sizes/font_size = 96
 text = "Weekly leaderboard"
 horizontal_alignment = 1

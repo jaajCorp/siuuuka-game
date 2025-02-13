@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://lxhxjkiveulc"]
 
-[ext_resource type="Script" path="res://scenes/Ball/ball.gd" id="1_cro3g"]
+[ext_resource type="Script" path="res://scenes/Ball/Ball.gd" id="1_cro3g"]
 [ext_resource type="Texture2D" uid="uid://dr5kvw60b14bs" path="res://icon.svg" id="2_ht0q0"]
 [ext_resource type="Shader" path="res://scenes/Ball/circle_frame.gdshader" id="2_imdjw"]
 [ext_resource type="AudioStream" uid="uid://bsci2un04pf06" path="res://assets/audio/pop.mp3" id="4_yp1eo"]

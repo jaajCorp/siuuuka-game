@@ -2,15 +2,15 @@
 
 [ext_resource type="Theme" uid="uid://cjenmxr6qql66" path="res://res/game_theme.tres" id="1_ioi18"]
 [ext_resource type="Texture2D" uid="uid://dxxs4tafnr2b8" path="res://assets/img/ui/jar.png" id="1_jgld7"]
-[ext_resource type="Script" path="res://scripts/logic/game_ui.gd" id="2_k6hk3"]
 [ext_resource type="PackedScene" uid="uid://cmu6mss2cn51m" path="res://scenes/Game/GameCore.tscn" id="2_l10mu"]
+[ext_resource type="Script" path="res://scenes/GameUI/GameUI.gd" id="2_nuujj"]
 [ext_resource type="Script" path="res://scripts/components/Node2DContainer.gd" id="2_w46qg"]
 [ext_resource type="Texture2D" uid="uid://degqop0axj2k1" path="res://assets/icon/pause.svg" id="3_t8gfn"]
 [ext_resource type="Shader" path="res://scenes/Ball/circle_frame.gdshader" id="4_lqh75"]
 [ext_resource type="Texture2D" uid="uid://dr5kvw60b14bs" path="res://icon.svg" id="5_dlhc0"]
 [ext_resource type="Script" path="res://scripts/components/ResponsiveTextureRect.gd" id="6_alc1o"]
 [ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="10_fa8tv"]
-[ext_resource type="Script" path="res://scenes/ui/pause_dialog.gd" id="11_ms4ad"]
+[ext_resource type="Script" path="res://scenes/GameUI/pause_dialog.gd" id="11_ms4ad"]
 [ext_resource type="Script" path="res://scripts/components/LeaderboardUpdater.gd" id="12_lsrva"]
 [ext_resource type="Script" path="res://scripts/components/GameSerializer.gd" id="13_mchgy"]
 
@@ -73,7 +73,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_ioi18")
-script = ExtResource("2_k6hk3")
+script = ExtResource("2_nuujj")
 background = NodePath("Background")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]

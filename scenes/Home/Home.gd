@@ -84,11 +84,11 @@ func _on_start_pressed():
 		fetch_remote_data()
 		await self.game_ready
 
-	get_tree().change_scene_to_file("res://scenes/Game/GameUI.tscn")
+	get_tree().change_scene_to_file("res://scenes/GameUI/GameUI.tscn")
 		
 	
 func _on_leaderboard_pressed():
-	get_tree().change_scene_to_file("res://scenes/ui/Leaderboard/Leaderboard.tscn")
+	get_tree().change_scene_to_file("res://scenes/Leaderboard/Leaderboard.tscn")
 	
 func _on_quit_pressed():
 	get_tree().quit()

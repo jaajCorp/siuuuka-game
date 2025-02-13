@@ -84,4 +84,4 @@ func _on_username_edit_submit():
 	popup_content.text = "Beat your personal weekly record to see it updated in the leaderboard"
 
 func _on_back_pressed():
-	get_tree().change_scene_to_file("res://scenes/ui/Home.tscn")
+	get_tree().change_scene_to_file("res://scenes/Home/Home.tscn")

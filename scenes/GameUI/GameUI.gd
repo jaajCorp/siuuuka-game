@@ -64,7 +64,7 @@ func _on_save_quit_button_pressed() -> void:
 
 func _on_quit_button_pressed() -> void:
 	if get_tree() != null:
-		get_tree().change_scene_to_file("res://scenes/ui/Home.tscn")
+		get_tree().change_scene_to_file("res://scenes/Home/Home.tscn")
 
 func _on_android_back_pressed() -> void:
 	_on_pause_pressed()
