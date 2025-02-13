@@ -76,7 +76,7 @@ func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, lo
 
 
 func _on_ambient_timer_timeout():
-	if randi() % 100 < probability:
+	if randi() % 100 < probability and not ambient_audio_player.playing:
 		var audio_stream := Global.current_pack.get_level_random_ambient(self.level)
 		if audio_stream != null:
 			ambient_audio_player.stream = audio_stream
