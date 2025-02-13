@@ -31,6 +31,8 @@ func _ready() -> void:
 	
 	if game_serializer.has_save():
 		game_serializer.restore_game.call_deferred()
+		# Avoid players backing up progress
+		game_serializer.reset_save.call_deferred()
 
 
 func _on_game_over(_score: int):
