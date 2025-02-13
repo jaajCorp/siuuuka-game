@@ -1,8 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://cj6irws0y2x5e"]
+[gd_scene load_steps=5 format=3 uid="uid://cj6irws0y2x5e"]
 
 [ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="1_k58y3"]
 [ext_resource type="Script" path="res://scenes/Home/Home.gd" id="2_aipuy"]
 [ext_resource type="FontFile" uid="uid://dapkttovfb4ap" path="res://assets/font/SingleDay-Regular.ttf" id="3_xo6fq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2mvl5"]
+content_margin_left = 12.0
+content_margin_top = 16.0
+content_margin_right = 12.0
+content_margin_bottom = 24.0
+bg_color = Color(0.447059, 0.301961, 0.231373, 1)
+border_width_left = 3
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.258451, 0.165805, 0.120649, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [node name="Home" type="Control" node_paths=PackedStringArray("status_label", "start_button", "leaderboard_button", "quit_button")]
 layout_mode = 3
@@ -87,8 +103,12 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
+transparent_bg = true
 title = "Error!"
 initial_position = 2
 size = Vector2i(480, 240)
-ok_button_text = " BRUH "
+borderless = true
+transparent = true
+theme_override_styles/panel = SubResource("StyleBoxFlat_2mvl5")
+ok_button_text = "  BRUH  "
 dialog_autowrap = true

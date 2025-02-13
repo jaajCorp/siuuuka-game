@@ -13,9 +13,12 @@ signal game_ready
 var game_loading := false
 
 func _ready() -> void:
+	error_dialog.visible = false
+	
 	start_button.connect("pressed", _on_start_pressed)
 	leaderboard_button.connect("pressed", _on_leaderboard_pressed)
 	quit_button.connect("pressed", _on_quit_pressed)
+	
 	fetch_remote_data()
 
 func fetch_remote_data():
@@ -100,8 +103,10 @@ func print_status(status: String):
 	status_label.text = status
 	
 func display_error(display_data: Dictionary):
-	error_dialog.title = display_data.get("title", "WTF")
-	error_dialog.dialog_text = display_data.get("tip", "HMM, wut !?")
+	error_dialog.dialog_text = "%s\n\n%s" % [
+		display_data.get("title", "WTF"), 
+		display_data.get("tip", "HMM, wut !?")
+	]
 	error_dialog.visible = true
 	waiting_for_start = false
 	game_loading = false
