@@ -65,7 +65,7 @@ _data = {
 "best_score": SubResource("Animation_o2i42")
 }
 
-[node name="GameUi" type="Control" node_paths=PackedStringArray("background")]
+[node name="GameUi" type="Control" node_paths=PackedStringArray("background", "game_core", "game_serializer", "next_ball_preview", "game_over_dialog", "pause_dialog", "animation_player", "best_score_splash")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -75,6 +75,13 @@ grow_vertical = 2
 theme = ExtResource("1_ioi18")
 script = ExtResource("2_nuujj")
 background = NodePath("Background")
+game_core = NodePath("VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore")
+game_serializer = NodePath("GameSerializer")
+next_ball_preview = NodePath("VBoxContainer/Top/GridContainer/Next/MarginContainer/VBoxContainer/Panel/CenterContainer/NextBallPreview")
+game_over_dialog = NodePath("GameOverDialog")
+pause_dialog = NodePath("PauseDialog")
+animation_player = NodePath("AnimationPlayer")
+best_score_splash = NodePath("VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1

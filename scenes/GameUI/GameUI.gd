@@ -1,16 +1,18 @@
 extends Control
 
+@export_category("Game")
 @export var background: ResponsiveTextureRect
+@export var game_core:  GameCore
+@export var game_serializer: GameSerializer
+@export var next_ball_preview: TextureRect
 
-@onready var game_core := $VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore
-@onready var game_serializer := $GameSerializer
+@export_category("Dialogs")
+@export var game_over_dialog: Window
+@export var pause_dialog: Window
 
-@onready var game_over_dialog := $GameOverDialog
-@onready var pause_dialog := $PauseDialog
-
-@onready var animation_player := $AnimationPlayer
-@onready var best_score_splash := $VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash
-@onready var next_ball_preview := $VBoxContainer/Top/GridContainer/Next/MarginContainer/VBoxContainer/Panel/CenterContainer/NextBallPreview
+@export_category("Animation")
+@export var animation_player: AnimationPlayer
+@export var best_score_splash: Label
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
