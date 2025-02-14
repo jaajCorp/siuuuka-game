@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=11 format=3 uid="uid://bgwxaicjsghpf"]
+[gd_resource type="Theme" load_steps=13 format=3 uid="uid://bgwxaicjsghpf"]
 
 [ext_resource type="FontFile" uid="uid://dapkttovfb4ap" path="res://assets/font/SingleDay-Regular.ttf" id="1_0ndtc"]
 
@@ -94,6 +94,27 @@ corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ro4bu"]
+bg_color = Color(0.286275, 0.215686, 0.180392, 1)
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.192157, 0.156863, 0.141176, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uluhb"]
+bg_color = Color(0.996078, 0.756863, 0.0235294, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
 [resource]
 Button/colors/font_color = Color(0.960784, 0.960784, 0.960784, 1)
 Button/colors/font_outline_color = Color(0.733333, 0.501961, 0.0431373, 1)
@@ -112,3 +133,7 @@ LineEdit/font_sizes/font_size = 28
 LineEdit/styles/focus = SubResource("StyleBoxEmpty_8fnv7")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_4bcpx")
 Panel/styles/panel = SubResource("StyleBoxFlat_dheyu")
+ProgressBar/font_sizes/font_size = 32
+ProgressBar/fonts/font = ExtResource("1_0ndtc")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_ro4bu")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_uluhb")

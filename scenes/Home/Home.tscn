@@ -20,7 +20,7 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[node name="Home" type="Control" node_paths=PackedStringArray("status_label", "start_button", "leaderboard_button", "quit_button")]
+[node name="Home" type="Control" node_paths=PackedStringArray("status_label", "progress_bar", "start_button", "leaderboard_button", "quit_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,6 +30,7 @@ grow_vertical = 2
 theme = ExtResource("1_k58y3")
 script = ExtResource("2_aipuy")
 status_label = NodePath("MarginContainer/VBoxContainer/VBoxContainer/Label")
+progress_bar = NodePath("MarginContainer/VBoxContainer/VBoxContainer/ProgressBar")
 start_button = NodePath("MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/StartButton")
 leaderboard_button = NodePath("MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/LeaderboardButton")
 quit_button = NodePath("MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/QuitButton")
@@ -41,9 +42,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 24
+theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 24
+theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 24
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
@@ -101,6 +102,9 @@ text = "Wooow debug info"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 transparent_bg = true

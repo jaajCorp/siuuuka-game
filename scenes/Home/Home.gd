@@ -3,6 +3,7 @@ extends Control
 signal game_ready
 
 @export var status_label: Label
+@export var progress_bar: ProgressBar
 
 @export var start_button: Button
 @export var leaderboard_button: Button
@@ -14,6 +15,7 @@ var game_loading := false
 
 func _ready() -> void:
 	error_dialog.visible = false
+	progress_bar.visible = false
 	
 	start_button.connect("pressed", _on_start_pressed)
 	leaderboard_button.connect("pressed", _on_leaderboard_pressed)
@@ -69,7 +71,9 @@ func fetch_pack(pack_id: String, online := true) -> ResourcePack:
 		print_status("Downloading latest content")
 		pack = ResourcePack.new_from_id(pack_id)
 		pack.connect("load_progress_update", _on_pack_load_progress_update)
+		progress_bar.visible = true
 		var error = await pack.loaded
+		progress_bar.visible = false
 		if error != CMS.CMSError.OK:
 			display_error(
 				get_error_display({"error": error})
@@ -104,6 +108,8 @@ func _on_quit_pressed():
 	get_tree().quit()
 
 func _on_pack_load_progress_update(current: int, total: int):
+	progress_bar.max_value = total
+	progress_bar.value = current
 	print_status("Downloading latest content (%d/%d)" % [current, total])
 
 func print_status(status: String):

@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://ds15eem7lyxir"]
 
-[ext_resource type="Theme" uid="uid://cjenmxr6qql66" path="res://res/game_theme.tres" id="1_ioi18"]
+[ext_resource type="Theme" uid="uid://cns142t2n3hns" path="res://res/game_theme.tres" id="1_ioi18"]
 [ext_resource type="Texture2D" uid="uid://dxxs4tafnr2b8" path="res://assets/img/ui/jar.png" id="1_jgld7"]
 [ext_resource type="PackedScene" uid="uid://cmu6mss2cn51m" path="res://scenes/Game/GameCore.tscn" id="2_l10mu"]
 [ext_resource type="Script" path="res://scenes/GameUI/GameUI.gd" id="2_nuujj"]
@@ -274,7 +274,7 @@ anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-expand_mode = 4
+expand_mode = 2
 stretch_mode = 6
 script = ExtResource("6_alc1o")
 metadata/_edit_lock_ = true
