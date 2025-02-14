@@ -28,13 +28,16 @@ func check_app_update() -> void:
 	var error := http_request.request("https://api.github.com/repos/JaajCorp/siuuuka-game/releases/latest")
 	var response = await http_request.request_completed
 	
+	var result: int = response[0]
+	if result != OK:
+		print("[UpdateChecker] Failed to check for updates")
+		return
 	var body: PackedByteArray = response[3]
 	
 	var json := JSON.new()
 	var parse_error := json.parse(body.get_string_from_utf8())
 	
 	var data: Dictionary = json.get_data()
-	
 	var tag = data.get("tag_name")
 	print("[UpdateChecker] Latest version tag: %s (current: %s)" % [tag, current_version_tag])
 	
