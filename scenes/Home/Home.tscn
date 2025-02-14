@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cj6irws0y2x5e"]
+[gd_scene load_steps=6 format=3 uid="uid://cj6irws0y2x5e"]
 
 [ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="1_k58y3"]
 [ext_resource type="Script" path="res://scenes/Home/Home.gd" id="2_aipuy"]
 [ext_resource type="FontFile" uid="uid://dapkttovfb4ap" path="res://assets/font/SingleDay-Regular.ttf" id="3_xo6fq"]
+[ext_resource type="PackedScene" uid="uid://6oq3d337puy8" path="res://scenes/UpdateNotifier/UpdateNotifier.tscn" id="4_jqi0r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2mvl5"]
 content_margin_left = 12.0
@@ -116,3 +117,6 @@ transparent = true
 theme_override_styles/panel = SubResource("StyleBoxFlat_2mvl5")
 ok_button_text = "  BRUH  "
 dialog_autowrap = true
+
+[node name="UpdateNotifier" parent="." instance=ExtResource("4_jqi0r")]
+visible = false
