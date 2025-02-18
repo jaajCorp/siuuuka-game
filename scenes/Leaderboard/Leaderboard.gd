@@ -8,6 +8,8 @@ extends Control
 @onready var popup_title := $Popup/VBoxContainer/Title
 @onready var popup_content := $Popup/VBoxContainer/Content
 
+const DEFAULT_LEADERBOARD := "weekly_leaderboard"
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	popup.visible = false
@@ -23,7 +25,7 @@ func _ready() -> void:
 
 func _on_backend_ready():
 	update_username_edit()
-	update_leaderboard_grid()
+	update_leaderboard_grid(DEFAULT_LEADERBOARD)
 
 func _on_backend_error(code: Backend.Error):
 	popup.visible = true
@@ -39,11 +41,10 @@ func update_username_edit():
 	else:
 		username_edit.text = account.user.username
 	
-func update_leaderboard_grid():
+func update_leaderboard_grid(leaderboard_name: String):
 	var limit = 100
 	var client = Global.backend.client
 	var session = Global.backend.session
-	var leaderboard_name = "weekly_leaderboard"
 	var result : NakamaAPI.ApiLeaderboardRecordList = await client.list_leaderboard_records_async(session, leaderboard_name, null, null, limit, null)
 
 	for child in scoreboard_grid.get_children():

@@ -8,4 +8,5 @@ func _ready() -> void:
 func _on_game_over(score: int) -> void:
 	var client = Global.backend.client
 	var session = Global.backend.session
-	var record : NakamaAPI.ApiLeaderboardRecord = await client.write_leaderboard_record_async(session, "weekly_leaderboard", score, 0)
+	var all_time_record : NakamaAPI.ApiLeaderboardRecord = await client.write_leaderboard_record_async(session, "all_time_leaderboard", score, 0)
+	var weekly_record : NakamaAPI.ApiLeaderboardRecord = await client.write_leaderboard_record_async(session, "weekly_leaderboard", score, 0)
