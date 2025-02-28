@@ -49,14 +49,12 @@ corner_radius_bottom_left = 14
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_plvgu"]
 bg_color = Color(0.286275, 0.215686, 0.180392, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
-expand_margin_left = 1.0
-expand_margin_top = 12.0
-expand_margin_right = 1.0
-expand_margin_bottom = 12.0
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+expand_margin_top = 14.0
+expand_margin_bottom = 14.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dheyu"]
 bg_color = Color(0.564706, 0.388235, 0.305882, 1)
@@ -73,6 +71,7 @@ Button/styles/focus = SubResource("StyleBoxEmpty_e0evu")
 Button/styles/hover = SubResource("StyleBoxFlat_dehq3")
 Button/styles/normal = SubResource("StyleBoxFlat_vln4o")
 Button/styles/pressed = SubResource("StyleBoxFlat_hvhdi")
+HSlider/constants/grabber_offset = 0
 HSlider/icons/grabber = ExtResource("1_jl2mj")
 HSlider/icons/grabber_disabled = ExtResource("1_jl2mj")
 HSlider/icons/grabber_highlight = ExtResource("1_jl2mj")
