@@ -14,6 +14,10 @@ extends Control
 @export var animation_player: AnimationPlayer
 @export var best_score_splash: Label
 
+@export_category("Leaderboard")
+@export var leaderboard_updater: LeaderboardUpdater
+@export var leaderboard_updater_label: Label
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	best_score_splash.visible = false
@@ -29,6 +33,10 @@ func _ready() -> void:
 	game_core.connect("best_score", _on_best_score)
 	game_core.connect("next_ball_update", _on_next_ball_update)
 	
+	leaderboard_updater.best_score_submitted.connect(_on_best_leaderboard_score)
+	leaderboard_updater.score_submitted.connect(_on_leaderboard_submit)
+	leaderboard_updater.submit_error.connect(_on_leaderboard_submit_error)
+	
 	get_tree().root.go_back_requested.connect(_on_android_back_pressed)
 	
 	if game_serializer.has_save():
@@ -40,6 +48,8 @@ func _ready() -> void:
 func _on_game_over(_score: int):
 	game_serializer.reset_save()
 	game_over_dialog.visible = true
+	
+	leaderboard_updater_label.text = "Sending score to leaderboard..."
 	
 func _on_best_score(_score: int):
 	best_score_splash.visible = true
@@ -62,7 +72,25 @@ func _on_restart_pressed():
 func _on_save_quit_button_pressed() -> void:
 	game_serializer.save_game()
 	_on_quit_button_pressed()
+
+func _on_best_leaderboard_score(leaderboard_id: String):
+	leaderboard_updater_label.text = "Scored new personnal best score on %s !" % [leaderboard_id.replace("_", " ")]
+
+func _on_leaderboard_submit():
+	leaderboard_updater_label.text = "Leaderboard score submitted"
+
+func _on_leaderboard_submit_error(exception: NakamaException):
+	const RESTART_WAIT_SEC := 10
+	
+	if not Global.backend.is_healthy:
+		Global.backend.create_session_and_connect()
+	Global.backend.refresh_session()
 		
+	for i in range(RESTART_WAIT_SEC):
+		leaderboard_updater_label.text = "Error while sending score to the leaderboard (%s). Retrying in %ds" % [exception.message, (RESTART_WAIT_SEC-i)]
+		await get_tree().create_timer(1).timeout
+	
+	leaderboard_updater._on_game_over(game_core.score)
 
 func _on_quit_button_pressed() -> void:
 	if get_tree() != null:

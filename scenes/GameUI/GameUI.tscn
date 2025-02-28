@@ -65,7 +65,7 @@ _data = {
 "best_score": SubResource("Animation_o2i42")
 }
 
-[node name="GameUi" type="Control" node_paths=PackedStringArray("background", "game_core", "game_serializer", "next_ball_preview", "game_over_dialog", "pause_dialog", "animation_player", "best_score_splash")]
+[node name="GameUi" type="Control" node_paths=PackedStringArray("background", "game_core", "game_serializer", "next_ball_preview", "game_over_dialog", "pause_dialog", "animation_player", "best_score_splash", "leaderboard_updater", "leaderboard_updater_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -82,6 +82,8 @@ game_over_dialog = NodePath("GameOverDialog")
 pause_dialog = NodePath("PauseDialog")
 animation_player = NodePath("AnimationPlayer")
 best_score_splash = NodePath("VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash")
+leaderboard_updater = NodePath("LeaderboardUpdater")
+leaderboard_updater_label = NodePath("GameOverDialog/Panel/MarginContainer/VBoxContainer/LeaderboardUpdaterStatus")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -283,8 +285,7 @@ metadata/_edit_lock_ = true
 transparent_bg = true
 title = "Game over!"
 initial_position = 2
-size = Vector2i(520, 220)
-visible = false
+size = Vector2i(600, 320)
 borderless = true
 transparent = true
 theme = ExtResource("10_fa8tv")
@@ -313,10 +314,19 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="GameOverDialog/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 42
 text = "T'as perdu ma gueule (ratio)"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="LeaderboardUpdaterStatus" type="Label" parent="GameOverDialog/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Sending score to leaderboard..."
+horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GameOverDialog/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
