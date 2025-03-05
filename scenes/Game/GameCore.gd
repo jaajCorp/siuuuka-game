@@ -90,7 +90,6 @@ func check_game_end():
 			ball.is_outside = false
 
 func reset():
-	score = 0
 	ball_queue = [ BALL_SCENE.instantiate(), BALL_SCENE.instantiate() ]
 	if held_ball:
 		held_ball.queue_free()
@@ -98,6 +97,8 @@ func reset():
 		child.queue_free()
 	
 	game_end_timer.start()
+	# Reset score after game_end_timer.start() in order to bypass the score setter
+	score = 0
 	spawn_ball()
 	
 func is_game_over() -> bool:
