@@ -86,27 +86,32 @@ func merge_with(other: Ball):
 	self.freeze = true
 	other.freeze = true
 	
+	
 	var merge_center: Vector2 = self.position - (self.position - other.position)/2.0
 	var mean_linear_velocity: Vector2 = (self.linear_velocity + other.linear_velocity)/2.0
 	var mean_angular_velocity: float = (self.angular_velocity + other.angular_velocity)/2.0
 	
-	var new_ball: Ball = PACKED_SCENE.instantiate()
-	self.get_parent().add_child(new_ball)
-	new_ball.level = self.level + 1
-	new_ball.position = merge_center
-	new_ball.linear_velocity = mean_linear_velocity
-	new_ball.angular_velocity = mean_angular_velocity
+	var is_final_ball := level + 1 == len(LEVEL_SIZES)
+	if !is_final_ball:
+		var new_ball: Ball = PACKED_SCENE.instantiate()
+		self.get_parent().add_child(new_ball)
+		new_ball.level = self.level + 1
+		new_ball.position = merge_center
+		new_ball.linear_velocity = mean_linear_velocity
+		new_ball.angular_velocity = mean_angular_velocity
+		
+		emit_signal("merged", new_ball)
 	
-	merge_anim(merge_center)
-	other.merge_anim(merge_center)
-	
-	emit_signal("merged", new_ball)
+	merge_anim(merge_center, is_final_ball)
+	other.merge_anim(merge_center, is_final_ball)
 
 
-func merge_anim(merge_center: Vector2):
+func merge_anim(merge_center: Vector2, scale_down := false):
 	var tween := get_tree().create_tween()
 	tween.tween_property(self, "position", merge_center, 0.1)
 	tween.tween_property(ambient_audio_player, "volume_db", -24.0, 0.1)
+	if scale_down:
+		tween.tween_property(sprite, "scale", Vector2.ZERO, 0.1)
 	tween.play()
 	merge_audio_player.play()
 	await tween.finished
