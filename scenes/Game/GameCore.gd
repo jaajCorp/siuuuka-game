@@ -96,6 +96,7 @@ func reset():
 	for child in balls_container.get_children():
 		child.queue_free()
 	
+	max_ball_level = 0
 	game_end_timer.start()
 	# Reset score after game_end_timer.start() in order to bypass the score setter
 	score = 0
