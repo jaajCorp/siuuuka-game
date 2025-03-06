@@ -22,15 +22,15 @@ func _ready() -> void:
 
 func fetch_manifest() -> Dictionary:
 	http_request.timeout = 4
-	var manifest := await __generic_json_fetch(MANIFEST_URL)
-	if manifest.has("error"):
+	var response := await __generic_json_fetch(MANIFEST_URL)
+	if response.has("error"):
 		# Let callers handle the error
-		return manifest
+		return response
 	
-	if manifest.get("version") != MANIFEST_VERSION:
+	if response.get("version") != MANIFEST_VERSION:
 		return { "error": CMSError.MANIFEST_VERSION }
 		
-	return manifest
+	return response
 
 func fetch_pack_list() -> Dictionary:
 	if manifest.is_empty():

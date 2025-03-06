@@ -26,16 +26,23 @@ func _on_discard_button_pressed() -> void:
 func check_app_update() -> void:
 	print("[UpdateChecker] Checking for updates")
 	var error := http_request.request("https://api.github.com/repos/JaajCorp/siuuuka-game/releases/latest")
+	if error != OK:
+		print("[UpdateChecker] Failed to request for updates")
+		return
+		
 	var response = await http_request.request_completed
 	
 	var result: int = response[0]
 	if result != OK:
-		print("[UpdateChecker] Failed to check for updates")
+		print("[UpdateChecker] Failed to fetch for updates")
 		return
 	var body: PackedByteArray = response[3]
 	
 	var json := JSON.new()
 	var parse_error := json.parse(body.get_string_from_utf8())
+	if parse_error != OK:
+		print("[UpdateChecker] Failed to parse request body")
+		return
 	
 	var data: Dictionary = json.get_data()
 	var tag = data.get("tag_name")
@@ -71,7 +78,3 @@ func compare_versions(a: Array[int], b: Array[int]) -> int:
 			return -1
 
 	return 0
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

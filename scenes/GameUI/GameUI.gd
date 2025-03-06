@@ -98,7 +98,3 @@ func _on_quit_button_pressed() -> void:
 
 func _on_android_back_pressed() -> void:
 	_on_pause_pressed()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

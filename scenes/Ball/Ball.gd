@@ -63,7 +63,7 @@ func _ready() -> void:
 	call_deferred("spawn_anim")
 
 
-func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, local_shape_index: int) -> void:
+func _on_body_shape_entered(_body_rid: RID, body: Node, _body_shape_index: int, _local_shape_index: int) -> void:
 	if body is Ball:
 		var other_level: int = body.level
 		if self.level == other_level and not (self.is_merged or body.is_merged):
@@ -100,7 +100,7 @@ func merge_with(other: Ball):
 		new_ball.linear_velocity = mean_linear_velocity
 		new_ball.angular_velocity = mean_angular_velocity
 		
-		emit_signal("merged", new_ball)
+		merged.emit(new_ball)
 	
 	merge_anim(merge_center, is_final_ball)
 	other.merge_anim(merge_center, is_final_ball)
@@ -144,8 +144,8 @@ func update_level():
 	self.mass = BASE_MASS * level_size
 
 
-func get_sprite_level_scale(sprite: Sprite2D, level: int) -> Vector2:
-	return BASE_SIZE / sprite.texture.get_size() * LEVEL_SIZES[level]
+func get_sprite_level_scale(target_sprite: Sprite2D, target_level: int) -> Vector2:
+	return BASE_SIZE / target_sprite.texture.get_size() * LEVEL_SIZES[target_level]
 
 
 func get_radius() -> int:

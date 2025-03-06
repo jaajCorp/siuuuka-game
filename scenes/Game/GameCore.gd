@@ -68,7 +68,7 @@ func spawn_ball():
 
 	balls_container.add_child(held_ball)
 	held_ball.update_level()
-	held_ball.position = Vector2(get_width() / 2, spawn_level.position.y)
+	held_ball.position = Vector2(get_width() / 2.0, spawn_level.position.y)
 	held_ball.freeze = true
 	held_ball.collision.disabled = true
 	held_ball.connect("merged", _on_ball_merge)

@@ -11,9 +11,9 @@ func _ready() -> void:
 	sfx_volume.value_changed.connect(_on_sfx_volume_changed)
 
 func _on_music_volume_changed(vol: float):
-	Global.settings.music_volume = vol
+	Global.settings.music_volume = int(vol)
 	Global.settings.apply()
 
 func _on_sfx_volume_changed(vol: float):
-	Global.settings.sfx_volume = vol
+	Global.settings.sfx_volume = int(vol)
 	Global.settings.apply()

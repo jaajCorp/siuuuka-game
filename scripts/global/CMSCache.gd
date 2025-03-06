@@ -18,8 +18,7 @@ func get_resource_pack(id: String) -> ResourcePack:
 		return null
 		
 	while ResourceLoader.load_threaded_get_status(path) == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_IN_PROGRESS:
-		await get_tree().create_timer(0.06)
-	var wait_timer := get_tree().create_timer(0.05)
+		await get_tree().create_timer(0.06).timeout
 	
 	return ResourceLoader.load_threaded_get(path)
 	
