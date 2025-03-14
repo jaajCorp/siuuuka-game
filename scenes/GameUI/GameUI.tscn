@@ -1,10 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://ds15eem7lyxir"]
+[gd_scene load_steps=18 format=3 uid="uid://ds15eem7lyxir"]
 
 [ext_resource type="Theme" uid="uid://cns142t2n3hns" path="res://res/game_theme.tres" id="1_ioi18"]
 [ext_resource type="Texture2D" uid="uid://dxxs4tafnr2b8" path="res://assets/img/ui/jar.png" id="1_jgld7"]
 [ext_resource type="PackedScene" uid="uid://cmu6mss2cn51m" path="res://scenes/Game/GameCore.tscn" id="2_l10mu"]
 [ext_resource type="Script" path="res://scenes/GameUI/GameUI.gd" id="2_nuujj"]
-[ext_resource type="Script" path="res://scripts/components/Node2DContainer.gd" id="2_w46qg"]
 [ext_resource type="Texture2D" uid="uid://degqop0axj2k1" path="res://assets/icon/pause.svg" id="3_t8gfn"]
 [ext_resource type="Shader" path="res://scenes/Ball/circle_frame.gdshader" id="4_lqh75"]
 [ext_resource type="Texture2D" uid="uid://dr5kvw60b14bs" path="res://icon.svg" id="5_dlhc0"]
@@ -75,7 +74,7 @@ grow_vertical = 2
 theme = ExtResource("1_ioi18")
 script = ExtResource("2_nuujj")
 background = NodePath("Background")
-game_core = NodePath("VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore")
+game_core = NodePath("VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore")
 game_serializer = NodePath("GameSerializer")
 next_ball_preview = NodePath("VBoxContainer/Top/GridContainer/Next/MarginContainer/VBoxContainer/Panel/CenterContainer/NextBallPreview")
 game_over_dialog = NodePath("GameOverDialog")
@@ -239,26 +238,40 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="JarInside" type="Control" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 10.9
-script = ExtResource("2_w46qg")
-initial_size = Vector2(720, 721)
+ratio = 0.5625
+stretch_mode = 3
 
-[node name="GameCore" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside" node_paths=PackedStringArray("score_label") instance=ExtResource("2_l10mu")]
-score_label = NodePath("../../../../../../Top/GridContainer/Score/Panel/Score")
+[node name="JarInside" type="SubViewportContainer" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 10.9
+stretch = true
 
-[node name="StaticBody2D" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore" index="0"]
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(688, 1223)
+size_2d_override = Vector2i(720, 1280)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="GameCore" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport" node_paths=PackedStringArray("score_label") instance=ExtResource("2_l10mu")]
+position = Vector2(0, 286)
+score_label = NodePath("../../../../../../../../Top/GridContainer/Score/Panel/Score")
+
+[node name="StaticBody2D" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore" index="0"]
 position = Vector2(0, -560.704)
 
-[node name="CollisionPolygon2D" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore/StaticBody2D" index="0"]
+[node name="CollisionPolygon2D" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore/StaticBody2D" index="0"]
 metadata/_edit_lock_ = true
 
-[node name="Spawn" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore" index="2"]
+[node name="Spawn" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore" index="2"]
 position = Vector2(360, -48.2887)
 
-[node name="AudioStreamPlayer2D" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore" index="4"]
+[node name="AudioStreamPlayer2D" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore" index="4"]
 bus = &"Music"
 
 [node name="Ground" type="ColorRect" parent="VBoxContainer"]
@@ -276,7 +289,7 @@ anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-expand_mode = 4
+expand_mode = 2
 stretch_mode = 6
 script = ExtResource("6_alc1o")
 metadata/_edit_lock_ = true
@@ -442,11 +455,11 @@ libraries = {
 
 [node name="LeaderboardUpdater" type="Node" parent="." node_paths=PackedStringArray("game")]
 script = ExtResource("12_lsrva")
-game = NodePath("../VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore")
+game = NodePath("../VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore")
 
 [node name="GameSerializer" type="Node" parent="." node_paths=PackedStringArray("game")]
 script = ExtResource("13_mchgy")
-game = NodePath("../VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore")
+game = NodePath("../VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore")
 
 [connection signal="pressed" from="VBoxContainer/Top/GridContainer/Settings/PauseButton" to="." method="_on_pause_pressed"]
 [connection signal="pressed" from="GameOverDialog/Panel/MarginContainer/VBoxContainer/HBoxContainer/RestartButton" to="." method="_on_restart_pressed"]
@@ -455,4 +468,4 @@ game = NodePath("../VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxCon
 [connection signal="pressed" from="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/RestartButton" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/ResumeButton" to="." method="_on_pause_pressed"]
 
-[editable path="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/JarInside/GameCore"]
+[editable path="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore"]
