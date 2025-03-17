@@ -46,7 +46,11 @@ func check_app_update() -> void:
 	
 	var data: Dictionary = json.get_data()
 	var tag = data.get("tag_name")
-	print("[UpdateChecker] Latest version tag: %s (current: %s)" % [tag, current_version_tag])
+	if tag:
+		print("[UpdateChecker] Latest version tag: %s (current: %s)" % [tag, current_version_tag])
+	else:
+		printerr("Failed to retreive latest release tag: ", data)
+		return
 	
 	var latest_version = parse_version(tag)
 	var cmp = compare_versions(current_version, latest_version)
