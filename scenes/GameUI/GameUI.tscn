@@ -253,6 +253,7 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside"]
 transparent_bg = true
 handle_input_locally = false
+audio_listener_enable_2d = true
 size = Vector2i(688, 1223)
 size_2d_override = Vector2i(720, 1280)
 size_2d_override_stretch = true
