@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://6oq3d337puy8"]
 
 [ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="1_s1223"]
-[ext_resource type="Script" path="res://scenes/UpdateNotifier/UpdateNotifier.gd" id="2_43mta"]
+[ext_resource type="Script" uid="uid://pixmvnfemv0m" path="res://scenes/UpdateNotifier/UpdateNotifier.gd" id="2_43mta"]
 
 [node name="UpdateNotifier" type="Window"]
 initial_position = 2

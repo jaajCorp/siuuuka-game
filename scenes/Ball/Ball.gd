@@ -6,11 +6,6 @@ signal merged(new_ball: Ball)
 	set(value):
 		level = value
 		update_level()
-@export var texture: Texture2D :
-	set(value):
-		texture = value
-		if self.sprite:
-			self.sprite.texture = value
 
 @export_category("Ambient sounds")
 @export var frequency_secs: int = 10 :
@@ -49,8 +44,6 @@ var is_outside: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Scale children
-	sprite.scale = Vector2.ZERO
 	collision.shape.radius = BASE_SIZE.x / 2
 	
 	contact_monitor = true
@@ -60,8 +53,11 @@ func _ready() -> void:
 	ambient_audio_timer.wait_time = frequency_secs
 	ambient_audio_timer.connect("timeout", _on_ambient_timer_timeout)
 	
-	call_deferred("spawn_anim")
-
+	update_level()
+	
+	sprite.scale = Vector2.ZERO
+	spawn_anim.call_deferred()
+	
 
 func _on_body_shape_entered(_body_rid: RID, body: Node, _body_shape_index: int, _local_shape_index: int) -> void:
 	if body is Ball:
@@ -122,20 +118,19 @@ func spawn_anim():
 	var target_scale: Vector2 = get_sprite_level_scale(sprite, level)
 	sprite.scale = Vector2.ZERO
 	
-	var tween := get_tree().create_tween()
+	var tween := self.create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_ELASTIC)
-	tween.tween_property(sprite, "scale", target_scale, 0.3)
+	tween.tween_property(sprite, "scale", target_scale, 0.4)
 	tween.play()
-
 
 func update_level():
 	# Visible scale
 	var level_size: float = LEVEL_SIZES[level]
 	var level_data := Global.current_pack.get_level_data(self.level)
-	self.texture = level_data.texture
 
 	if self.sprite and self.collision:
+		sprite.texture = level_data.texture
 		sprite.scale = get_sprite_level_scale(sprite, level)
 		collision.scale = Vector2.ONE * level_size
 		if not level_data.frame:

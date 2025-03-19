@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://lxhxjkiveulc"]
 
-[ext_resource type="Script" path="res://scenes/Ball/Ball.gd" id="1_cro3g"]
+[ext_resource type="Script" uid="uid://bt6oqhe7boc2p" path="res://scenes/Ball/Ball.gd" id="1_cro3g"]
 [ext_resource type="Texture2D" uid="uid://dr5kvw60b14bs" path="res://icon.svg" id="2_ht0q0"]
-[ext_resource type="Shader" path="res://scenes/Ball/circle_frame.gdshader" id="2_imdjw"]
+[ext_resource type="Shader" uid="uid://bok0l11ssuy1p" path="res://scenes/Ball/circle_frame.gdshader" id="2_imdjw"]
 [ext_resource type="AudioStream" uid="uid://bsci2un04pf06" path="res://assets/audio/pop.mp3" id="4_yp1eo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cl83c"]
@@ -10,9 +10,9 @@ friction = 0.4
 bounce = 0.05
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6njgi"]
-radius = 28.0
+radius = 25.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nyh7v"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4x73w"]
 shader = ExtResource("2_imdjw")
 
 [node name="Ball" type="RigidBody2D"]
@@ -20,7 +20,6 @@ physics_material_override = SubResource("PhysicsMaterial_cl83c")
 contact_monitor = true
 max_contacts_reported = 8
 script = ExtResource("1_cro3g")
-texture = ExtResource("2_ht0q0")
 frequency_secs = 4
 probability = 10
 
@@ -28,7 +27,9 @@ probability = 10
 shape = SubResource("CircleShape2D_6njgi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_nyh7v")
+physics_interpolation_mode = 2
+material = SubResource("ShaderMaterial_4x73w")
+scale = Vector2(0.390625, 0.390625)
 texture = ExtResource("2_ht0q0")
 
 [node name="MergeAudioPlayer" type="AudioStreamPlayer2D" parent="."]
@@ -40,4 +41,5 @@ bus = &"SFX"
 bus = &"SFX"
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
 autostart = true

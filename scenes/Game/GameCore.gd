@@ -26,7 +26,7 @@ func _ready() -> void:
 	game_end_timer.connect("timeout", check_game_end)
 	game_end_timer.start()
 	
-	call_deferred("reset")
+	reset.call_deferred()
 
 func _input(event: InputEvent) -> void:
 	if held_ball == null: return
@@ -46,7 +46,7 @@ func _input(event: InputEvent) -> void:
 		
 
 func _on_ball_merge(new_ball: Ball):
-	new_ball.connect("merged", _on_ball_merge)
+	new_ball.merged.connect(_on_ball_merge)
 	score += new_ball.level * 2
 	max_ball_level = max(max_ball_level, new_ball.level)
 	
@@ -67,11 +67,12 @@ func spawn_ball():
 	next_ball_update.emit(ball_queue.front())
 
 	balls_container.add_child(held_ball)
-	held_ball.update_level()
+	
 	held_ball.position = Vector2(get_width() / 2.0, spawn_level.position.y)
 	held_ball.freeze = true
 	held_ball.collision.disabled = true
-	held_ball.connect("merged", _on_ball_merge)
+	held_ball.merged.connect(_on_ball_merge)
+	
 	
 func check_game_end():
 	var min_y := spawn_level.position.y

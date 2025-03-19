@@ -3,15 +3,15 @@
 [ext_resource type="Theme" uid="uid://cns142t2n3hns" path="res://res/game_theme.tres" id="1_ioi18"]
 [ext_resource type="Texture2D" uid="uid://dxxs4tafnr2b8" path="res://assets/img/ui/jar.png" id="1_jgld7"]
 [ext_resource type="PackedScene" uid="uid://cmu6mss2cn51m" path="res://scenes/Game/GameCore.tscn" id="2_l10mu"]
-[ext_resource type="Script" path="res://scenes/GameUI/GameUI.gd" id="2_nuujj"]
+[ext_resource type="Script" uid="uid://by8ikeonf0ngl" path="res://scenes/GameUI/GameUI.gd" id="2_nuujj"]
 [ext_resource type="Texture2D" uid="uid://degqop0axj2k1" path="res://assets/icon/pause.svg" id="3_t8gfn"]
-[ext_resource type="Shader" path="res://scenes/Ball/circle_frame.gdshader" id="4_lqh75"]
+[ext_resource type="Shader" uid="uid://bok0l11ssuy1p" path="res://scenes/Ball/circle_frame.gdshader" id="4_lqh75"]
 [ext_resource type="Texture2D" uid="uid://dr5kvw60b14bs" path="res://icon.svg" id="5_dlhc0"]
-[ext_resource type="Script" path="res://scripts/components/ResponsiveTextureRect.gd" id="6_alc1o"]
+[ext_resource type="Script" uid="uid://ga2h7a3dhkes" path="res://scripts/components/ResponsiveTextureRect.gd" id="6_alc1o"]
 [ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="10_fa8tv"]
-[ext_resource type="Script" path="res://scenes/GameUI/pause_dialog.gd" id="11_ms4ad"]
-[ext_resource type="Script" path="res://scripts/components/LeaderboardUpdater.gd" id="12_lsrva"]
-[ext_resource type="Script" path="res://scripts/components/GameSerializer.gd" id="13_mchgy"]
+[ext_resource type="Script" uid="uid://dppeg54yt65a2" path="res://scenes/GameUI/pause_dialog.gd" id="11_ms4ad"]
+[ext_resource type="Script" uid="uid://bb17rloolhkw4" path="res://scripts/components/LeaderboardUpdater.gd" id="12_lsrva"]
+[ext_resource type="Script" uid="uid://c08l3k4jf4fci" path="res://scripts/components/GameSerializer.gd" id="13_mchgy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ugm33"]
 bg_color = Color(0.87451, 0.847059, 0.737255, 1)
@@ -60,8 +60,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_smf5d"]
 _data = {
-"RESET": SubResource("Animation_h6630"),
-"best_score": SubResource("Animation_o2i42")
+&"RESET": SubResource("Animation_h6630"),
+&"best_score": SubResource("Animation_o2i42")
 }
 
 [node name="GameUi" type="Control" node_paths=PackedStringArray("background", "game_core", "game_serializer", "next_ball_preview", "game_over_dialog", "pause_dialog", "animation_player", "best_score_splash", "leaderboard_updater", "leaderboard_updater_label")]
@@ -253,6 +253,7 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside"]
 transparent_bg = true
 handle_input_locally = false
+audio_listener_enable_2d = true
 size = Vector2i(688, 1223)
 size_2d_override = Vector2i(720, 1280)
 size_2d_override_stretch = true
@@ -289,7 +290,7 @@ anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-expand_mode = 2
+expand_mode = 4
 stretch_mode = 6
 script = ExtResource("6_alc1o")
 metadata/_edit_lock_ = true
@@ -450,7 +451,7 @@ text = "Resume"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_smf5d")
+&"": SubResource("AnimationLibrary_smf5d")
 }
 
 [node name="LeaderboardUpdater" type="Node" parent="." node_paths=PackedStringArray("game")]
