@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmu6mss2cn51m"]
+[gd_scene load_steps=2 format=3 uid="uid://cmu6mss2cn51m"]
 
 [ext_resource type="Script" path="res://scenes/Game/GameCore.gd" id="1_sn5wc"]
-[ext_resource type="AudioStream" uid="uid://b7r1070fknnhn" path="res://assets/audio/music.ogg" id="2_85xml"]
 
 [node name="GameCore" type="Node2D" node_paths=PackedStringArray("spawn_level", "balls_container")]
 script = ExtResource("1_sn5wc")
@@ -22,8 +21,3 @@ gizmo_extents = 32.0
 
 [node name="GameEndTimer" type="Timer" parent="."]
 wait_time = 0.4
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_85xml")
-autoplay = true
-parameters/looping = true

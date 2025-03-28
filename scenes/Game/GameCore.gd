@@ -26,6 +26,8 @@ func _ready() -> void:
 	game_end_timer.connect("timeout", check_game_end)
 	game_end_timer.start()
 	
+	Music.ensure_soundtrack_playing(Music.SOUNDTRACKS.IN_GAME)
+	
 	call_deferred("reset")
 
 func _input(event: InputEvent) -> void:
