@@ -21,6 +21,8 @@ func _ready() -> void:
 	leaderboard_button.connect("pressed", _on_leaderboard_pressed)
 	quit_button.connect("pressed", _on_quit_pressed)
 	
+	Music.ensure_soundtrack_playing(Music.SOUNDTRACKS.TITLE_SCREEN)
+	
 	fetch_remote_data()
 
 func fetch_remote_data():
