@@ -273,9 +273,6 @@ metadata/_edit_lock_ = true
 [node name="Spawn" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore" index="2"]
 position = Vector2(360, -48.2887)
 
-[node name="AudioStreamPlayer2D" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore" index="4"]
-bus = &"Music"
-
 [node name="Ground" type="ColorRect" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
