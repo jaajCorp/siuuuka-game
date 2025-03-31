@@ -1,7 +1,7 @@
 extends Control
 
 @onready var username_edit := $MarginContainer/VBoxContainer/HBoxContainer/UsernameEdit
-@onready var scoreboard_grid := $MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/GridContainer
+@onready var scoreboard_grid := $MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer/GridContainer
 @onready var virtual_keyboard_margin := $MarginContainer/VBoxContainer/VKeyboardMargin
 
 @onready var popup := $Popup
