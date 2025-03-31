@@ -79,13 +79,12 @@ func _on_session_refresh_timer_timeout() -> void:
 	
 func get_device_id() -> String:
 	var id := OS.get_unique_id()
-	if id == "":
+	if not id:
 		if OS.has_feature("web"):
 			var console = JavaScriptBridge.get_interface("console")
 			console.log("Initializing backend")
 			
 			var localStorage = JavaScriptBridge.get_interface("localStorage");
-			var crypto = JavaScriptBridge.get_interface("crypto");
 			
 			id = localStorage.getItem("siuuuka-user-id");
 			if not id:
