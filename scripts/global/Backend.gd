@@ -52,6 +52,7 @@ func create_session_and_connect():
 	session = await client.authenticate_device_async(device_id)
 	if session.is_exception():
 		print("An error occurred while autheticating to the backend: %s" % session)
+		is_healthy = false
 		error.emit(Error.SESSION_AUTH)
 		return
 	print("Successfully authenticated to the backend: %s" % session)
@@ -61,6 +62,7 @@ func create_session_and_connect():
 	var connection : NakamaAsyncResult = await socket.connect_async(session)
 	if connection.is_exception():
 		print("An error occurred while connecting to backend: %s" % connection)
+		is_healthy = false
 		error.emit(Error.SOCKET_CONNECTION)
 		return
 	print("Backend socket connected.")
@@ -70,6 +72,7 @@ func refresh_session():
 	session = await client.session_refresh_async(session)
 	if session.is_exception():
 		print("An error occurred while refreshing the backend session: %s" % session)
+		is_healthy = false
 		error.emit(Error.SESSION_REFRESH)
 	else:
 		session_refreshed.emit()
