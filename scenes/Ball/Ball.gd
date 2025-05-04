@@ -45,7 +45,6 @@ const BASE_MASS: float = 0.01
 const PACKED_SCENE = preload("res://scenes/Ball/Ball.tscn")
 
 var is_merged: bool = false
-var is_outside: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
