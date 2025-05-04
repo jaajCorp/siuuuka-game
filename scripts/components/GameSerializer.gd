@@ -25,7 +25,8 @@ func save_game():
 		"balls": balls,
 		"queue": ball_queue,
 		"held": held_ball,
-		"debug_score": game.score
+		"debug_score": game.score,
+		"max_ball_level": game.max_ball_level
 	}
 	
 	Global.settings.game_save = save
@@ -38,11 +39,12 @@ func restore_game():
 	assert(Global.settings.game_save != {})
 	var save := Global.settings.game_save
 	
-	_restore_balls(save.get("balls"))
-	_restore_queue(save.get("queue"))
+	_restore_balls(save.get("balls", []))
+	_restore_queue(save.get("queue", []))
 	_restore_held(save.get("held"))
 	
-	game.score = save.get("debug_score")
+	game.max_ball_level = save.get("max_ball_level", 0)
+	game.score = save.get("debug_score", 0)
 	
 func reset_save():
 	Global.settings.game_save = {}
