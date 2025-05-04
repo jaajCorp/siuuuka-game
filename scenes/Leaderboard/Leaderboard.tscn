@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://b7rp6hp01y3qb"]
+[gd_scene load_steps=11 format=3 uid="uid://b7rp6hp01y3qb"]
 
 [ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="1_ijuk4"]
 [ext_resource type="Script" path="res://scenes/Leaderboard/Leaderboard.gd" id="2_euexk"]
-[ext_resource type="FontFile" uid="uid://dapkttovfb4ap" path="res://assets/font/SingleDay-Regular.ttf" id="3_77xjd"]
 [ext_resource type="ButtonGroup" uid="uid://c3qlxpg528ktv" path="res://res/leaderboard_button_group.tres" id="4_vj0p6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_es01d"]
@@ -85,7 +84,6 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.952941, 0.721569, 0.12549, 1)
 theme_override_colors/font_outline_color = Color(0.27451, 0.0980392, 0.0470588, 1)
 theme_override_constants/outline_size = 13
-theme_override_fonts/font = ExtResource("3_77xjd")
 theme_override_font_sizes/font_size = 96
 text = "Leaderboard"
 horizontal_alignment = 1

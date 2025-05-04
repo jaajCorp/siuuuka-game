@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=9 format=3 uid="uid://cns142t2n3hns"]
 
 [ext_resource type="Texture2D" uid="uid://cfwxt7pajsede" path="res://assets/icon/grabber.svg" id="1_jl2mj"]
-[ext_resource type="FontFile" uid="uid://dapkttovfb4ap" path="res://assets/font/SingleDay-Regular.ttf" id="1_rfbuw"]
+[ext_resource type="FontFile" uid="uid://bjkqmbwyyiifp" path="res://assets/font/DynaPuff-Regular.ttf" id="2_t6sl1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e0evu"]
 
@@ -67,6 +67,7 @@ corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
 [resource]
+default_font = ExtResource("2_t6sl1")
 Button/styles/focus = SubResource("StyleBoxEmpty_e0evu")
 Button/styles/hover = SubResource("StyleBoxFlat_dehq3")
 Button/styles/normal = SubResource("StyleBoxFlat_vln4o")
@@ -78,5 +79,4 @@ HSlider/icons/grabber_highlight = ExtResource("1_jl2mj")
 HSlider/styles/slider = SubResource("StyleBoxFlat_plvgu")
 Label/colors/font_color = Color(0.873233, 0.819525, 0.675174, 1)
 Label/font_sizes/font_size = 32
-Label/fonts/font = ExtResource("1_rfbuw")
 Panel/styles/panel = SubResource("StyleBoxFlat_dheyu")

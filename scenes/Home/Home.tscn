@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cj6irws0y2x5e"]
+[gd_scene load_steps=5 format=3 uid="uid://cj6irws0y2x5e"]
 
 [ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="1_k58y3"]
 [ext_resource type="Script" path="res://scenes/Home/Home.gd" id="2_aipuy"]
-[ext_resource type="FontFile" uid="uid://dapkttovfb4ap" path="res://assets/font/SingleDay-Regular.ttf" id="3_xo6fq"]
 [ext_resource type="PackedScene" uid="uid://6oq3d337puy8" path="res://scenes/UpdateNotifier/UpdateNotifier.tscn" id="4_jqi0r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2mvl5"]
@@ -60,7 +59,6 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.952941, 0.721569, 0.12549, 1)
 theme_override_colors/font_outline_color = Color(0.27451, 0.0980392, 0.0470588, 1)
 theme_override_constants/outline_size = 13
-theme_override_fonts/font = ExtResource("3_xo6fq")
 theme_override_font_sizes/font_size = 96
 text = "Siuuuka Game"
 horizontal_alignment = 1
