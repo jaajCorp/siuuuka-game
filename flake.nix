@@ -13,6 +13,16 @@
       config.android_sdk.accept_license = true;
     };
 
+    godot_version = "4.3-stable";
+    godot = pkgs.godot.override {
+      version = godot_version;
+      hash = "sha256-MzElflwXHWLgPtoOIhPLA00xX8eEdQsexZaGIEOzbj0=";
+    };
+    export-templates = pkgs.godot-export-templates-bin.override {
+      version = godot_version;
+      hash = "sha256-9fENuvVqeQg0nmS5TqjCyTwswR+xAUyVZbaKK7Q3uSI=";
+    };
+
     # Android
     androidComposition = pkgs.androidenv.composeAndroidPackages {
       platformVersions = [
@@ -37,10 +47,7 @@
   in {
     devShells.${system}.default = pkgs.mkShell {
       packages = with pkgs; [
-        (godot_4.override {
-          version = "4.3-stable";
-          hash = "sha256-MzElflwXHWLgPtoOIhPLA00xX8eEdQsexZaGIEOzbj0=";
-        })
+        godot
         android-tools
         sdkmanager
         openjdk17-bootstrap
@@ -55,6 +62,7 @@
 
       shellHook = ''
         export PATH="${ndk_path}:${androidsdk}/bin:$PATH";
+        ln -sf "${export-templates}"/share/godot/export_templates "$HOME"/.local/share/godot/
       '';
     };
   };
