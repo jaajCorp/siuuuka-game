@@ -15,7 +15,7 @@ on:
 env:
   # used for uploading the app to a GitHub release
   APP_NAME: Siuuuka Game
-  BUNDLE_PATH: "build/Siuuuka-game.apk"
+  BUNDLE_PATH: "build/com.gasdev.siuuukagame.aab"
   PACKAGE_NAME: "com.gasdev.siuuukagame"
   # release track; you can promote a build to "higher" tracks in the play console or publish to a different track directly
   # see track at https://github.com/r0adkll/upload-google-play#inputs for more options
@@ -35,7 +35,7 @@ jobs:
         run: nix develop --command godot --version
       - name: Build app bundle
         run: |
-          nix develop --command godot --headless --export-release Android
+          nix develop --command godot --verbose --headless --export-release Android
       - name: sign app bundle
         run: |
           KEYSTORE_PATH=${{ runner.temp }}/upload-keystore.jks
