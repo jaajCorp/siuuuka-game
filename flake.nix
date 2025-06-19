@@ -67,6 +67,8 @@
       shellHook = ''
         export PATH="${ndk_path}:${androidsdk}/bin:$PATH";
         ln -sf "${export-templates}"/share/godot/export_templates "$HOME"/.local/share/godot/
+
+        . .env
       '';
     };
   };
