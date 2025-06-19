@@ -26,7 +26,10 @@
     # Android
     androidComposition = pkgs.androidenv.composeAndroidPackages {
       platformVersions = [
-        "35"
+        "34"
+      ];
+      buildToolsVersions = [
+        "34.0.0"
       ];
       systemImageTypes = ["default"];
       abiVersions = [
@@ -48,6 +51,7 @@
     devShells.${system}.default = pkgs.mkShell {
       packages = with pkgs; [
         godot
+        gradle
         android-tools
         sdkmanager
         openjdk17-bootstrap
