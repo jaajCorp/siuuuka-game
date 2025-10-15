@@ -84,7 +84,7 @@ jobs:
       - name: Setup environment
         run: |
           mkdir secrets
-          echo '${{ secrets.ANDROID_KEYSTORE_RELEASE_CONTENT_B64 }}' | base64 -d > ${{ env.GODOT_ANDROID_KEYSTORE_RELEASE_PATH }}
+          # echo '${{ secrets.ANDROID_KEYSTORE_RELEASE_CONTENT_B64 }}' | base64 -d > ${{ env.GODOT_ANDROID_KEYSTORE_RELEASE_PATH }}
 
       - name: Build app bundle
         run: |
