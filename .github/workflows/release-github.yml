@@ -79,10 +79,8 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Setup environment
-        run: |
-          mkdir secrets
-          echo '${{ secrets.ANDROID_KEYSTORE_RELEASE_CONTENT_B64 }}' | base64 -d > ${{ env.GODOT_ANDROID_KEYSTORE_RELEASE_PATH }}
-
+        run: mkdir -p secrets ; echo '${{ secrets.ANDROID_KEYSTORE_RELEASE_CONTENT_B64 }}' | base64 -d > '${{ env.GODOT_ANDROID_KEYSTORE_RELEASE_PATH }}'
+      
       - name: Install nix env
         run: nix develop --command godot --version
 
