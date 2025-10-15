@@ -83,8 +83,6 @@ jobs:
 
       - name: Setup environment
         run: |
-          echo "app_package_filename=${{ env.APP_PACKAGE_NAME }}-${{ matrix.arch }}.${{ matrix.format }}" >> "${GITHUB_ENV}"
-
           mkdir secrets
           echo '${{ secrets.ANDROID_KEYSTORE_RELEASE_CONTENT_B64 }}' | base64 -d > ${{ env.GODOT_ANDROID_KEYSTORE_RELEASE_PATH }}
 
@@ -95,8 +93,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/${{ env.app_package_filename }}
-          asset_name: ${{ env.app_package_filename }}
+          file: build/${{ env.APP_PACKAGE_NAME }}-${{ matrix.arch }}.${{ matrix.format }}
+          asset_name: ${{ env.APP_PACKAGE_NAME }}-${{ matrix.arch }}.${{ matrix.format }}
           release_name: ${{ inputs.version }}
           tag: ${{ inputs.version }}
           overwrite: true
