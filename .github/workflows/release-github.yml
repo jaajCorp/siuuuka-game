@@ -1,39 +1,90 @@
-name: release-android-google-play
+name: GitHub Release
 
 on:
+  # Trigger this workflow when a tag is pushed in the format `v1.2.3`.
+  push:
+    tags:
+      # Pattern syntax: <https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet>.
+      - "v[0-9]+.[0-9]+.[0-9]+*"
+  # Trigger this workflow manually via workflow dispatch.
   workflow_dispatch:
     inputs:
       version:
-        description: 'GitHub Release'
+        description: "Version number in the format `v1.2.3`"
         required: true
         type: string
 
 env:
   # used for uploading the app to a GitHub release
-  APP_NAME: Siuuuka Game
-  BUNDLE_PATH: "build/com.gasdev.siuuukagame-all.aab"
-  PACKAGE_NAME: "com.gasdev.siuuukagame"
+  APP_DISPLAY_NAME: Siuuuka Game
+  APP_PACKAGE_NAME: "com.gasdev.siuuukagame"
 
 permissions:
   contents: write
 
 jobs:
-  bundle-sign-release:
+    # Determine the version number for this workflow.
+  get-version:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Determine version number (git)
+        id: tag
+        run: echo "tag=${GITHUB_REF#refs/tags/}" >> "${GITHUB_OUTPUT}"
+
+      - name: Determine version number (godot project)
+        id: project-version
+        run: |
+          PROJECT_VERSION=$(grep -oP 'config/version="\K[^"]+' project.godot)
+          echo "project_version=$PROJECT_VERSION" >> "${GITHUB_OUTPUT}"
+    
+      - name: Check version match
+        run: |
+          if [ "${{ inputs.version || steps.tag.outputs.tag }}" != "v${{ steps.project-version.outputs.project_version }}" ]; then
+            echo "Error: Git tag (${{ inputs.version || steps.tag.outputs.tag }}) does not match godot project version (${{ steps.project-version.outputs.project_version }})"
+            exit 1
+          fi
+
+    outputs:
+      # Use the input from workflow dispatch, or fall back to the git tag.
+      version: ${{ inputs.version || steps.tag.outputs.tag }}
+
+
+  build:
+    runs-on: ubuntu-latest
+    needs:
+      - get-version
+    env:
+      version: ${{ needs.get-version.outputs.version }}
+    strategy:
+      matrix:
+        include:
+          - arch: all
+            format: apk
+
+          - arch: arm64-v8a
+            format: apk
+
+          - arch: armeabi-v7a
+            format: apk
+
     steps:
       - uses: cachix/install-nix-action@v25
       - name: Install nix env
         run: nix develop --command godot --version
+
       - name: Build app bundle
         run: |
-          nix develop --command godot --verbose --headless --export-release android-all.aab
+          nix develop --command godot --verbose --headless --export-release android-${{ matrix.arch }}.${{ martrix.format }}
       - name: Upload self-signed bundle to GitHub
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.BUNDLE_PATH }}
-          asset_name: ${{ env.APP_NAME }}_${{ inputs.version }}_android.aab
+          file: build/${{ env.APP_PACKAGE_NAME }}-${{ matrix.arch }}.${{ matrix.format }}
+          asset_name: ${{ env.APP_PACKAGE_NAME }}-${{ matrix.arch }}.${{ matrix.format }}
           release_name: ${{ inputs.version }}
           tag: ${{ inputs.version }}
           overwrite: true
+
