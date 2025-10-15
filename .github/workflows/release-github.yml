@@ -92,7 +92,7 @@ jobs:
 
       - name: Build app bundle
         run: |
-          nix develop --command godot --verbose --headless --export-release android-${{ matrix.arch }}.${{ matrix.format }}
+          nix develop --command godot --verbose --headless --install-android-build-template --export-release android-${{ matrix.arch }}.${{ matrix.format }}
       - name: Upload self-signed bundle to GitHub
         uses: svenstaro/upload-release-action@v2
         with:
