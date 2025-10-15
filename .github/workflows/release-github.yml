@@ -19,9 +19,6 @@ env:
   APP_DISPLAY_NAME: Siuuuka Game
   APP_PACKAGE_NAME: "com.gasdev.siuuukagame"
 
-permissions:
-  contents: write
-
 jobs:
     # Determine the version number for this workflow.
   get-version:
@@ -58,6 +55,7 @@ jobs:
       - get-version
     env:
       version: ${{ needs.get-version.outputs.version }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     strategy:
       matrix:
         include:
@@ -70,10 +68,24 @@ jobs:
           - arch: armeabi-v7a
             format: apk
 
+    permissions:
+      contents: write
+
     steps:
       - uses: cachix/install-nix-action@v25
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
       - name: Install nix env
         run: nix develop --command godot --version
+
+      - name: Setup environment
+        run: |
+          echo "app_package_filename=${{ env.APP_PACKAGE_NAME }}-${{ matrix.arch }}.${{ matrix.format }}" >> "${GITHUB_ENV}"
+
+          mkdir secrets
+          echo ${{ secrets.ANDROID_KEYSTORE_RELEASE_CONTENT_B64 }} | base64 -d > {{ env.GODOT_ANDROID_KEYSTORE_RELEASE_PATH }}
 
       - name: Build app bundle
         run: |
@@ -82,8 +94,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/${{ env.APP_PACKAGE_NAME }}-${{ matrix.arch }}.${{ matrix.format }}
-          asset_name: ${{ env.APP_PACKAGE_NAME }}-${{ matrix.arch }}.${{ matrix.format }}
+          file: build/${{ env.app_package_filename }}
+          asset_name: ${{ env.app_package_filename }}
           release_name: ${{ inputs.version }}
           tag: ${{ inputs.version }}
           overwrite: true
