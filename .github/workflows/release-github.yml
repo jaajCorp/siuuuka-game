@@ -3,9 +3,9 @@ name: GitHub Release
 on:
   # Trigger this workflow when a tag is pushed in the format `v1.2.3`.
   push:
-    tags:
+    # tags: Disabled temporarly
       # Pattern syntax: <https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet>.
-      - "v[0-9]+.[0-9]+.[0-9]+*"
+      # - "v[0-9]+.[0-9]+.[0-9]+*"
   # Trigger this workflow manually via workflow dispatch.
   workflow_dispatch:
     inputs:
@@ -29,7 +29,8 @@ jobs:
 
       - name: Determine version number (git)
         id: tag
-        run: echo "tag=${GITHUB_REF#refs/tags/}" >> "${GITHUB_OUTPUT}"
+        run: echo "tag=v1.1.0" >> "${GITHUB_OUTPUT}"
+        # run: echo "tag=${GITHUB_REF#refs/tags/}" >> "${GITHUB_OUTPUT}"
 
       - name: Determine version number (godot project)
         id: project-version
@@ -85,7 +86,7 @@ jobs:
           echo "app_package_filename=${{ env.APP_PACKAGE_NAME }}-${{ matrix.arch }}.${{ matrix.format }}" >> "${GITHUB_ENV}"
 
           mkdir secrets
-          echo ${{ secrets.ANDROID_KEYSTORE_RELEASE_CONTENT_B64 }} | base64 -d > {{ env.GODOT_ANDROID_KEYSTORE_RELEASE_PATH }}
+          echo '${{ secrets.ANDROID_KEYSTORE_RELEASE_CONTENT_B64 }}' | base64 -d > ${{ env.GODOT_ANDROID_KEYSTORE_RELEASE_PATH }}
 
       - name: Build app bundle
         run: |
