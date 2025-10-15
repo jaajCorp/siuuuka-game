@@ -1,0 +1,39 @@
+name: release-android-google-play
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'GitHub Release'
+        required: true
+        type: string
+
+env:
+  # used for uploading the app to a GitHub release
+  APP_NAME: Siuuuka Game
+  BUNDLE_PATH: "build/com.gasdev.siuuukagame-all.aab"
+  PACKAGE_NAME: "com.gasdev.siuuukagame"
+
+permissions:
+  contents: write
+
+jobs:
+  bundle-sign-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: cachix/install-nix-action@v25
+      - name: Install nix env
+        run: nix develop --command godot --version
+      - name: Build app bundle
+        run: |
+          nix develop --command godot --verbose --headless --export-release android-all.aab
+      - name: Upload self-signed bundle to GitHub
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ env.BUNDLE_PATH }}
+          asset_name: ${{ env.APP_NAME }}_${{ inputs.version }}_android.aab
+          release_name: ${{ inputs.version }}
+          tag: ${{ inputs.version }}
+          overwrite: true
