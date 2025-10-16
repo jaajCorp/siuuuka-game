@@ -92,6 +92,9 @@ jobs:
 
       - name: Build app bundle
         run: |
+          export GODOT_ANDROID_KEYSTORE_RELEASE_PATH=./secrets/siuuuka-game.keystore
+          export GODOT_ANDROID_KEYSTORE_RELEASE_USER=${{ secrets.GODOT_ANDROID_KEYSTORE_RELEASE_USER }}
+          export GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD=${{ secrets.GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD }}
           nix develop --command godot --verbose --headless --install-android-build-template --export-release android-${{ matrix.arch }}.${{ matrix.format }}
       - name: Upload self-signed bundle to GitHub
         uses: svenstaro/upload-release-action@v2
