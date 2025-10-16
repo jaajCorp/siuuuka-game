@@ -55,6 +55,7 @@ jobs:
       - get-version
     env:
       version: ${{ needs.get-version.outputs.version }}
+      # Avoid rate-limiting. See: <https://github.com/cargo-bins/cargo-binstall/issues/2045>.
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     strategy:
       matrix:
@@ -102,7 +103,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/${{ env.APP_PACKAGE_NAME }}-${{ matrix.arch }}.${{ matrix.format }}
           asset_name: ${{ env.APP_PACKAGE_NAME }}-${{ matrix.arch }}.${{ matrix.format }}
-          release_name: ${{ inputs.version }}
-          tag: ${{ inputs.version }}
+          release_name: ${{ env.version }}
+          tag: ${{ env.version }}
           overwrite: true
 
