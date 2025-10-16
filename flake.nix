@@ -68,6 +68,8 @@
         export PATH="${ndk_path}:${androidsdk}/bin:$PATH";
         ln -sf "${export-templates}"/share/godot/export_templates "$HOME"/.local/share/godot/
 
+        export GODOT_ANDROID_KEYSTORE_RELEASE_PATH=./secrets/siuuuka-game.keystore
+
         [[ -f .env ]] && . .env
       '';
     };
