@@ -92,6 +92,7 @@ jobs:
 
       - name: Build app bundle
         run: |
+          unset -v ANDROID_SDK_ROOT
           export GODOT_ANDROID_KEYSTORE_RELEASE_PATH=./secrets/siuuuka-game.keystore
           export GODOT_ANDROID_KEYSTORE_RELEASE_USER=${{ secrets.GODOT_ANDROID_KEYSTORE_RELEASE_USER }}
           export GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD=${{ secrets.GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD }}
