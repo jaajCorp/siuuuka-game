@@ -3,9 +3,9 @@ name: GitHub Release
 on:
   # Trigger this workflow when a tag is pushed in the format `v1.2.3`.
   push:
-    # tags: Disabled temporarly
+    tags:
       # Pattern syntax: <https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet>.
-      # - "v[0-9]+.[0-9]+.[0-9]+*"
+      - "v[0-9]+.[0-9]+.[0-9]+*"
   # Trigger this workflow manually via workflow dispatch.
   workflow_dispatch:
     inputs:
@@ -29,8 +29,7 @@ jobs:
 
       - name: Determine version number (git)
         id: tag
-        run: echo "tag=v1.1.0" >> "${GITHUB_OUTPUT}"
-        # run: echo "tag=${GITHUB_REF#refs/tags/}" >> "${GITHUB_OUTPUT}"
+        run: echo "tag=${GITHUB_REF#refs/tags/}" >> "${GITHUB_OUTPUT}"
 
       - name: Determine version number (godot project)
         id: project-version
