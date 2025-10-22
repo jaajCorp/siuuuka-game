@@ -49,7 +49,7 @@ func check_app_update() -> void:
 	if tag:
 		print("[UpdateChecker] Latest version tag: %s (current: %s)" % [tag, current_version_tag])
 	else:
-		printerr("Failed to retreive latest release tag: ", data)
+		printerr("Failed to retrieve latest release tag: ", data)
 		return
 	
 	var parsed_version = parse_version(tag)
@@ -68,7 +68,7 @@ func check_app_update() -> void:
 		self.visible = true
 	
 """
-Parse a semantic version string to an tuple of:
+Parse a semantic version string to a tuple of:
 	- array of 3 ints representing version numbers
 	- optional release candidate version
 """
