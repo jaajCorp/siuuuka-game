@@ -6,11 +6,11 @@ on:
     tags:
       # Pattern syntax: <https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet>.
       - "v[0-9]+.[0-9]+.[0-9]+*"
-  # Trigger this workflow manually via workflow dispatch.
+      - "v[0-9]*.[0-9]*.[0-9]*-*"
   workflow_dispatch:
     inputs:
       version:
-        description: "Version number in the format `v1.2.3`"
+        description: "Version number in the format `v1.2.3` or `v1.2.3-rc1`"
         required: true
         type: string
 
@@ -83,6 +83,8 @@ jobs:
           mkdir -p secrets
           mkdir -p ~/.local/share/godot
           echo '${{ secrets.ANDROID_KEYSTORE_RELEASE_CONTENT_B64 }}' | base64 -d > ./secrets/siuuuka-game.keystore
+
+          echo '${{ secrets.NAKAMA_CONFIG }}' > ./secrets/nakama.cfg
       
       - name: Install nix env
         run: nix develop --command godot --version
