@@ -83,6 +83,8 @@ jobs:
           mkdir -p secrets
           mkdir -p ~/.local/share/godot
           echo '${{ secrets.ANDROID_KEYSTORE_RELEASE_CONTENT_B64 }}' | base64 -d > ./secrets/siuuuka-game.keystore
+
+          echo '${{ secrets.NAKAMA_CONFIG }}' > ./secrets/nakama.cfg
       
       - name: Install nix env
         run: nix develop --command godot --version
