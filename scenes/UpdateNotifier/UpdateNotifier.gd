@@ -52,7 +52,7 @@ func check_app_update() -> void:
 		printerr("Failed to retreive latest release tag: ", data)
 		return
 	
-	var parsed_version = parse_version("v1.1.2-rc1")
+	var parsed_version = parse_version(tag)
 	var latest_version = parsed_version[0]
 	var release_candidate = parsed_version[1]
 	
