@@ -12,6 +12,10 @@ var latest_release_download_link: String
 func _ready() -> void:
 	self.visible = false
 	
+	if OS.has_feature("web"):
+		# Skip update process
+		return
+	
 	http_request = HTTPRequest.new()
 	add_child(http_request)
 	
