@@ -1,0 +1,470 @@
+[gd_scene load_steps=18 format=3 uid="uid://ds15eem7lyxir"]
+
+[ext_resource type="Theme" uid="uid://cns142t2n3hns" path="res://res/game_theme.tres" id="1_ioi18"]
+[ext_resource type="Texture2D" uid="uid://dxxs4tafnr2b8" path="res://assets/img/ui/jar.png" id="1_jgld7"]
+[ext_resource type="PackedScene" uid="uid://cmu6mss2cn51m" path="res://scenes/Game/GameCore.tscn" id="2_l10mu"]
+[ext_resource type="Script" path="res://scenes/GameUI/GameUI.gd" id="2_nuujj"]
+[ext_resource type="Texture2D" uid="uid://degqop0axj2k1" path="res://assets/icon/pause.svg" id="3_t8gfn"]
+[ext_resource type="Shader" path="res://scenes/Ball/circle_frame.gdshader" id="4_lqh75"]
+[ext_resource type="Texture2D" uid="uid://dr5kvw60b14bs" path="res://icon.svg" id="5_dlhc0"]
+[ext_resource type="Script" path="res://scripts/components/ResponsiveTextureRect.gd" id="6_alc1o"]
+[ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="10_fa8tv"]
+[ext_resource type="Script" path="res://scenes/GameUI/pause_dialog.gd" id="11_ms4ad"]
+[ext_resource type="Script" path="res://scripts/components/LeaderboardUpdater.gd" id="12_lsrva"]
+[ext_resource type="Script" path="res://scripts/components/GameSerializer.gd" id="13_mchgy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ugm33"]
+bg_color = Color(0.87451, 0.847059, 0.737255, 1)
+corner_radius_top_left = 64
+corner_radius_top_right = 64
+corner_radius_bottom_right = 64
+corner_radius_bottom_left = 64
+shadow_color = Color(0, 0, 0, 0.313726)
+shadow_size = 4
+shadow_offset = Vector2(2, 3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bqi4p"]
+shader = ExtResource("4_lqh75")
+
+[sub_resource type="Animation" id="Animation_h6630"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_o2i42"]
+resource_name = "best_score"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(0.470704, 2.83955, 0.508121),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1591, 1.13942), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_smf5d"]
+_data = {
+"RESET": SubResource("Animation_h6630"),
+"best_score": SubResource("Animation_o2i42")
+}
+
+[node name="GameUi" type="Control" node_paths=PackedStringArray("background", "game_core", "game_serializer", "next_ball_preview", "game_over_dialog", "pause_dialog", "animation_player", "best_score_splash", "leaderboard_updater", "leaderboard_updater_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ioi18")
+script = ExtResource("2_nuujj")
+background = NodePath("Background")
+game_core = NodePath("VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore")
+game_serializer = NodePath("GameSerializer")
+next_ball_preview = NodePath("VBoxContainer/Top/GridContainer/Next/MarginContainer/VBoxContainer/Panel/CenterContainer/NextBallPreview")
+game_over_dialog = NodePath("GameOverDialog")
+pause_dialog = NodePath("PauseDialog")
+animation_player = NodePath("AnimationPlayer")
+best_score_splash = NodePath("VBoxContainer/Top/GridContainer/Score/Panel/BestScoreSplash")
+leaderboard_updater = NodePath("LeaderboardUpdater")
+leaderboard_updater_label = NodePath("GameOverDialog/Panel/MarginContainer/VBoxContainer/LeaderboardUpdaterStatus")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Top" type="VBoxContainer" parent="VBoxContainer"]
+z_index = 10
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Top"]
+layout_mode = 2
+theme_override_constants/margin_top = 32
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/Top"]
+layout_mode = 2
+size_flags_vertical = 4
+columns = 3
+
+[node name="Settings" type="HBoxContainer" parent="VBoxContainer/Top/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Top/GridContainer/Settings"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+
+[node name="PauseButton" type="Button" parent="VBoxContainer/Top/GridContainer/Settings"]
+custom_minimum_size = Vector2(82, 82)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme_override_constants/icon_max_width = 48
+icon = ExtResource("3_t8gfn")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Score" type="HBoxContainer" parent="VBoxContainer/Top/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+alignment = 1
+
+[node name="Panel" type="Panel" parent="VBoxContainer/Top/GridContainer/Score"]
+custom_minimum_size = Vector2(156, 82)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Score" type="Label" parent="VBoxContainer/Top/GridContainer/Score/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BestScoreSplash" type="Label" parent="VBoxContainer/Top/GridContainer/Score/Panel"]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 68.0
+offset_right = 255.0
+offset_bottom = 117.0
+rotation = -0.430003
+pivot_offset = Vector2(72, 16)
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 48
+text = "Best score !"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Next" type="HBoxContainer" parent="VBoxContainer/Top/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Top/GridContainer/Next"]
+layout_mode = 2
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Top/GridContainer/Next/MarginContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="VBoxContainer/Top/GridContainer/Next/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ugm33")
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/Top/GridContainer/Next/MarginContainer/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NextBallPreview" type="TextureRect" parent="VBoxContainer/Top/GridContainer/Next/MarginContainer/VBoxContainer/Panel/CenterContainer"]
+material = SubResource("ShaderMaterial_bqi4p")
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+texture = ExtResource("5_dlhc0")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Top/GridContainer/Next/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.434291, 0.290224, 0.222828, 1)
+theme_override_font_sizes/font_size = 32
+text = "Next"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Center" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/Center"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+ratio = 0.9
+alignment_vertical = 2
+
+[node name="JarTexture" type="TextureRect" parent="VBoxContainer/Center/AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("1_jgld7")
+expand_mode = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Limit" type="Control" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 10.9
+ratio = 0.5625
+stretch_mode = 3
+
+[node name="JarInside" type="SubViewportContainer" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 10.9
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside"]
+transparent_bg = true
+handle_input_locally = false
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+size = Vector2i(688, 1223)
+size_2d_override = Vector2i(720, 1280)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="GameCore" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport" node_paths=PackedStringArray("score_label") instance=ExtResource("2_l10mu")]
+position = Vector2(0, 286)
+score_label = NodePath("../../../../../../../../Top/GridContainer/Score/Panel/Score")
+
+[node name="StaticBody2D" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore" index="0"]
+position = Vector2(0, -560.704)
+
+[node name="CollisionPolygon2D" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore/StaticBody2D" index="0"]
+metadata/_edit_lock_ = true
+
+[node name="Spawn" parent="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore" index="2"]
+position = Vector2(360, -48.2887)
+
+[node name="Ground" type="ColorRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.603922, 0.407843, 0.301961, 1)
+
+[node name="Background" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 2
+stretch_mode = 6
+script = ExtResource("6_alc1o")
+metadata/_edit_lock_ = true
+
+[node name="GameOverDialog" type="Window" parent="."]
+transparent_bg = true
+title = "Game over!"
+initial_position = 2
+size = Vector2i(600, 320)
+borderless = true
+transparent = true
+theme = ExtResource("10_fa8tv")
+
+[node name="Panel" type="Panel" parent="GameOverDialog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="GameOverDialog/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverDialog/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GameOverDialog/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 42
+text = "T'as perdu ma gueule (ratio)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LeaderboardUpdaterStatus" type="Label" parent="GameOverDialog/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Sending score to leaderboard..."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameOverDialog/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="RestartButton" type="Button" parent="GameOverDialog/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "Restart"
+
+[node name="QuitButton" type="Button" parent="GameOverDialog/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "FF"
+
+[node name="PauseDialog" type="Window" parent="." node_paths=PackedStringArray("music_volume", "sfx_volume")]
+transparent_bg = true
+initial_position = 2
+size = Vector2i(520, 600)
+visible = false
+borderless = true
+transparent = true
+theme = ExtResource("10_fa8tv")
+script = ExtResource("11_ms4ad")
+music_volume = NodePath("Panel/MarginContainer/VBoxContainer/VolumeSettings/MusicVolume/Slider")
+sfx_volume = NodePath("Panel/MarginContainer/VBoxContainer/VolumeSettings/SFXVolume/Slider")
+
+[node name="Panel" type="Panel" parent="PauseDialog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PauseDialog/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseDialog/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PauseDialog/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 48
+text = "Pause"
+horizontal_alignment = 1
+
+[node name="VolumeSettings" type="VBoxContainer" parent="PauseDialog/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+
+[node name="MusicVolume" type="VBoxContainer" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VolumeSettings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VolumeSettings/MusicVolume"]
+layout_mode = 2
+text = "Music"
+
+[node name="Slider" type="HSlider" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VolumeSettings/MusicVolume"]
+layout_mode = 2
+
+[node name="SFXVolume" type="VBoxContainer" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VolumeSettings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VolumeSettings/SFXVolume"]
+layout_mode = 2
+text = "Sound effects"
+
+[node name="Slider" type="HSlider" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VolumeSettings/SFXVolume"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseDialog/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+alignment = 2
+
+[node name="SaveQuitButton" type="Button" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Save and quit"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="RestartButton" type="Button" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Restart"
+
+[node name="ResumeButton" type="Button" parent="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Resume"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_smf5d")
+}
+
+[node name="LeaderboardUpdater" type="Node" parent="." node_paths=PackedStringArray("game")]
+script = ExtResource("12_lsrva")
+game = NodePath("../VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore")
+
+[node name="GameSerializer" type="Node" parent="." node_paths=PackedStringArray("game")]
+script = ExtResource("13_mchgy")
+game = NodePath("../VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore")
+
+[connection signal="pressed" from="VBoxContainer/Top/GridContainer/Settings/PauseButton" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="GameOverDialog/Panel/MarginContainer/VBoxContainer/HBoxContainer/RestartButton" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="GameOverDialog/Panel/MarginContainer/VBoxContainer/HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/SaveQuitButton" to="." method="_on_save_quit_button_pressed"]
+[connection signal="pressed" from="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/RestartButton" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="PauseDialog/Panel/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/ResumeButton" to="." method="_on_pause_pressed"]
+
+[editable path="VBoxContainer/Center/AspectRatioContainer/JarTexture/VBoxContainer/AspectRatioContainer/JarInside/SubViewport/GameCore"]

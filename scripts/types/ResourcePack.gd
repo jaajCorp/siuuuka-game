@@ -15,18 +15,18 @@ signal load_progress_update(current: int, total: int)
 @export var total_asset_count: int
 @export var current_asset_count: int
 
-static func new_from_id(id: String) -> ResourcePack:
+static func new_from_id(target_id: String) -> ResourcePack:
 	var new_pack := ResourcePack.new()
-	new_pack.id = id
+	new_pack.id = target_id
 	new_pack.__load_assets()
 	return new_pack
 	
 func __load_assets():
-	emit_signal("load_progress_update", 0, 100)
+	load_progress_update.emit(0, 100)
 	
 	var meta = await CMS.fetch_pack_metadata(id)
 	if meta.has("error"):
-		emit_signal("loaded", meta.get("error"))
+		loaded.emit(meta.get("error"))
 		return
 	total_asset_count = __get_total_asset_count(meta)
 	
@@ -37,21 +37,22 @@ func __load_assets():
 	for level: Dictionary in meta.get("levels"):
 		var texture := await __load_texture_asset(level.get("texture"))
 		if texture == null:
-			emit_signal("loaded", CMS.CMSError.DATA_INTEGRITY)
+			loaded.emit(CMS.CMSError.DATA_INTEGRITY)
 			return
+		var frame: bool = level.get("frame")
 		var ambient_sounds: Array[AudioStreamOggVorbis] = []
 		for sound: String in level.get("ambient_sounds"):
 			var audio_stream := await __load_audio_asset(sound)
 			if audio_stream == null:
-				emit_signal("loaded", CMS.CMSError.DATA_INTEGRITY)
+				loaded.emit(CMS.CMSError.DATA_INTEGRITY)
 				return
 			
 			ambient_sounds.push_back(audio_stream)
 		
-		self.levels.push_back(PackLevelData.from(texture, ambient_sounds))
+		self.levels.push_back(PackLevelData.from(texture, frame, ambient_sounds))
 		
 	
-	emit_signal("loaded", CMS.CMSError.OK)
+	loaded.emit(CMS.CMSError.OK)
 	
 func __load_texture_asset(asset_path: String) -> ImageTexture:
 	print("Loading texture asset " + asset_path + " for pack " + id)
@@ -103,10 +104,10 @@ func __get_total_asset_count(meta: Dictionary) -> int:
 	
 func __incr_asset_count() -> void:
 	current_asset_count += 1
-	emit_signal("load_progress_update", current_asset_count, total_asset_count)
+	load_progress_update.emit(current_asset_count, total_asset_count)
 	
-func get_level_texture(level: int) -> Texture2D:
-	return levels[level].texture
+func get_level_data(level: int) -> PackLevelData:
+	return levels[level]
 	
 func get_level_random_ambient(level: int) -> AudioStreamOggVorbis:
 	if levels[level].ambient_sounds.is_empty():

@@ -11,7 +11,9 @@ config_version=5
 [application]
 
 config/name="Siuuuka-game"
-run/main_scene="res://scenes/ui/Home.tscn"
+config/version="1.1.2"
+run/main_scene="res://scenes/Home/Home.tscn"
+config/quit_on_go_back=false
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
 
@@ -20,6 +22,8 @@ config/icon="res://icon.svg"
 CMS="*res://scripts/global/CMS.gd"
 Global="*res://scripts/global/Global.gd"
 CMSCache="*res://scripts/global/CMSCache.gd"
+Nakama="*res://addons/com.heroiclabs.nakama/Nakama.gd"
+Music="*res://scripts/global/Music.gd"
 
 [display]
 
@@ -28,6 +32,10 @@ window/size/viewport_height=1280
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=1
+
+[physics]
+
+common/physics_interpolation=true
 
 [rendering]
 

@@ -1,0 +1,266 @@
+[gd_scene load_steps=11 format=3 uid="uid://b7rp6hp01y3qb"]
+
+[ext_resource type="Theme" uid="uid://bgwxaicjsghpf" path="res://res/ui_theme.tres" id="1_ijuk4"]
+[ext_resource type="Script" path="res://scenes/Leaderboard/Leaderboard.gd" id="2_euexk"]
+[ext_resource type="ButtonGroup" uid="uid://c3qlxpg528ktv" path="res://res/leaderboard_button_group.tres" id="4_vj0p6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_es01d"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 4
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pmnyp"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 4
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rn11b"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 4
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c3hwy"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 4
+border_color = Color(0.968627, 0.792157, 0, 1)
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8s38"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 4
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t72nn"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 4
+border_color = Color(0.968627, 0.792157, 0, 1)
+corner_radius_bottom_right = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uvx5i"]
+content_margin_left = 12.0
+content_margin_top = 16.0
+content_margin_right = 12.0
+content_margin_bottom = 24.0
+bg_color = Color(0.447059, 0.301961, 0.231373, 1)
+border_width_left = 3
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.258451, 0.165805, 0.120649, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="Leaderboard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ijuk4")
+script = ExtResource("2_euexk")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 100)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.952941, 0.721569, 0.12549, 1)
+theme_override_colors/font_outline_color = Color(0.27451, 0.0980392, 0.0470588, 1)
+theme_override_constants/outline_size = 13
+theme_override_font_sizes/font_size = 96
+text = "Leaderboard"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LeaderboardSelectPanel" type="Panel" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/LeaderboardSelectPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="WeeklyButton" type="Button" parent="MarginContainer/VBoxContainer/LeaderboardSelectPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_hover_pressed_color = Color(0.960784, 0.960784, 0.960784, 1)
+theme_override_colors/font_hover_color = Color(0.960784, 0.960784, 0.960784, 1)
+theme_override_colors/font_pressed_color = Color(0.960784, 0.960784, 0.960784, 1)
+theme_override_colors/font_focus_color = Color(0.960784, 0.960784, 0.960784, 1)
+theme_override_colors/font_color = Color(0.960784, 0.960784, 0.960784, 1)
+theme_override_constants/outline_size = 0
+theme_override_styles/focus = SubResource("StyleBoxFlat_es01d")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_pmnyp")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rn11b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_c3hwy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_a8s38")
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("4_vj0p6")
+text = "Weekly"
+
+[node name="AllTimeButton" type="Button" parent="MarginContainer/VBoxContainer/LeaderboardSelectPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_hover_pressed_color = Color(0.960784, 0.960784, 0.960784, 1)
+theme_override_colors/font_hover_color = Color(0.960784, 0.960784, 0.960784, 1)
+theme_override_colors/font_pressed_color = Color(0.960784, 0.960784, 0.960784, 1)
+theme_override_colors/font_focus_color = Color(0.960784, 0.960784, 0.960784, 1)
+theme_override_colors/font_color = Color(0.960784, 0.960784, 0.960784, 1)
+theme_override_constants/outline_size = 0
+theme_override_styles/focus = SubResource("StyleBoxFlat_es01d")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_pmnyp")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rn11b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_t72nn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_a8s38")
+toggle_mode = true
+button_group = ExtResource("4_vj0p6")
+text = "All time"
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RankLabel" type="Label" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+theme_override_font_sizes/font_size = 48
+text = "Rank"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UsernameLabel" type="Label" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+theme_override_font_sizes/font_size = 48
+text = "Username"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+theme_override_font_sizes/font_size = 48
+text = "Score"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "  Back   "
+
+[node name="UsernameEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Username"
+alignment = 1
+max_length = 18
+
+[node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "  Save   "
+
+[node name="VKeyboardMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Popup" type="AcceptDialog" parent="."]
+transparent_bg = true
+initial_position = 1
+size = Vector2i(500, 300)
+borderless = true
+transparent = true
+max_size = Vector2i(500, 300)
+theme_override_styles/panel = SubResource("StyleBoxFlat_uvx5i")
+ok_button_text = "    OK     "
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Popup"]
+offset_left = 12.0
+offset_top = 16.0
+offset_right = 488.0
+offset_bottom = 213.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Popup/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 42
+text = "Username updated!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Content" type="Label" parent="Popup/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 6
+text = "Beat your personal weekly record to see it updated in the leaderboard"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/LeaderboardSelectPanel/HBoxContainer/WeeklyButton" to="." method="update_leaderboard_grid" binds= ["weekly_leaderboard"]]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/LeaderboardSelectPanel/HBoxContainer/AllTimeButton" to="." method="update_leaderboard_grid" binds= ["all_time_leaderboard"]]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_pressed"]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer/UsernameEdit" to="." method="_on_username_edit_focus"]
+[connection signal="focus_exited" from="MarginContainer/VBoxContainer/HBoxContainer/UsernameEdit" to="." method="_on_username_edit_focus_exited"]
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/HBoxContainer/UsernameEdit" to="." method="_on_username_edit_submit"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveButton" to="." method="_on_username_edit_submit"]

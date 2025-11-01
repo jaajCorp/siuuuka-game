@@ -1,0 +1,111 @@
+name: GitHub Release
+
+on:
+  # Trigger this workflow when a tag is pushed in the format `v1.2.3`.
+  push:
+    tags:
+      # Pattern syntax: <https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet>.
+      - "v[0-9]+.[0-9]+.[0-9]+*"
+      - "v[0-9]*.[0-9]*.[0-9]*-*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version number in the format `v1.2.3` or `v1.2.3-rc1`"
+        required: true
+        type: string
+
+env:
+  # used for uploading the app to a GitHub release
+  APP_DISPLAY_NAME: Siuuuka Game
+  APP_PACKAGE_NAME: "com.gasdev.siuuukagame"
+
+jobs:
+    # Determine the version number for this workflow.
+  get-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Determine version number (git)
+        id: tag
+        run: echo "tag=${GITHUB_REF#refs/tags/}" >> "${GITHUB_OUTPUT}"
+
+      - name: Determine version number (godot project)
+        id: project-version
+        run: |
+          PROJECT_VERSION=$(grep -oP 'config/version="\K[^"]+' project.godot)
+          echo "project_version=$PROJECT_VERSION" >> "${GITHUB_OUTPUT}"
+    
+      - name: Check version match
+        run: |
+          if [ "${{ inputs.version || steps.tag.outputs.tag }}" != "v${{ steps.project-version.outputs.project_version }}" ]; then
+            echo "Error: Git tag (${{ inputs.version || steps.tag.outputs.tag }}) does not match godot project version (${{ steps.project-version.outputs.project_version }})"
+            exit 1
+          fi
+
+    outputs:
+      # Use the input from workflow dispatch, or fall back to the git tag.
+      version: ${{ inputs.version || steps.tag.outputs.tag }}
+
+
+  build:
+    runs-on: ubuntu-latest
+    needs:
+      - get-version
+    env:
+      version: ${{ needs.get-version.outputs.version }}
+      # Avoid rate-limiting. See: <https://github.com/cargo-bins/cargo-binstall/issues/2045>.
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    strategy:
+      matrix:
+        include:
+          - arch: all
+            format: apk
+
+          - arch: arm64-v8a
+            format: apk
+
+          - arch: armeabi-v7a
+            format: apk
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: cachix/install-nix-action@v25
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup environment
+        run: |
+          mkdir -p secrets
+          mkdir -p ~/.local/share/godot
+          echo '${{ secrets.ANDROID_KEYSTORE_RELEASE_CONTENT_B64 }}' | base64 -d > ./secrets/siuuuka-game.keystore
+
+          echo '${{ secrets.NAKAMA_CONFIG }}' > ./secrets/nakama.cfg
+      
+      - name: Install nix env
+        run: nix develop --command godot --version
+
+      - name: Import resources
+        run: nix develop --command godot --headless --import .
+
+      - name: Build app bundle
+        run: |
+          unset -v ANDROID_SDK_ROOT
+          export GODOT_ANDROID_KEYSTORE_RELEASE_PATH=./secrets/siuuuka-game.keystore
+          export GODOT_ANDROID_KEYSTORE_RELEASE_USER=${{ secrets.GODOT_ANDROID_KEYSTORE_RELEASE_USER }}
+          export GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD=${{ secrets.GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD }}
+          nix develop --command godot --verbose --headless --install-android-build-template --export-release android-${{ matrix.arch }}.${{ matrix.format }}
+      - name: Upload self-signed bundle to GitHub
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/${{ env.APP_PACKAGE_NAME }}-${{ matrix.arch }}.${{ matrix.format }}
+          asset_name: ${{ env.APP_PACKAGE_NAME }}-${{ matrix.arch }}.${{ matrix.format }}
+          release_name: ${{ env.version }}
+          tag: ${{ env.version }}
+          overwrite: true
+

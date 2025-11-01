@@ -3,9 +3,10 @@ extends Control
 signal game_ready
 
 @export var status_label: Label
+@export var progress_bar: ProgressBar
 
 @export var start_button: Button
-@export var store_button: Button
+@export var leaderboard_button: Button
 @export var quit_button: Button
 
 @onready var error_dialog := $AcceptDialog
@@ -13,9 +14,15 @@ signal game_ready
 var game_loading := false
 
 func _ready() -> void:
+	error_dialog.visible = false
+	progress_bar.visible = false
+	
 	start_button.connect("pressed", _on_start_pressed)
-	store_button.connect("pressed", _on_store_pressed)
+	leaderboard_button.connect("pressed", _on_leaderboard_pressed)
 	quit_button.connect("pressed", _on_quit_pressed)
+	
+	Music.ensure_soundtrack_playing(Music.SOUNDTRACKS.TITLE_SCREEN)
+	
 	fetch_remote_data()
 
 func fetch_remote_data():
@@ -31,6 +38,8 @@ func fetch_remote_data():
 	if pack_id == "":
 		if not manifest.has("error"):
 			pack_id = manifest.get("default_pack_id")
+			Global.settings.selected_pack_id = pack_id
+			Global.save_state()
 		else:
 			display_error(get_error_display(manifest))
 			return
@@ -39,10 +48,11 @@ func fetch_remote_data():
 	
 	if pack == null:
 		printerr("Failed to fetch pack")
-		display_error({
-			"title": "Failed to download remote content", 
-			"tip": "This game needs to be conencted to the interned the first time it is launched"}
-		)
+		if not error_dialog.visible:
+			display_error({
+				"title": "Failed to download remote content", 
+				"tip": "This game needs to be connected to the internet the first time it is launched"}
+			)
 		return
 		
 	
@@ -63,7 +73,15 @@ func fetch_pack(pack_id: String, online := true) -> ResourcePack:
 		print_status("Downloading latest content")
 		pack = ResourcePack.new_from_id(pack_id)
 		pack.connect("load_progress_update", _on_pack_load_progress_update)
-		await pack.loaded
+		progress_bar.visible = true
+		var error = await pack.loaded
+		progress_bar.visible = false
+		if error != CMS.CMSError.OK:
+			display_error(
+				get_error_display({"error": error})
+			)
+			return
+
 		var cache_result = CMSCache.save_resource_pack(pack)
 		if cache_result != OK:
 			display_error({"title": "Storage error", "tip": "Could not cache aseets on your storage device, please allow us to do so (i'm begging you)"})
@@ -82,24 +100,28 @@ func _on_start_pressed():
 		fetch_remote_data()
 		await self.game_ready
 
-	get_tree().change_scene_to_file("res://scenes/Game/GameUI.tscn")
+	get_tree().change_scene_to_file("res://scenes/GameUI/GameUI.tscn")
 		
 	
-func _on_store_pressed():
-	print_status("Coming soon")
+func _on_leaderboard_pressed():
+	get_tree().change_scene_to_file("res://scenes/Leaderboard/Leaderboard.tscn")
 	
 func _on_quit_pressed():
 	get_tree().quit()
 
 func _on_pack_load_progress_update(current: int, total: int):
+	progress_bar.max_value = total
+	progress_bar.value = current
 	print_status("Downloading latest content (%d/%d)" % [current, total])
 
 func print_status(status: String):
 	status_label.text = status
 	
 func display_error(display_data: Dictionary):
-	error_dialog.title = display_data.get("title", "WTF")
-	error_dialog.dialog_text = display_data.get("tip", "HMM, wut !?")
+	error_dialog.dialog_text = "%s\n\n%s" % [
+		display_data.get("title", "WTF"), 
+		display_data.get("tip", "HMM, wut !?")
+	]
 	error_dialog.visible = true
 	waiting_for_start = false
 	game_loading = false

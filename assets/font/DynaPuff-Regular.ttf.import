@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dapkttovfb4ap"
-path="res://.godot/imported/SingleDay-Regular.ttf-32ea707c5febd7228b7eabe8021ae5a3.fontdata"
+uid="uid://bjkqmbwyyiifp"
+path="res://.godot/imported/DynaPuff-Regular.ttf-02d48a28c39fdfae19412a9bfcad0301.fontdata"
 
 [deps]
 
-source_file="res://assets/font/SingleDay-Regular.ttf"
-dest_files=["res://.godot/imported/SingleDay-Regular.ttf-32ea707c5febd7228b7eabe8021ae5a3.fontdata"]
+source_file="res://assets/font/DynaPuff-Regular.ttf"
+dest_files=["res://.godot/imported/DynaPuff-Regular.ttf-02d48a28c39fdfae19412a9bfcad0301.fontdata"]
 
 [params]
 

@@ -1,11 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmu6mss2cn51m"]
+[gd_scene load_steps=4 format=3 uid="uid://cmu6mss2cn51m"]
 
-[ext_resource type="Script" path="res://scripts/logic/game_logic.gd" id="1_sn5wc"]
-[ext_resource type="AudioStream" uid="uid://b7r1070fknnhn" path="res://assets/audio/music.ogg" id="2_85xml"]
+[ext_resource type="Script" path="res://scenes/Game/GameCore.gd" id="1_sn5wc"]
+[ext_resource type="Shader" path="res://scenes/Game/DashedLine.gdshader" id="2_2ia0b"]
 
-[node name="GameCore" type="Node2D" node_paths=PackedStringArray("spawn_level", "balls_container")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_olawf"]
+shader = ExtResource("2_2ia0b")
+shader_parameter/color = Color(1, 0, 0.435294, 1)
+shader_parameter/dash_count = 64
+
+[node name="GameCore" type="Node2D" node_paths=PackedStringArray("spawn_level", "limit_line", "balls_container")]
 script = ExtResource("1_sn5wc")
 spawn_level = NodePath("Spawn")
+limit_line = NodePath("Spawn/Line2D")
 balls_container = NodePath("Balls")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
@@ -17,13 +23,15 @@ polygon = PackedVector2Array(0, 0, 0, 1280, 720, 1280, 720, 0)
 [node name="Balls" type="Node2D" parent="."]
 
 [node name="Spawn" type="Marker2D" parent="."]
-position = Vector2(320, 80)
+position = Vector2(360, 80)
 gizmo_extents = 32.0
 
-[node name="GameEndTimer" type="Timer" parent="."]
-wait_time = 0.4
+[node name="Line2D" type="Line2D" parent="Spawn"]
+material = SubResource("ShaderMaterial_olawf")
+points = PackedVector2Array(360, 0, -360, 0)
+width = 4.0
+texture_mode = 2
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_85xml")
-autoplay = true
-parameters/looping = true
+[node name="GameEndTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
