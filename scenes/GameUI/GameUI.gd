@@ -74,7 +74,7 @@ func _on_save_quit_button_pressed() -> void:
 	_on_quit_button_pressed()
 
 func _on_best_leaderboard_score(leaderboard_id: String):
-	leaderboard_updater_label.text = "Scored new personnal best score on %s !" % [leaderboard_id.replace("_", " ")]
+	leaderboard_updater_label.text = "Scored new personal best score on %s !" % [leaderboard_id.replace("_", " ")]
 
 func _on_leaderboard_submit():
 	leaderboard_updater_label.text = "Leaderboard score submitted"

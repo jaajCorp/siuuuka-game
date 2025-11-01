@@ -51,7 +51,7 @@ func _ready() -> void:
 func create_session_and_connect():
 	session = await client.authenticate_device_async(device_id)
 	if session.is_exception():
-		print("An error occurred while autheticating to the backend: %s" % session)
+		print("An error occurred while authenticating to the backend: %s" % session)
 		is_healthy = false
 		error.emit(Error.SESSION_AUTH)
 		return

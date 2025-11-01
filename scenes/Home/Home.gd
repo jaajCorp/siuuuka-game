@@ -51,7 +51,7 @@ func fetch_remote_data():
 		if not error_dialog.visible:
 			display_error({
 				"title": "Failed to download remote content", 
-				"tip": "This game needs to be connected to the interned the first time it is launched"}
+				"tip": "This game needs to be connected to the internet the first time it is launched"}
 			)
 		return
 		
