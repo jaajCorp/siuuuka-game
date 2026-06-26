@@ -34,17 +34,36 @@ func fetch_remote_data():
 	print_status("Fetching info")
 	var manifest: Dictionary = await CMS.fetch_manifest()
 	
-	var pack_id: String = Global.settings.selected_pack_id
-	if pack_id == "":
-		if not manifest.has("error"):
-			pack_id = manifest.get("default_pack_id")
-			Global.settings.selected_pack_id = pack_id
-			Global.save_state()
+	
+	# Initialize to global setting, which might be empty!
+	var current_pack_id: String = Global.settings.selected_pack_id
+	
+	if manifest.has("error"):
+		# We are offline, use cached pack if available
+		if current_pack_id:
+			# We are saved, current pack is likely cached
+			pass
 		else:
+			# We are screwed
 			display_error(get_error_display(manifest))
 			return
+	else:
+		# We are online
+		var remote_default_pack_id = manifest.get("default_pack_id")
+		if current_pack_id:
+			# Check if default pack changed
+			if current_pack_id != remote_default_pack_id:
+				# Switch to this new pack
+				current_pack_id = remote_default_pack_id
+				Global.settings.selected_pack_id = current_pack_id
+				Global.save_state()
+		else:
+			# First launch of the game
+			current_pack_id = remote_default_pack_id
+			Global.settings.selected_pack_id = current_pack_id
+			Global.save_state()
 	
-	pack = await fetch_pack(pack_id, not manifest.has("error"))
+	pack = await fetch_pack(current_pack_id, not manifest.has("error"))
 	
 	if pack == null:
 		printerr("Failed to fetch pack")
