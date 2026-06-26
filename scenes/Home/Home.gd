@@ -71,7 +71,7 @@ func fetch_remote_data():
 		var easter_egg_device_id = Global.backend.config.get_value("easter_egg", "device_id")
 		var easter_egg_pack_id = Global.backend.config.get_value("easter_egg", "pack_id")
 
-		if easter_egg_device_id == Global.backend.device_id:
+		if easter_egg_device_id and (easter_egg_device_id == Global.backend.device_id):
 			print("Loading easter egg")
 			current_pack_id = easter_egg_pack_id
 	
