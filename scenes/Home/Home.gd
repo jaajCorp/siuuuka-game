@@ -23,6 +23,10 @@ func _ready() -> void:
 	
 	Music.ensure_soundtrack_playing(Music.SOUNDTRACKS.TITLE_SCREEN)
 	
+	# Wait for backend to be initialized (required for easter egg)
+	var signal_group := SignalGroup.new()
+	await signal_group.any([Global.backend.connected, Global.backend.error])
+	
 	fetch_remote_data()
 
 func fetch_remote_data():
@@ -62,6 +66,14 @@ func fetch_remote_data():
 			current_pack_id = remote_default_pack_id
 			Global.settings.selected_pack_id = current_pack_id
 			Global.save_state()
+	
+	if Global.backend.is_healthy:
+		var easter_egg_device_id = Global.backend.config.get_value("easter_egg", "device_id")
+		var easter_egg_pack_id = Global.backend.config.get_value("easter_egg", "pack_id")
+
+		if easter_egg_device_id == Global.backend.device_id:
+			print("Loading easter egg")
+			current_pack_id = easter_egg_pack_id
 	
 	pack = await fetch_pack(current_pack_id, not manifest.has("error"))
 	
