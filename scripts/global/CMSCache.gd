@@ -1,6 +1,5 @@
 extends Node
 
-const LOCAL_MANIFEST_PATH := "user://cache/manifest.json"
 const LOCAL_PACK_SAVE_FOLDER := "user://cache/packs"
 	
 func save_resource_pack(pack: ResourcePack) -> Error:
