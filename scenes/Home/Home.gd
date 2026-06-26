@@ -73,7 +73,7 @@ func fetch_remote_data():
 		
 		var account = await Global.backend.client.get_account_async(Global.backend.session)
 
-		if account and account.user and account.user.id == Global.backend.device_id:
+		if account and account.user and account.user.id == easter_egg_device_id:
 			current_pack_id = easter_egg_pack_id
 	
 	pack = await fetch_pack(current_pack_id, not manifest.has("error"))
